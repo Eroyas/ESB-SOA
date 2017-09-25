@@ -17,11 +17,11 @@
         <version>1.0</version>
     </parent>
 
-<!--    <modules>
+    <modules>
         <module>rpc</module>
         <module>resource</module>
         <module>document</module>
-    </modules>-->
+    </modules>
 
     <properties>
         <versions.tomee>7.0.3</versions.tomee>
