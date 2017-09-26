@@ -16,6 +16,7 @@ import java.util.Collection;
 @Produces(MediaType.APPLICATION_JSON)
 public class HotelService {
 
+    // http://localhost:8080/tcs-service-rest/hotels
     @GET
     public Response getHotels() {
         Collection<Hotel> hotels = Storage.findAll();
@@ -29,6 +30,7 @@ public class HotelService {
     }
 
 
+    // http://localhost:8080/tcs-service-rest/hotels/Ibis
     @Path("/{name}")
     @GET
     public Response getHotelsByName(@PathParam("name") String name) {
