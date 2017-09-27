@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  tomee:
+    container_name: tta-reservation
+    build:
+      context: ./services/document/
+    ports:
+     - "8080:8080"
