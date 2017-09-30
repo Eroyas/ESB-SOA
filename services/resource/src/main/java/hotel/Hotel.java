@@ -5,6 +5,7 @@ package hotel;
  */
 public class Hotel {
 
+    private int id;
     private String name; // json : hotel_name (unique)
     private String city; // json : city
 /*
@@ -15,11 +16,20 @@ public class Hotel {
     private String type; // json : hotel_type
     private double amount; // json : price_per_night
 
-    public Hotel(String name, String city, String type, double amount) {
+    public Hotel(int id, String name, String city, String type, double amount) {
+        this.id = id;
         this.name = name;
         this.city = city;
         this.type = type;
         this.amount = amount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

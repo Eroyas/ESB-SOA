@@ -29,16 +29,26 @@ public class HotelService {
         return Response.ok().entity(result.toString(2)).build();
     }
 
-
-    // http://localhost:8080/tcs-service-rest/hotels/Ibis
-    @Path("/{name}")
+    // http://localhost:8080/tcs-service-rest/hotels/name/Ibis
+    @Path("name/{name}")
     @GET
     public Response getHotelsByName(@PathParam("name") String name) {
-        if(Storage.read(name) == null) {
+        if(Storage.readByName(name) == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        return Response.ok().entity("\"" + Storage.read(name).toString() + "\"").build();
+        return Response.ok().entity(Storage.readByName(name).toString()).build();
+    }
+
+    // http://localhost:8080/tcs-service-rest/hotels/city/Paris
+    @Path("city/{city}")
+    @GET
+    public Response getHotelsByCity(@PathParam("city") String city) {
+        if(Storage.readByCity(city) == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok().entity(Storage.readByCity(city).toString()).build();
     }
 
 }
