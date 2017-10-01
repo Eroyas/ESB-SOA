@@ -34,7 +34,7 @@
     </dependencies>
 
     <build>
-        <finalName>tta-reservation</finalName>
+        <finalName>tta-booking</finalName>
     </build>
 
 </project>

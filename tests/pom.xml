@@ -18,10 +18,10 @@
     </parent>
 
 
-    <!--<modules>
-        <module>stress</module>
-        <module>acceptation</module>
-    </modules>-->
+    <modules>
+       <!-- <module>stress</module>-->
+        <module>acceptance</module>
+    </modules>
 
 
 </project>
