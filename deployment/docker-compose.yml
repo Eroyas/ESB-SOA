@@ -26,21 +26,21 @@ services:
     ports:
       - "9080:8080"
 
-    document_services:
-      container_name: tta-booking
-      build:
-        context: ../services/document/
-  #    depends_on:
-  #      - tta-database
-  #    links:
-  #      - tta-database:tta-database
-      ports:
-       - "8080:8080"
+  #document_services:
+    #container_name: tta-booking
+    #build:
+      #context: ../services/document/
+    #depends_on:
+      #- tta-database
+    #links:
+      #- tta-database:tta-database
+    #ports:
+    #- "8080:8080"
 
-  #  tta-database:
-  #    container_name: tta-database
-  #    image: mongo:3.0
-  #    volumes:
-  #      - ./database/mongo_data:/data/db
-  #    ports:
-  #    - "27017:27017"
+  #tta-database:
+    #container_name: tta-database
+    #image: mongo:3.0
+    #volumes:
+      #- ./database/mongo_data:/data/db
+    #ports:
+    #- "27017:27017"
