@@ -1,9 +1,27 @@
+########################################
+##         The Travel Agency          ##
+########################################
+
+## Start the system with "docker-compose up -d"
+## Shutdown it with "docker-compose down"
+## To clean your docker install: "docker system prune"
+## To purge your docker install: "docker system prune -a"
+
+
 version: "3"
 
 services:
-  tomee:
+
+  flight-reservation:
     container_name: tta-reservation
     build:
       context: ../services/document
     ports:
      - "8080:8080"
+
+  carrent-and-hotel-reservation:
+    container_name: tta-car-and-hotel
+    build:
+      context: ../services/resource
+    ports:
+      - "9080:8080"
