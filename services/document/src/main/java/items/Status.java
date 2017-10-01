@@ -1,9 +1,9 @@
 package items;
 
 public enum Status {
-    WAITING_APPROVAL("waiting for approval"),
-    APPROVED("approved"),
-    REJECTED("rejected");
+    WAITING_APPROVAL("WAITING_APPROVAL"),
+    APPROVED("APPROVED"),
+    REJECTED("REJECTED");
 
     String str;
 

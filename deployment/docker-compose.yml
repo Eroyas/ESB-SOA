@@ -12,13 +12,6 @@ version: "3"
 
 services:
 
-  flight-reservation:
-    container_name: tta-reservation
-    build:
-      context: ../services/document
-    ports:
-     - "8080:8080"
-
   carrent-and-hotel-reservation:
     container_name: tta-car-and-hotel
     build:
@@ -26,21 +19,21 @@ services:
     ports:
       - "9080:8080"
 
-  #document_services:
-    #container_name: tta-booking
-    #build:
-      #context: ../services/document/
+  document_services:
+    container_name: tta-booking
+    build:
+      context: ../services/document/
     #depends_on:
-      #- tta-database
+    #  - tta-database
     #links:
-      #- tta-database:tta-database
-    #ports:
-    #- "8080:8080"
+    #  - tta-database:tta-database
+    ports:
+     - "8080:8080"
 
   #tta-database:
-    #container_name: tta-database
-    #image: mongo:3.0
-    #volumes:
-      #- ./database/mongo_data:/data/db
-    #ports:
-    #- "27017:27017"
+  #  container_name: tta-database
+  #  image: mongo:3.0
+  #  volumes:
+  #    - ./database/mongo_data:/data/db
+  #  ports:
+  #  - "27017:27017"

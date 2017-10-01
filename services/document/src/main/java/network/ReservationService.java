@@ -4,7 +4,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import handler.Handler;
 import org.json.JSONObject;
 
@@ -27,13 +26,14 @@ public class ReservationService {
         JSONObject obj = new JSONObject(input);
         System.out.println("Receving req with JSON nested object: " + obj.toString());
         try {
+            JSONObject answer;
             switch ((obj.getString("type"))) {
                 case "submit":
-                    System.out.println(obj.getJSONObject("booking"));
-                    JSONObject answer = handler.submitBooking(obj.getJSONObject("booking"));
+                    answer = handler.submitBooking(obj.getJSONObject("booking"));
                     return Response.ok().entity(answer.toString(INDENT_FACTOR)).build();
                 case "validate":
-                    return Response.ok().entity("OK LOURD VALID").build();
+                    answer = handler.approveBooking(obj.getInt("id"));
+                    return Response.ok().entity(answer.toString(INDENT_FACTOR)).build();
             }
         }catch(Exception e) {
             JSONObject error = new JSONObject().put("error", e.toString());

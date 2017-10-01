@@ -1,6 +1,7 @@
 package handler;
 
 import com.mongodb.Mongo;
+import com.mongodb.util.JSON;
 import exceptions.EmptyBookingException;
 import items.Booking;
 import network.MongoConnector;
@@ -20,9 +21,8 @@ public class Handler {
         try {
             MongoCollection bookings = MongoConnector.getBookings();
             Booking booking = new Booking(bookingAsJson);
-            System.out.println("Booking before insert: " + booking.toString());
+            //TODO: consistency booking ou booking nesté dans JSONObject
             bookings.insert(booking);
-            System.out.println("Booking inserted.");
 
             return new JSONObject()
                     .put("inserted", true)
@@ -44,19 +44,28 @@ public class Handler {
         }
     }
 
-    public boolean validateBooking(JSONObject bookingAsJson)
+    public JSONObject approveBooking(int idToValidate)
     {
         try {
             MongoCollection bookings = MongoConnector.getBookings();
-            Booking booking = new Booking(bookingAsJson);
-            bookings.update("{'airline':#");
+            bookings.update("{id:#}", idToValidate).upsert().multi().with("{$set: {'status': 'APPROVED'}}");
 
-            return true;
+            /*
+            System.out.println("ID to validate : " + idToValidate);
+            Booking booking = bookings.findOne("{id:#}", idToValidate).as(Booking.class);
+            System.out.println("updated: " + booking.toString());
+            */
+
+            return new JSONObject()
+                    //.put("booking", bookings.findOne("{id:#}", idToValidate).as(Booking.class).toJson())
+                    .put("approved", true);
         }
         catch (Exception e)
         {
-            System.err.println(e.getStackTrace());
-            return false;
+            e.printStackTrace();
+            return new JSONObject()
+                    .put("approved", false)
+                    .put("message", "Error occured: " + e.getMessage());
         }
     }
 
