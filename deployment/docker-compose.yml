@@ -4,6 +4,6 @@ services:
   tomee:
     container_name: tta-reservation
     build:
-      context: ./services/document/
+      context: ../services/document
     ports:
      - "8080:8080"
