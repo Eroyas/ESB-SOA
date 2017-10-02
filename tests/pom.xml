@@ -20,7 +20,6 @@
 
     <modules>
         <!--<module>stress</module>-->
-        <module>acceptance</module>
         <module>acceptation</module>
     </modules>
 
