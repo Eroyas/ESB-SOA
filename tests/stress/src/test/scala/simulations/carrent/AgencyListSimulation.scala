@@ -1,15 +1,15 @@
 package simulations.carrent
 
+import dockerized.DockerizedTest
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 
 import scala.language.postfixOps
-
 import scala.concurrent.duration._
 
-class AgencyListSimulation extends Simulation{
+class AgencyListSimulation extends DockerizedTest {
 
-  private val host = "192.168.99.100"
+  private val host = getDockerHost
   private val port = "9080"
   private val serviceName = "/tta-car-and-hotel"
 

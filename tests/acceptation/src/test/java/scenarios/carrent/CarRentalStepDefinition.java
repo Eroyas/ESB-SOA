@@ -3,6 +3,7 @@ package scenarios.carrent;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import dockerized.DockerizedTest;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,9 +12,9 @@ import javax.ws.rs.core.MediaType;
 
 import static org.junit.Assert.*;
 
-public class CarRentalStepDefinition {
+public class CarRentalStepDefinition extends DockerizedTest{
 
-    private String host = "192.168.99.100";
+    private String host = getDockerHost();
     private String serviceName = "/tta-car-and-hotel";
     private int port = 9080;
 

@@ -1,5 +1,6 @@
 package bookingEngine;
 
+import dockerized.DockerizedTest;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.json.JSONObject;
 import org.junit.Assert;
@@ -8,7 +9,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 import javax.ws.rs.core.MediaType;
 
-public class BookingActionsTest {
+public class BookingActionsTest extends DockerizedTest{
 
     @Test
     public void submitBookingTest() {
@@ -54,7 +55,7 @@ public class BookingActionsTest {
 
     public static JSONObject call(JSONObject request, String param) {
         String raw =
-                WebClient.create("http://" + "localhost" + ":" + 8080 + "/tta-booking/" + param)
+                WebClient.create("http://" + getDockerHost() + ":" + 8080 + "/tta-booking/" + param)
                         .header("Content-Type", MediaType.APPLICATION_JSON)
                         .post(request.toString(), String.class);
         return new JSONObject(raw);

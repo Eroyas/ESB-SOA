@@ -3,6 +3,7 @@ package scenarios.hotel;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import dockerized.DockerizedTest;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.json.JSONArray;
 
@@ -12,9 +13,9 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Eroyas on 02/10/17.
  */
-public class HotelReservationGetAll {
+public class HotelReservationGetAll extends DockerizedTest{
 
-    private String host = "localhost";
+    private String host = getDockerHost();
     private String serviceName = "/tta-car-and-hotel";
     private int port = 9080;
 
