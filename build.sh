@@ -11,7 +11,7 @@ fi
 
 # Build maven project to generate web archive
 echo -n "Building maven project..."
-mvn -q clean package
+mvn clean package -DskipTests
 
 # Check for errors on last call
 if [ "$?" = "0" ]; then
@@ -26,8 +26,8 @@ cd deployment
 set +e
 
 # Execute Docker Compose
-echo -n "Composing Docker images..."
-docker-compose up -d
+echo -n "Building Docker images..."
+docker-compose build
 
 if [ "$?" = "0" ]; then
     echo "OK"
