@@ -15,9 +15,22 @@
         <version>1.0</version>
     </parent>
 
+    <properties>
+        <versions.json>1.1.1</versions.json>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>${versions.json}</version>
+        </dependency>
+    </dependencies>
+
+
 
     <build>
-        <finalName>tcs-service-rpc</finalName>
+        <finalName>tta-service-rpc</finalName>
     </build>
 
 </project>

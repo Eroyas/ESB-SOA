@@ -12,6 +12,13 @@ version: "3"
 
 services:
 
+  flight-booking:
+      container_name: tta-flight-booking
+      build:
+            context: ../services/rpc
+      ports:
+        - "9090:8080"
+
   carrent-and-hotel-reservation:
     container_name: tta-car-and-hotel
     build:
