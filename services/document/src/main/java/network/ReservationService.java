@@ -24,7 +24,7 @@ public class ReservationService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response process(String input) {
         JSONObject obj = new JSONObject(input);
-        System.out.println("Receving req with JSON nested object: " + obj.toString());
+        System.out.println("Receving request with JSON nested object: " + obj.toString());
         try {
             JSONObject answer;
             switch ((obj.getString("type"))) {
