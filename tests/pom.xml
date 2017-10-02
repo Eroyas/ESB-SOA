@@ -19,8 +19,8 @@
 
 
     <modules>
-        <!--<module>stress</module>-->
         <module>acceptation</module>
+        <module>stress</module>
     </modules>
 
 
