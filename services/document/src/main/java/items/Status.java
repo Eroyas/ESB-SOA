@@ -7,6 +7,8 @@ public enum Status {
 
     String str;
 
+    Status(){}
+
     Status(String str) {
         this.str = str;
     }

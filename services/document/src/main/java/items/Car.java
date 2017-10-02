@@ -7,6 +7,8 @@ public class Car {
     private String model;
     private int id;
 
+    public Car(){}
+
     public Car(JSONObject car) {
         this.model = car.getString("model");
         this.id = car.getInt("id");

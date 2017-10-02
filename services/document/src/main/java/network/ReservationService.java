@@ -1,11 +1,11 @@
 package network;
 
+import handler.Handler;
+import org.json.JSONObject;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import handler.Handler;
-import org.json.JSONObject;
 
 @Path("/booking")
 @Produces(MediaType.APPLICATION_JSON)

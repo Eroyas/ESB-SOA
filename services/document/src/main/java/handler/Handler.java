@@ -1,7 +1,5 @@
 package handler;
 
-import com.mongodb.Mongo;
-import com.mongodb.util.JSON;
 import exceptions.EmptyBookingException;
 import items.Booking;
 import network.MongoConnector;

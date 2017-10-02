@@ -1,6 +1,5 @@
 package items;
 
-import org.jongo.marshall.jackson.oid.MongoObjectId;
 import org.json.JSONObject;
 
 public class Flight {
@@ -8,8 +7,7 @@ public class Flight {
     private String airline;
     private int number;
 
-    public Flight() {
-    }
+    public Flight() {}
 
     public Flight(JSONObject data) {
         this.airline = data.getString("airline");
