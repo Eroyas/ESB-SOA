@@ -16,7 +16,7 @@ import java.util.Collection;
 @Produces(MediaType.APPLICATION_JSON)
 public class HotelService {
 
-    // http://localhost:8080/tcs-service-rest/hotels
+    // http://localhost:8080/tta-car-and-hotel/hotels
     @GET
     public Response getHotels() {
         Collection<Hotel> hotels = Storage.findAll();
@@ -29,7 +29,7 @@ public class HotelService {
         return Response.ok().entity(result.toString(2)).build();
     }
 
-    // http://localhost:8080/tcs-service-rest/hotels/name/Ibis
+    // http://localhost:8080/tta-car-and-hotel/hotels/name/Ibis
     @Path("name/{name}")
     @GET
     public Response getHotelsByName(@PathParam("name") String name) {
@@ -40,7 +40,7 @@ public class HotelService {
         return Response.ok().entity(Storage.readByName(name).toString()).build();
     }
 
-    // http://localhost:8080/tcs-service-rest/hotels/city/Paris
+    // http://localhost:8080/tta-car-and-hotel/hotels/city/Paris
     @Path("city/{city}")
     @GET
     public Response getHotelsByCity(@PathParam("city") String city) {

@@ -4,7 +4,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.ws.rs.core.MediaType;
 import static org.junit.Assert.assertTrue;
@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Eroyas on 02/10/17.
  */
-public class HotelReservationGetAll {
+public class HotelReservationGetByName {
 
     private String host = "localhost";
     private String serviceName = "/tta-car-and-hotel";
@@ -23,22 +23,22 @@ public class HotelReservationGetAll {
 
     private String result;
 
-    @Given("^the getAll hotel reservation service is up$")
-    public void the_hotel_reservation_service_is_up() {
+    @Given("^the getByName hotel reservation service is up$")
+    public void the_hotel_reservation_service_by_name_is_up() {
 
     }
 
-    @When("^the getAll hotel endpoint is '(.*)'$")
+    @When("^the getByName hotel hotel endpoint is '(.*)'$")
     public void set_endpoint(String endpoint) {
         this.endpoint = endpoint;
     }
 
-    @When("^the getAll hotel select method is (.*)$")
+    @When("^the getByName hotel select method is (.*)$")
     public void set_httpMethod(String httpMethod) {
         this.httpMethod = httpMethod;
     }
 
-    @When("^the getAll hotel request is sent$")
+    @When("^the getByName hotel request is sent$")
     public void call_service() {
         String rawResult="";
         switch (httpMethod) {
@@ -51,9 +51,9 @@ public class HotelReservationGetAll {
         this.result = rawResult;
     }
 
-    @Then("^there is at least one result for getAll hotel$")
+    @Then("^there is at least one result for getByName hotel$")
     public void at_least_one_result() {
-        JSONArray hotels = new JSONArray(result);
+        JSONObject hotels = new JSONObject(result);
         assertTrue(hotels.length() > 0);
     }
 }
