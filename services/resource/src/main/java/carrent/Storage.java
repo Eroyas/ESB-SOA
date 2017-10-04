@@ -1,6 +1,11 @@
 package carrent;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 public class Storage {
@@ -11,7 +16,22 @@ public class Storage {
     }
 
     static {
-        agencies.add(new Agency("Europcart", "Nice", "Estate", 40));
-        agencies.add(new Agency("Hertz", "Nice", "City", 30));
+        try {
+
+            JSONTokener tokener = new JSONTokener(new FileReader("/usr/local/tomee/data/Location-Agencies.json"));
+            JSONArray rawArray = new JSONArray(tokener);
+
+            for (int i = 0; i < rawArray.length(); i++) {
+                JSONObject jsonAgency = rawArray.getJSONObject(i);
+                agencies.add(new Agency(
+                        jsonAgency.getString("agency_name"),
+                        jsonAgency.getString("city"),
+                        jsonAgency.getString("car_type"),
+                        jsonAgency.getDouble("price_per_day")));
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
