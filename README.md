@@ -28,9 +28,9 @@ En l'état la description des services qui suit est uniquement informative et se
 * (Sélectionner le tri par prix)
 
 ### Hotel handler
-#####Hotel alternatif -> Resource
+##### Hotel alternatif -> Resource
 Le service de reservation d'hôtel est bien adapté pour être un service Ressource dans la messure ou on expose que des ressources que le client va venir consulter.  
-######Les fonctionnalités attendues : 
+###### Les fonctionnalités attendues : 
 * Sélectionner une ville
 * Sélectionner un hotel
 * Sélectionner une date d’arrivée
@@ -38,7 +38,7 @@ Le service de reservation d'hôtel est bien adapté pour être un service Ressou
 * (Sélectionner le type de chambre)
 * (Sélectionner le trie par prix)
 
-######Les interfaces présentes :
+###### Les interfaces présentes :
 * public Response getHotels() :
     * Path : get sur le path @Path("/hotels")
     * Utilisation : http://localhost:8080/tta-car-and-hotel/hotels
