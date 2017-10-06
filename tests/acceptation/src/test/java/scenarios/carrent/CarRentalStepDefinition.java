@@ -1,5 +1,7 @@
 package scenarios.carrent;
 
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -23,11 +25,6 @@ public class CarRentalStepDefinition extends DockerizedTest{
 
     private String result;
 
-    @Given("^the car rent service is up$")
-    public void the_car_rent_service_is_up() {
-
-    }
-
     @When("^the endpoint is '(.*)'$")
     public void set_endpoint(String endpoint) {
         this.endpoint = endpoint;
@@ -41,12 +38,13 @@ public class CarRentalStepDefinition extends DockerizedTest{
     @When("^the request is sent$")
     public void call_service() {
         String rawResult="";
+        WebClient webClient = WebClient.create("http://" + host + ":" + port + serviceName + endpoint)
+                .accept(MediaType.APPLICATION_JSON)
+                .header("Content-Type", MediaType.APPLICATION_JSON);
+
         switch (httpMethod) {
             case "GET":
-                 rawResult = WebClient.create("http://" + host + ":" + port + serviceName + endpoint)
-                        .accept(MediaType.APPLICATION_JSON)
-                        .header("Content-Type", MediaType.APPLICATION_JSON)
-                        .get(String.class);
+                 rawResult = webClient.get(String.class);
         }
         this.result = rawResult;
     }
@@ -55,5 +53,16 @@ public class CarRentalStepDefinition extends DockerizedTest{
     public void at_least_one_result() {
         JSONArray cities = new JSONArray(result);
         assertTrue(cities.length()>0);
+    }
+
+    @And("^the city is '(.*)'$")
+    public void theCityIsCity(String cityName) {
+        endpoint += "/" + cityName;
+    }
+
+    @Then("^there are (\\d+) result$")
+    public void thereAreNb_agenciesResult(int nbAgency) throws Throwable {
+        JSONArray agencies = new JSONArray(result);
+        assertEquals(nbAgency, agencies.length());
     }
 }
