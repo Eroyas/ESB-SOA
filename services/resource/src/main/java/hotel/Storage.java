@@ -6,7 +6,11 @@ import org.json.JSONTokener;
 
 import java.io.FileReader;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+
+import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Eroyas on 25/09/17.
@@ -72,6 +76,60 @@ public class Storage {
         hotels.put("hotels", array);
 
         return hotels;
+    }
+
+    public static JSONObject readForReservation(String city, String name, String arrival, String departure) {
+        JSONObject hotels = new JSONObject();
+
+        JSONArray array = new JSONArray();
+
+        for(Hotel hotel: contents.values()) {
+
+            if(hotel.getCity().equalsIgnoreCase(city) && hotel.getName().equalsIgnoreCase(name)) {
+
+                JSONObject item = new JSONObject();
+
+                item.put("id", hotel.getId());
+                item.put("hotel_name", hotel.getName());
+                item.put("city", hotel.getCity());
+                item.put("arrival_date", arrival);
+                item.put("departure_date", departure);
+
+                long nbNight = getNumberOfNight(arrival, departure);
+                item.put("number_of_night", nbNight);
+
+                item.put("hotel_type", hotel.getType());
+                item.put("price_per_night", hotel.getAmount());
+
+                array.put(item);
+            }
+        }
+
+        hotels.put("hotels", array);
+
+        return hotels;
+    }
+
+    private static long getNumberOfNight(String arrival, String departure) {
+        try{
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+            // setLenient : cela permet de respecter le nombre de jours par mois
+            format.setLenient(false);
+            Date arr = format.parse(arrival);
+            Date dep = format.parse(departure);
+
+            // on vérif bien que la date de départ est bien après celle de l'arrivée
+            if (dep.getTime() > arr.getTime()) {
+                long diff = dep.getTime() - arr.getTime();
+                return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            }
+
+            return 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     public static void delete(Integer id) {

@@ -7,6 +7,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * Created by Eroyas on 25/09/17.
@@ -49,6 +50,21 @@ public class HotelService {
         }
 
         return Response.ok().entity(Storage.readByCity(city).toString()).build();
+    }
+
+    // http://localhost:8080/tta-car-and-hotel/hotels/Paris/Ibis/01-10-2017/03-10-2017
+    @Path("{city}/{name}/{arrival}/{departure}")
+    @GET
+    public Response getHotelReservation(@PathParam("city") String city,
+                                        @PathParam("name") String name,
+                                        @PathParam("arrival") String arrival,
+                                        @PathParam("departure") String departure) {
+
+        if(Storage.readForReservation(city, name, arrival, departure) == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        return Response.ok().entity(Storage.readForReservation(city, name, arrival, departure).toString()).build();
     }
 
 }
