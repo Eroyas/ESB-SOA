@@ -55,7 +55,6 @@ public class HotelReservationGetAll extends DockerizedTest{
     @Then("^there is at least one result for getAll hotel$")
     public void at_least_one_result() {
         JSONArray hotels = new JSONArray(result);
-        System.out.println("Lenght : "+hotels.length());
         assertTrue(hotels.length() > 0);
     }
 }
