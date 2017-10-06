@@ -7,6 +7,8 @@ class Network {
 
     static final int PORT = 27017;
 
-    static final String DATABASE = "bookings";
+    static final String DATABASE = "tta-database";
+
+    static final String COLLECTION = "bookings";
 
 }
