@@ -1,8 +1,8 @@
 package hotel;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.FileReader;
 import java.util.Collection;
@@ -39,7 +39,7 @@ public class Storage {
                 item.put("hotel_type", hotel.getType());
                 item.put("price_per_night", hotel.getAmount());
 
-                array.add(item);
+                array.put(item);
             }
         }
 
@@ -65,7 +65,7 @@ public class Storage {
                 item.put("hotel_type", hotel.getType());
                 item.put("price_per_night", hotel.getAmount());
 
-                array.add(item);
+                array.put(item);
             }
         }
 
@@ -83,18 +83,14 @@ public class Storage {
     }
 
     static {
-        JSONParser parser = new JSONParser();
-
         try {
-            // Relative path ne marche pas..
-            Object obj = parser.parse(new FileReader(
-                    "/home/user/ESB-SOA/datasets/hotels/Hotels_DB.json"));
 
-            JSONObject jsonObject = (JSONObject) obj;
+            JSONTokener tokener = new JSONTokener(new FileReader("/usr/local/tomee/data/Hotels_DB.json"));
+            JSONObject jsonObject = new JSONObject(tokener);
 
             JSONArray hotels = (JSONArray) jsonObject.get("hotels");
 
-            for (int id = 0; id < hotels.size(); id++) {
+            for (int id = 0; id < hotels.length(); id++) {
                 JSONObject hotel = (JSONObject) hotels.get(id);
 
                 String name = (String) hotel.get("hotel_name");
