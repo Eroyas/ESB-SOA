@@ -48,14 +48,8 @@ public class Handler {
             MongoCollection bookings = MongoConnector.getBookings();
             bookings.update("{id:#}", idToValidate).upsert().multi().with("{$set: {'status': 'APPROVED'}}");
 
-            /*
-            System.out.println("ID to validate : " + idToValidate);
-            Booking booking = bookings.findOne("{id:#}", idToValidate).as(Booking.class);
-            System.out.println("updated: " + booking.toString());
-            */
-
             return new JSONObject()
-                    //.put("booking", bookings.findOne("{id:#}", idToValidate).as(Booking.class).toJson())
+                    .put("id", idToValidate)
                     .put("approved", true);
         }
         catch (Exception e)
@@ -63,13 +57,29 @@ public class Handler {
             e.printStackTrace();
             return new JSONObject()
                     .put("approved", false)
+                    .put("id", idToValidate)
                     .put("message", "Error occured: " + e.getMessage());
         }
     }
 
-
-    public String responseForger(Map<String, String> map)
+    public JSONObject rejectBooking(int idToReject)
     {
-        return "toz";
+        try {
+            MongoCollection bookings = MongoConnector.getBookings();
+            bookings.update("{id:#}", idToReject).with("{$set: {'status': 'REJECTED'}}");
+
+            return new JSONObject()
+                    .put("rejected", true)
+                    .put("id", idToReject);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return new JSONObject()
+                    .put("rejected", false)
+                    .put("id", idToReject)
+                    .put("message", "Error occured: " + e.getMessage());
+        }
     }
+
 }

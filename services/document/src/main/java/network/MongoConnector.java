@@ -9,10 +9,9 @@ public class MongoConnector {
 
     public static MongoCollection getBookings() {
         try {
-            System.out.println("Connecting MongoDB...");
-            DB db = new MongoClient("tta-database", 27017).getDB("tta-database");
+            DB db = new MongoClient(Network.HOST, Network.PORT).getDB(Network.DATABASE);
             Jongo jongo = new Jongo(db);
-            return jongo.getCollection("bookings");
+            return jongo.getCollection(Network.COLLECTION);
         }
         catch (Exception e){
             e.printStackTrace();

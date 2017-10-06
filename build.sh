@@ -38,3 +38,5 @@ fi
 
 # Change dir to location before script launch
 cd "$OLDPWD"
+
+echo "\n"

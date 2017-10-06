@@ -11,6 +11,7 @@ public class Booking {
     private Hotel hotel;
     private Car car;
     private int id;
+    private Identity identity;
 
     @MongoObjectId
     String _id;
@@ -38,6 +39,7 @@ public class Booking {
             this.car = null;
         }
         this.id = booking.getInt("id");
+        this.identity = new Identity(booking.getJSONObject("identity"));
         if (this.flight == null && this.hotel == null && this.car == null)
         {
             throw new EmptyBookingException();
@@ -50,6 +52,7 @@ public class Booking {
 
         result.put("status", this.status.getStr());
         result.put("id", this.id);
+        result.put("identity", this.identity.toJson());
 
         if (this.flight != null)
                 result.put("flight", this.flight.toJson());
@@ -68,6 +71,7 @@ public class Booking {
                 ", hotel=" + hotel +
                 ", car=" + car +
                 ", id=" + id +
+                ", identity=" + identity +
                 ", _id='" + _id + '\'' +
                 '}';
     }
@@ -84,6 +88,7 @@ public class Booking {
         if (flight != null ? !flight.equals(booking.flight) : booking.flight != null) return false;
         if (hotel != null ? !hotel.equals(booking.hotel) : booking.hotel != null) return false;
         if (car != null ? !car.equals(booking.car) : booking.car != null) return false;
+        if (identity != null ? !identity.equals(booking.identity) : booking.identity != null) return false;
         return _id != null ? _id.equals(booking._id) : booking._id == null;
     }
 
@@ -94,7 +99,9 @@ public class Booking {
         result = 31 * result + (hotel != null ? hotel.hashCode() : 0);
         result = 31 * result + (car != null ? car.hashCode() : 0);
         result = 31 * result + id;
+        result = 31 * result + (identity != null ? identity.hashCode() : 0);
         result = 31 * result + (_id != null ? _id.hashCode() : 0);
         return result;
     }
+
 }
