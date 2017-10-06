@@ -6,11 +6,11 @@ package carrent;
 public class Agency {
     private String name;
     private String city;
-    private String carType;
+    private CarType carType;
     private double price;
 
 
-    public Agency(String name, String city, String carType, double price) {
+    public Agency(String name, String city, CarType carType, double price) {
         this.name = name;
         this.city = city;
         this.carType = carType;
