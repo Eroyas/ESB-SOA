@@ -7,7 +7,7 @@ import io.gatling.http.Predef._
 import scala.language.postfixOps
 import scala.concurrent.duration._
 
-class AgencyListSimulation extends DockerizedTest {
+class ListCitiesSimulation extends DockerizedTest {
 
   private val host = getDockerHost
   private val port = "9080"
@@ -20,7 +20,7 @@ class AgencyListSimulation extends DockerizedTest {
   val stressSample = scenario("Listing cities with at least one agency")
     .repeat(10) {
       exec(http("Listing cities with at least one agency")
-        .get("/carrent")
+        .get("/car-rental/cities")
         .check(status.is(200))
       )
     }
