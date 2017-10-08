@@ -12,7 +12,15 @@ Github repository: https://github.com/Eroyas/ESB-SOA
 
 ## Services exposés
 
-En l'état la description des services qui suit est uniquement informative et sera nettement plus détaillée par la suite.
+Le système que nous proposons est un ensemble de services indépendants les uns des autres.
+Aucun service ne fait appel à un autre service à l'intérieur de lui-même.
+Le scope de nos services est respectivement:
+* Services de recherche de vol
+* Services de recherche d'hotel
+* Services de recherche de location de voiture
+* Services de gestion de réservation
+
+Ils sont décrits plus en détails ci-dessous.
 
 ### Flight handler
 
@@ -70,11 +78,23 @@ Le service de reservation d'hôtel est bien adapté pour être un service Ressou
 
 ### Booking management
 
-**Itinéraires: -> Document**
-  * Soumettre un itinéraire pour validation -> Document
-    * Récupérer tous les détails d’un voyage (Vol + Hôtel + location)
-    * Soumettre un récapitulatif d’un voyage pour approbation à un manager
-    * Valider un itinéraire de voyage
+Le choix du paradigme "document" se justifie ici par la potentielle volatilité des informations s'y trouvant.
+En effet, selon la recherche et les critères, un objet vol n'est pas défini par les mêmes attributs et il faut donc potentiellement servir un service très adaptable au niveau des données manipulées.
 
-  * Envoyer un récapitulatif par e-mail -> Document
-    * Soumettre un récapitulatif au client par mail (trouver une raison d’être de ce service en tant que tel)
+Les données transitant par JSON, le traitement côté back-end en est facilité, en effet, si un champ est présent en trop, il ne sera simplement pas traité contrairement à un service à contrat strict qui générerait une erreur.
+
+Pour ce service, nous avons fait l'hypothèse d'un service de réservation à une entreprise.
+
+**Réservations: -> Document**
+  * Soumettre une réservation
+    * Récupérer tous les détails d’un voyage (Vol + Hôtel + Voiture + Identité)
+    * Soumettre la réservation contenant ces détails au système de réservation
+
+  * Valider une réservation
+    * Valider une réservation par ID
+
+  * Rejeter une réservation
+    * Rejeter une réservation par ID
+
+  * Récupérer une réservation
+    * Récupéere les informations et détails d'une réservation en recherchant par ID
