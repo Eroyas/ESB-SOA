@@ -106,30 +106,50 @@ choix, car le découpage en objets et leurs relations, s'accord bien sur le choi
     * Liste toutes agence de location pour une ville
     * Paramètre : `city : La ville pour laquelle il faut lister toutes les agences de location`
     * Renvoie : Un tableau JSON listant l'ensemble des agences de location pour une ville selon le format suivant :
-```json
-[
-    {
-        "UID": "Europcart-Nice-1",
-        "city": "Nice",
-        "agency-name": "Europcart"
-    }
-]
-```
+    ```json
+    [
+        {
+            "UID": "Europcart-Nice-1",
+            "city": "Nice",
+            "agency-name": "Europcart"
+        }
+    ]
+    ```
 
-* GET "/car/{carUID}"
+* GET "/car-rental/car/{carUID}"
     * Permet de lister les métadonnées propres à un véhicule
     * Paramètre : `carUID : l'identifiant unique d'un véhicule`
     * Renvoie : Un Object JSON au format ci-dessous contenant les métadonnées de la voiture. 404 si elle n'existe pas
-```json
-{
-  "UID": 1,
-  "carType": "Sports",
-  "available": true,
-  "pricePerDay": 25.78,
-  "rentEnd": "N/A",
-  "rentStart": "N/A"
-}
-```
+    ```json
+    {
+      "UID": 1,
+      "carType": "Sports",
+      "available": true,
+      "pricePerDay": 25.78,
+      "rentEnd": "N/A",
+      "rentStart": "N/A"
+    }
+    ```
+
+* POST "/car-rental/rentacar/{carUID}"
+    * Permet de soumettre une demande de réservation pour un véhicule
+    * Paramètre : `carUID : l'identifiant unique d'unb véhicule`
+    * Payload : Un objet JSON au format suivant :
+    ```json
+    {
+      "UID": "[the car UID]:Integer",
+      "start_date": "[the location start date]:String in ISO-8601 format",
+      "end_date": "[the location end date]:String in ISO-8601 format"
+    }
+    ```
+    * Renvoi : Un objet JSON au foramt suivant :
+    ```json
+    {
+       "status": "[ok|error]:String",
+       "message": "[if an error happened, an error message explaining what went wrong]:String",
+       "total_price": "[total price in euros if no error happened]:double"
+    }
+    ```
 
 ### Booking management
 
