@@ -40,10 +40,10 @@ Ils sont décrits plus en détails ci-dessous.
 ##### Hotel alternatif -> Resource
 Le service de reservation d'hôtel est bien adapté pour être un service Ressource dans la messure ou on expose que des ressources que le client va venir consulter.  
 ###### Les fonctionnalités attendues : 
-* Sélectionner une ville
-* Sélectionner un hotel
-* Sélectionner une date d’arrivée
-* Sélectionner une date de départ 
+* Lister tous les hôtels
+* Sélectionner par ville
+* Sélectionner par nom d'hotel
+* Sélectionner avec date d’arrivée et une date de départ
 
 ###### Les interfaces présentes :
 * public Response getHotels() :
@@ -69,7 +69,7 @@ Le service de reservation d'hôtel est bien adapté pour être un service Ressou
     
 ###### Le retour des interfaces : données envoyées en JSON.
 
-###### Un exemple de données renvoyé par les services : 
+###### Un exemple de données renvoyées par les services : 
   * pour http://localhost:9080/tcs-service-rest/hotels/name/Ibis :
 <pre><code>
 {
