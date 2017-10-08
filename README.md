@@ -101,17 +101,17 @@ Le type de reqûete est défini par un champ envoyé en JSON, ce champ est le ch
     Au niveau de la logique métier, on suppose ici que les informations de différentes recherches (vol, hotel...) sont agrégés et formatées, avant d'être envoyés par un client vers le server.
 
   * Valider une réservation (validate)
-    * Valider une réservation par ID
+    * Valider une réservation par BookingID
 
     {type: "validate", id: int}
 
   * Rejeter une réservation (reject)
-    * Rejeter une réservation par ID
+    * Rejeter une réservation par BookingID
 
     {type: "reject", id: int}
 
   * Récupérer une réservation (retrieve)
-    * Récupére les informations et détails d'une réservation en recherchant par ID
+    * Récupére les informations et détails d'une réservation en recherchant par BookingID
 
     {type: "retrieve", id: int}
 
