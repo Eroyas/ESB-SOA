@@ -43,7 +43,7 @@ Le service de reservation d'hôtel est bien adapté pour être un service Ressou
 * Sélectionner une ville
 * Sélectionner un hotel
 * Sélectionner une date d’arrivée
-* Sélectionner une date de départ
+* Sélectionner une date de départ 
 
 ###### Les interfaces présentes :
 * public Response getHotels() :
@@ -53,7 +53,7 @@ Le service de reservation d'hôtel est bien adapté pour être un service Ressou
 * public Response getHotelsByName(@PathParam("name") String name) :
     * Path : on fait un get sur le path @Path("name/{name}")
     * Utilisation : http://localhost:9080/tta-car-and-hotel/hotels/name/Ibis
-    * Description : liste tout les hôtels d'une enseigne précise présent en France, comme par exemple dans le cas d'utilisation ci-dessus, tous les Ibis de France.
+    * Description : liste tout les hôtels d'une enseigne précise présent en France, comme par exemple dans le cas d'utilisation ci-dessus, tous les Ibis de France. 
 * public Response getHotelsByCity(@PathParam("city") String city) :
     * Path : on fait un get sur le path @Path("city/{city}")
     * Utilisation : http://localhost:9080/tta-car-and-hotel/hotels/city/Paris
@@ -64,10 +64,30 @@ Le service de reservation d'hôtel est bien adapté pour être un service Ressou
                                     @PathParam("departure") String departure) :
     * Path : on fait un get sur le path @Path("{city}/{name}/{arrival}/{departure}")
     * Utilisation : http://localhost:9080/tta-car-and-hotel/hotels/Paris/Ibis/01-10-2017/03-10-2017
-    * Description : donne un hôtel d'une enseigne précise et qui est présent dans une ville donné en indiquant la date de l'arrivée et la date de départ du client. Comme par exemple dans le cas d'utilisation ci-dessus, l'hôtel Ibis de Paris pour les dates de 01-10-2017 et 03-10-2017.
+    * Description : donne un hôtel d'une enseigne précise et qui est présent dans une ville donné en indiquant la date d'arrivée et la date de départ du client. Nous aurons également le nombre de nuit que le client a prévu de rester dans l'hôtel comme information. Comme par exemple dans le cas d'utilisation ci-dessus, l'hôtel Ibis de Paris pour les dates de 01-10-2017 et 03-10-2017 soit 2 nuit dans cet hotel. 
     * Remarque : pour l'instant il y a de la redondance dans les noms des hôtels par vile car nous avons mis en place une base de donnée de façon rapide et facile d'utilisation pour tester nos services. Donc la requête retourne pour l'instant plusieurs hôtels. Par la suite nous auront un nom unique d'hôtel par ville comme par exemple un « Ibis Paris Nord » ou « Ibis Paris sud » et etc.
+    
+###### Le retour des interfaces : données renvoyé en JSON.
 
-Le retour des interfaces : données transitant en JSON.
+###### Un exemple de données renvoyé par les services : 
+  * pour http://localhost:9080/tcs-service-rest/hotels/name/Ibis :
+{
+    "hotels": [{
+        "city": "Lyon",
+        "price_per_night": 16.26,
+        "hotel_type": "Chambre simple",
+        "id": 0,
+        "hotel_name": "Ibis"
+    }, {
+        "city": "Toulouse",
+        "price_per_night": 53.6,
+        "hotel_type": "Chambre premium",
+        "id": 8,
+        "hotel_name": "Ibis"
+    }, {
+     ...
+    }]
+}
 
 ### Car handler
 
