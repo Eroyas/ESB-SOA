@@ -67,10 +67,11 @@ Le service de reservation d'hôtel est bien adapté pour être un service Ressou
     * Description : donne un hôtel d'une enseigne précise et qui est présent dans une ville donné en indiquant la date d'arrivée et la date de départ du client. Nous aurons également le nombre de nuit que le client a prévu de rester dans l'hôtel comme information. Comme par exemple dans le cas d'utilisation ci-dessus, l'hôtel Ibis de Paris pour les dates de 01-10-2017 et 03-10-2017 soit 2 nuit dans cet hotel. 
     * Remarque : pour l'instant il y a de la redondance dans les noms des hôtels par vile car nous avons mis en place une base de donnée de façon rapide et facile d'utilisation pour tester nos services. Donc la requête retourne pour l'instant plusieurs hôtels. Par la suite nous auront un nom unique d'hôtel par ville comme par exemple un « Ibis Paris Nord » ou « Ibis Paris sud » et etc.
     
-###### Le retour des interfaces : données renvoyé en JSON.
+###### Le retour des interfaces : données envoyées en JSON.
 
 ###### Un exemple de données renvoyé par les services : 
   * pour http://localhost:9080/tcs-service-rest/hotels/name/Ibis :
+<pre><code>
 {
     "hotels": [{
         "city": "Lyon",
@@ -88,6 +89,7 @@ Le service de reservation d'hôtel est bien adapté pour être un service Ressou
      ...
     }]
 }
+</code></pre>
 
 ### Car handler
 
