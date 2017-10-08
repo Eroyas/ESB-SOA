@@ -82,10 +82,10 @@ Le retour des interfaces : données transitant en JSON.
 Le choix du paradigme "document" se justifie ici par la potentielle volatilité des informations s'y trouvant.
 En effet, selon la recherche et les critères, un objet vol n'est pas défini par les mêmes attributs et il faut donc potentiellement servir un service très adaptable au niveau des données manipulées.
 De plus, le service ne sert pas uniquement des données, mais permet aussi de les modifier, ce qui renforce l'intérêt de ce paradigme.
-
 Les données transitant par JSON, le traitement côté back-end en est facilité, en effet, si un champ est présent en trop, il ne sera simplement pas traité contrairement à un service à contrat strict qui générerait une erreur.
 
 Pour ce service, nous avons fait l'hypothèse d'un service de réservation à une entreprise.
+
 C'est donc le coeur métier de notre agence de voyage virtuelle, elle a donc une base de données qui lui est propre (MongoDB).
 L'ensemble des requêtes se fait en HTTP POST sur http://localhost:8080/tta-booking/booking, en contenant des informations en format JSON.
 Le type de reqûete est défini par un champ envoyé en JSON, ce champ est le champ {type: string}, la string pouvant représenter submit, validate, reject, ou retrieve.
@@ -122,4 +122,8 @@ Le type de reqûete est défini par un champ envoyé en JSON, ce champ est le ch
   * hotel: {name: string, room: int}
   * car: {model: string, id, int}
   * identity: {firstName: string, lastName: string, email: string}
+
+#### Remarques
+
+On notera que le service de récupération n'est pas testé directement, cependant il est testé implicitement par la validation et le rejet, puisque lors des tests de ces derniers, l'état de la réservation est vérifié une fois la requête executée.
 
