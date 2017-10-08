@@ -1,4 +1,4 @@
-package tta.data;
+package flightres.data;
 
 public class Flight {
 

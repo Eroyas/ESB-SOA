@@ -1,6 +1,6 @@
-package tta.service;
+package flightres.service;
 
-import tta.data.*;
+import flightres.data.*;
 
 import javax.jws.WebService;
 import java.text.NumberFormat;
@@ -11,7 +11,7 @@ import java.util.Locale;
 @WebService(targetNamespace   = "http://informatique.polytech.unice.fr/soa1/team/3/flightres/",
         portName          = "ExternalFlightBookingPort",
         serviceName       = "FlightBookingService",
-        endpointInterface = "tta.service.FlightReservationService")
+        endpointInterface = "flightres.service.FlightReservationService")
 public class FlightReservationImpl implements FlightReservationService {
 
     public FlightReservation simpleReservation(SimpleItineraryRequest request) {
@@ -38,13 +38,13 @@ public class FlightReservationImpl implements FlightReservationService {
             float price = 0;
             try {
                 price = (float) NumberFormat.getNumberInstance(Locale.FRANCE).parse(
-                        flight.getPrice().split("$")[1]);
+                        flight.getPrice().split("$")[0]);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             reservation.setStartingAirport(origin);
             reservation.setEndingAirport(destination);
-            reservation.setDate(date);
+            reservation.setDate(flight.getStartDate());
             reservation.setPrice(price);
             return reservation;
         }

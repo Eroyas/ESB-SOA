@@ -1,4 +1,4 @@
-package tta.data;
+package flightres.data;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;

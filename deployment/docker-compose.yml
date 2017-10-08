@@ -13,7 +13,7 @@ version: "3"
 services:
 
   flight-booking:
-      container_name: tta-flight-booking
+      container_name: tta-service-rpc
       build:
             context: ../services/rpc
       ports:

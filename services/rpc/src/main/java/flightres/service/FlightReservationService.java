@@ -1,10 +1,10 @@
-package tta.service;
+package flightres.service;
 
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 
-import tta.data.*;
+import flightres.data.*;
 
 @WebService(name="FlightReservation", targetNamespace = "http://informatique.polytech.unice.fr/soa1/team/3/flightres/")
 public interface FlightReservationService {

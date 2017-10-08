@@ -1,4 +1,4 @@
-package tta.data;
+package flightres.data;
 
 
 import java.util.HashMap;
@@ -17,7 +17,8 @@ public class FlightAgency {
         ArrayList<Flight> listOfFlights = agency.get(start);
         for(Flight flight: listOfFlights)
         {
-            if(flight.getEndingAirport() == end && flight.getStartDate().startsWith(date))
+            if(flight.getEndingAirport().equals(end) &&
+                    flight.getStartDate().startsWith(date))
                 return flight;
         }
         return null;
