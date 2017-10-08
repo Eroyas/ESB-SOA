@@ -1,6 +1,5 @@
 package items;
 
-import com.mongodb.util.JSON;
 import org.json.JSONObject;
 
 public class Identity {
@@ -12,15 +11,16 @@ public class Identity {
     public Identity(){}
 
     public Identity(JSONObject data){
-        this.firstName = data.getString("first_name");
-        this.lastName = data.getString("last_name");
+        System.out.println("Identity: " + data);
+        this.firstName = data.getString("firstName");
+        this.lastName = data.getString("lastName");
         this.email = data.getString("email");
     }
 
     JSONObject toJson(){
         return new JSONObject()
-                .put("first_name", firstName)
-                .put("last_name", lastName)
+                .put("firstName", firstName)
+                .put("lastName", lastName)
                 .put("email", email);
     }
 

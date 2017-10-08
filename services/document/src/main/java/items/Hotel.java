@@ -5,28 +5,29 @@ import org.json.JSONObject;
 public class Hotel {
 
     private String name;
-    private int id;
+    private int room;
 
     public Hotel() {
     }
 
     public Hotel(JSONObject data) {
+        System.out.println("Hotel: " + data);
         this.name = data.getString("name");
-        this.id = data.getInt("id");
+        this.room = data.getInt("room");
     }
 
 
     JSONObject toJson() {
         return new JSONObject()
                 .put("name", name)
-                .put("id", id);
+                .put("room", room);
     }
 
     @Override
     public String toString() {
         return "Hotel{" +
                 "name='" + name + '\'' +
-                ", id=" + id +
+                ", room=" + room +
                 '}';
     }
 
