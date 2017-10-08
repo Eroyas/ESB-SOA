@@ -93,11 +93,43 @@ Le service de reservation d'hôtel est bien adapté pour être un service Ressou
 
 ### Car handler
 
-* Location de véhicule alternatif -> Resource
-* Sélectionner une agence de location au départ
-* (Sélectionner une agence de location à l’arrivée)
-* Sélectionner une durée
-* (Type de voiture)
+Nous avons choisis d'utiliser d'implémenter la location de voiture en utilisant le procédé Resource. Nous avons fait ce
+choix, car le découpage en objets et leurs relations, s'accord bien sur le choix des URLs que nous avons fait.
+
+#### Interface exposée
+
+* GET "/car-rental/cities"
+    * Permet de lister l'ensemble des villes ayant au moins une agence.
+    * Renvoie un tableau des JSON des villes avec au moins une agence `["Nice", "Paris",...]`
+    
+* GET "/car-rental/search/{city}"
+    * Liste toutes agence de location pour une ville
+    * Paramètre : `city : La ville pour laquelle il faut lister toutes les agences de location`
+    * Renvoie : Un tableau JSON listant l'ensemble des agences de location pour une ville selon le format suivant :
+```json
+[
+    {
+        "UID": "Europcart-Nice-1",
+        "city": "Nice",
+        "agency-name": "Europcart"
+    }
+]
+```
+
+* GET "/car/{carUID}"
+    * Permet de lister les métadonnées propres à un véhicule
+    * Paramètre : `carUID : l'identifiant unique d'un véhicule`
+    * Renvoie : Un Object JSON au format ci-dessous contenant les métadonnées de la voiture. 404 si elle n'existe pas
+```json
+{
+  "UID": 1,
+  "carType": "Sports",
+  "available": true,
+  "pricePerDay": 25.78,
+  "rentEnd": "N/A",
+  "rentStart": "N/A"
+}
+```
 
 ### Booking management
 
