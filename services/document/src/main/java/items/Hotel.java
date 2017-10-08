@@ -11,6 +11,7 @@ public class Hotel {
     }
 
     public Hotel(JSONObject data) {
+        System.out.println("Hotel: " + data);
         this.name = data.getString("name");
         this.id = data.getInt("id");
     }

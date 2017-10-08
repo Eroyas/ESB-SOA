@@ -4,11 +4,12 @@ import dockerized.DockerizedTest;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import javax.ws.rs.core.MediaType;
-import java.io.File;
 
 public class BookingActionsTest extends DockerizedTest{
 
@@ -16,6 +17,7 @@ public class BookingActionsTest extends DockerizedTest{
     private static final int[] ids = new int[]{(int) (Math.random()*1000), (int) (Math.random()*1000), (int) (Math.random()*1000)};
     //private static final JSONObject identities = new JSONObject(new File("./database/datasets/identities.json"));
 
+    @Before
     @Test
     public void submitBookingTest() {
         JSONObject booking, answer;
@@ -23,6 +25,7 @@ public class BookingActionsTest extends DockerizedTest{
         for(int i = 0; i < 3; i++){
             booking = createBooking(i);
             answer = call(booking, "booking");
+
             JSONAssert.assertEquals(booking.getJSONObject("booking"), answer.getJSONObject("booking"), false);
             Assert.assertTrue(answer.getJSONObject("booking").optString("status").equals("WAITING_APPROVAL"));
             Assert.assertTrue(answer.getBoolean("inserted"));
@@ -113,22 +116,8 @@ public class BookingActionsTest extends DockerizedTest{
                 "      \"last_name\": \"Foucard\",\n" +
                 "      \"email\": \"afoucardf@joomla.org\"\n" +
                 "    }]}");
-        System.out.println(identities.toString());
         int nb = (int) (Math.random()*10);
         return identities.getJSONArray("array").getJSONObject(nb);
-    }
-
-    private JSONObject createBooking(int i){
-        JSONObject flight = new JSONObject()
-                .put("number", (int) (Math.random() * 1000))
-                .put("airline", "Air Whatever");
-
-        return new JSONObject()
-                .put("type", "submit")
-                .put("booking", new JSONObject()
-                        .put("id", ids[i])
-                        .put("identity", generateIdentity())
-                        .put("flight", flight));
     }
 
     @Test
@@ -140,7 +129,6 @@ public class BookingActionsTest extends DockerizedTest{
 
         JSONObject answer = call(request, "booking");
 
-        System.out.println(answer.toString());
         Assert.assertTrue(answer.getInt("id") == ids[0]);
         Assert.assertTrue(answer.getBoolean("approved"));
     }
@@ -154,18 +142,43 @@ public class BookingActionsTest extends DockerizedTest{
 
         JSONObject answer = call(request, "booking");
 
-        System.out.println(answer.toString());
         Assert.assertTrue(answer.getInt("id") == ids[1]);
         Assert.assertTrue(answer.getBoolean("rejected"));
     }
 
+    @Test
+    public void retrieveBookingTest() {
+        JSONObject request = new JSONObject()
+                .put("type", "retrieve")
+                .put("id", ids[2]);
+
+        JSONObject answer = call(request, "booking");
+
+        Assert.assertTrue(ids[2] == answer.getInt("id"));
+        Assert.assertTrue(answer.getBoolean("retrieved"));
+        Assert.assertTrue("WAITING_APPROVAL".equals(answer.getString("status")));
+    }
+
     /* ASSETS */
 
-    public static JSONObject call(JSONObject request, String param) {
+    private JSONObject call(JSONObject request, String param) {
         String raw =
                 WebClient.create("http://" + getDockerHost() + ":" + 8080 + "/tta-booking/" + param)
                         .header("Content-Type", MediaType.APPLICATION_JSON)
                         .post(request.toString(), String.class);
         return new JSONObject(raw);
+    }
+
+    private JSONObject createBooking(int i){
+        JSONObject flight = new JSONObject()
+                .put("number", (int) (Math.random() * 1000))
+                .put("airline", "Air Whatever");
+
+        return new JSONObject()
+                .put("type", "submit")
+                .put("booking", new JSONObject()
+                        .put("id", ids[i])
+                        .put("identity", generateIdentity())
+                        .put("flight", flight));
     }
 }

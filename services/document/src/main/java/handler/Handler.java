@@ -2,24 +2,18 @@ package handler;
 
 import exceptions.EmptyBookingException;
 import items.Booking;
-import network.MongoConnector;
+import network.ReservationService;
 import org.jongo.MongoCollection;
 import org.json.JSONObject;
 
-import java.util.Map;
-
 public class Handler {
 
-    //TODO: useless yet, don't know if it makes sense to load the collection at instanciation? does it?
-    private MongoCollection bookings;
-
-    //TODO: contraindre la db pour éviter doublons
+    //TODO: contraindre la db pour éviter doublons, pas réellement scope
     public JSONObject submitBooking(JSONObject bookingAsJson)
     {
         try {
-            MongoCollection bookings = MongoConnector.getBookings();
+            MongoCollection bookings = ReservationService.mongoConnector.getBookings();
             Booking booking = new Booking(bookingAsJson);
-            //TODO: consistency booking ou booking nesté dans JSONObject
             bookings.insert(booking);
 
             return new JSONObject()
@@ -45,7 +39,7 @@ public class Handler {
     public JSONObject approveBooking(int idToValidate)
     {
         try {
-            MongoCollection bookings = MongoConnector.getBookings();
+            MongoCollection bookings = ReservationService.mongoConnector.getBookings();
             bookings.update("{id:#}", idToValidate).upsert().multi().with("{$set: {'status': 'APPROVED'}}");
 
             return new JSONObject()
@@ -65,7 +59,7 @@ public class Handler {
     public JSONObject rejectBooking(int idToReject)
     {
         try {
-            MongoCollection bookings = MongoConnector.getBookings();
+            MongoCollection bookings = ReservationService.mongoConnector.getBookings();
             bookings.update("{id:#}", idToReject).with("{$set: {'status': 'REJECTED'}}");
 
             return new JSONObject()
@@ -78,6 +72,24 @@ public class Handler {
             return new JSONObject()
                     .put("rejected", false)
                     .put("id", idToReject)
+                    .put("message", "Error occured: " + e.getMessage());
+        }
+    }
+
+    public JSONObject retrieveBooking(int idToRetrieve)
+    {
+        try {
+            MongoCollection bookings = ReservationService.mongoConnector.getBookings();
+            Booking booking = bookings.findOne("{id:#}", idToRetrieve).as(Booking.class);
+
+            return booking.toJson().put("retrieved", true);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return new JSONObject()
+                    .put("retrieved", false)
+                    .put("id", idToRetrieve)
                     .put("message", "Error occured: " + e.getMessage());
         }
     }

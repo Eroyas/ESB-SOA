@@ -1,6 +1,5 @@
 package items;
 
-import com.mongodb.util.JSON;
 import org.json.JSONObject;
 
 public class Identity {
@@ -12,6 +11,7 @@ public class Identity {
     public Identity(){}
 
     public Identity(JSONObject data){
+        System.out.println("Identity: " + data);
         this.firstName = data.getString("first_name");
         this.lastName = data.getString("last_name");
         this.email = data.getString("email");

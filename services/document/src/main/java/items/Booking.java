@@ -1,5 +1,6 @@
 package items;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import exceptions.EmptyBookingException;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import org.json.JSONObject;
@@ -7,6 +8,7 @@ import org.json.JSONObject;
 public class Booking {
 
     private Status status;
+    @JsonProperty("flight")
     private Flight flight;
     private Hotel hotel;
     private Car car;

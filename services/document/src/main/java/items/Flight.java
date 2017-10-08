@@ -10,6 +10,7 @@ public class Flight {
     public Flight() {}
 
     public Flight(JSONObject data) {
+        System.out.println("Flight: " + data);
         this.airline = data.getString("airline");
         this.number = data.getInt("number");
     }

@@ -4,8 +4,9 @@
 cd deployment
 
 echo -n "Starting containers..."
-docker-compose up -d
+docker-compose up
 
-echo -n "Containers started detached.\n"
+echo -n ""
+echo -n "Containers started detached."
 
 

@@ -1,16 +1,33 @@
 package network;
 
-import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 
 public class MongoConnector {
 
-    public static MongoCollection getBookings() {
+    private MongoClient mongoClient;
+
+    public MongoConnector(){
+        this.mongoClient = this.initMongoClient();
+    }
+
+    private MongoClient initMongoClient(){
+        System.out.println("Opening new connection.");
+        return new MongoClient(Network.HOST, Network.PORT);
+    }
+
+    public void closeClientConnection(){
+        this.mongoClient.close();
+        this.mongoClient = null;
+    }
+
+    public MongoCollection getBookings() {
+        if (this.mongoClient == null){
+            this.initMongoClient();
+        }
         try {
-            DB db = new MongoClient(Network.HOST, Network.PORT).getDB(Network.DATABASE);
-            Jongo jongo = new Jongo(db);
+            Jongo jongo = new Jongo(this.mongoClient.getDB(Network.DATABASE));
             return jongo.getCollection(Network.COLLECTION);
         }
         catch (Exception e){
