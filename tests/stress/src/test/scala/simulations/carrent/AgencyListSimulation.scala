@@ -20,7 +20,7 @@ class AgencyListSimulation extends DockerizedTest {
   val stressSample = scenario("Listing cities with at least one agency")
     .repeat(10) {
       exec(http("Listing cities with at least one agency")
-        .get("/rent")
+        .get("/carrent")
         .check(status.is(200))
       )
     }

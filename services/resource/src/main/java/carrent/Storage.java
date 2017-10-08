@@ -6,14 +6,14 @@ import org.json.JSONTokener;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.Future;
 
 public class Storage {
     private static ArrayList<Agency> agencies = new ArrayList<>();
+    private static HashMap<String, Agency> agenciesByUID = new HashMap<>();
     private static HashMap<String, ArrayList<Agency>> agenciesByCity = new HashMap<>();
+    private static HashMap<Integer, Car> CarsByUID = new HashMap<>();
 
     public static ArrayList<Agency> getAllAgencies() {
         return agencies;
@@ -23,10 +23,12 @@ public class Storage {
         return agenciesByCity.get(city);
     }
 
+    public static Car getCarByUID(int UID) {
+        return CarsByUID.get(UID);
+    }
+
     static {
         try {
-
-            System.out.println("Starting Database...");
 
             JSONTokener tokener = new JSONTokener(new FileReader("/usr/local/tomee/data/Location-Agencies.json"));
             JSONArray rawArray = new JSONArray(tokener);
@@ -43,24 +45,36 @@ public class Storage {
                     continue;
                 }
 
+                // Create Agency Object
+                int carUID = jsonAgency.getInt("UID");
+                String agencyUID = jsonAgency.getString("agencyUID");
                 String city = jsonAgency.getString("city");
-                Agency a = new Agency(
-                        jsonAgency.getString("agency_name"),
-                        city,
-                        carType,
-                        jsonAgency.getDouble("price_per_day"));
+                String agencyName = jsonAgency.getString("agency_name");
+                double pricePerDay = jsonAgency.getDouble("price_per_day");
+                boolean available = jsonAgency.getBoolean("available");
 
+                Agency a = new Agency(agencyUID, agencyName, city);
+                Car c = new Car(carUID, carType, pricePerDay, true, null, null);
+
+                a.AddCar(c);
+
+                // Add agency to global Collection
                 agencies.add(a);
 
+                // Add agency to agenciesByCity Map
                 ArrayList<Agency> values = agenciesByCity.get(city);
                 if (values == null) {
                     values = new ArrayList<Agency>();
                     agenciesByCity.put(city, values);
                 }
                 values.add(a);
-            }
 
-            System.out.println("Database is ready");
+                // Add the agency to the AgenciesByUID Map
+                agenciesByUID.put(agencyUID, a);
+
+                // Add the car to the carsByUID Map
+                CarsByUID.put(carUID, c);
+            }
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

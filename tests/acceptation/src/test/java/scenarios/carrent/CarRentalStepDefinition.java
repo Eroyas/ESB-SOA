@@ -7,6 +7,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import dockerized.DockerizedTest;
 import org.apache.cxf.jaxrs.client.WebClient;
+import org.joda.time.DateTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -22,6 +23,10 @@ public class CarRentalStepDefinition extends DockerizedTest{
 
     private String endpoint;
     private String httpMethod;
+
+    private int carUID;
+    private String startDate;
+    private String endDate;
 
     private String result;
 
@@ -64,5 +69,53 @@ public class CarRentalStepDefinition extends DockerizedTest{
     public void thereAreNb_agenciesResult(int nbAgency) throws Throwable {
         JSONArray agencies = new JSONArray(result);
         assertEquals(nbAgency, agencies.length());
+    }
+
+    @Given("^the carUID (\\d+)$")
+    public void theCarUID(int carUID) {
+        this.carUID = carUID;
+        this.endpoint +="/"+carUID;
+    }
+
+    @And("^the starting date is \"(.*)\"$")
+    public void theStartingDateIs(String startDate) {
+        this.startDate =startDate;
+    }
+
+    @And("^the ending date is \"([^\"]*)\"$")
+    public void theEndingDateIs(String endDate) {
+        this.endDate = endDate;
+    }
+
+    @And("^the request to rent a car is sent$")
+    public void theRequestToRentACarIsSent() {
+        JSONObject request = new JSONObject();
+        request.put("UID", carUID);
+        request.put("start_date", startDate);
+        request.put("end_date", endDate);
+
+        String rawResult="";
+        WebClient webClient = WebClient.create("http://" + host + ":" + port + serviceName + endpoint)
+                .accept(MediaType.APPLICATION_JSON)
+                .header("Content-Type", MediaType.APPLICATION_JSON);
+
+        switch (httpMethod) {
+            case "POST":
+                rawResult = webClient.post(request.toString(),String.class);
+        }
+        this.result = rawResult;
+    }
+
+    @Then("^the status reponse is \"(.*)\"$")
+    public void theStatusReponseIs(String status) {
+        JSONObject jsonresult = new JSONObject(result);
+        assertEquals("ok", jsonresult.getString("status"));
+    }
+
+    @And("^the total price is (.*)$")
+    public void theTotalPriceIs(String doubleStringprice) {
+        JSONObject jsonresult = new JSONObject(result);
+        double thePrice = Double.parseDouble(doubleStringprice);
+        assertEquals(thePrice, jsonresult.getDouble("total_price"));
     }
 }
