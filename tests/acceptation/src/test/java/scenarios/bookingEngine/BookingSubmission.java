@@ -1,4 +1,6 @@
 package scenarios.bookingEngine;
 
-public class BookingSubmission {
+import dockerized.DockerizedTest;
+
+public class BookingSubmission extends DockerizedTest {
 }

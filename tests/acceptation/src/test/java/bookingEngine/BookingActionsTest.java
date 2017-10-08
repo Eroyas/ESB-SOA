@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 public class BookingActionsTest extends DockerizedTest{
 
 
-    private static final int[] ids = new int[]{(int) (Math.random()*1000), (int) (Math.random()*1000), (int) (Math.random()*1000)};
+    private static final int[] ids = new int[]{(int) (Math.random()*10000), (int) (Math.random()*10000), (int) (Math.random()*10000)};
     //private static final JSONObject identities = new JSONObject(new File("./database/datasets/identities.json"));
 
     @Before
@@ -24,7 +24,7 @@ public class BookingActionsTest extends DockerizedTest{
 
         for(int i = 0; i < 3; i++){
             booking = createBooking(i);
-            answer = call(booking, "booking");
+            answer = Assets.call(booking);
 
             JSONAssert.assertEquals(booking.getJSONObject("booking"), answer.getJSONObject("booking"), false);
             Assert.assertTrue(answer.getJSONObject("booking").optString("status").equals("WAITING_APPROVAL"));
@@ -127,7 +127,7 @@ public class BookingActionsTest extends DockerizedTest{
                 .put("type", "validate")
                 .put("id", ids[0]);
 
-        JSONObject answer = call(request, "booking");
+        JSONObject answer = Assets.call(request);
 
         Assert.assertTrue(answer.getInt("id") == ids[0]);
         Assert.assertTrue(answer.getBoolean("approved"));
@@ -140,7 +140,7 @@ public class BookingActionsTest extends DockerizedTest{
                 .put("type", "reject")
                 .put("id", ids[1]);
 
-        JSONObject answer = call(request, "booking");
+        JSONObject answer = Assets.call(request);
 
         Assert.assertTrue(answer.getInt("id") == ids[1]);
         Assert.assertTrue(answer.getBoolean("rejected"));
@@ -152,7 +152,7 @@ public class BookingActionsTest extends DockerizedTest{
                 .put("type", "retrieve")
                 .put("id", ids[2]);
 
-        JSONObject answer = call(request, "booking");
+        JSONObject answer = Assets.call(request);
 
         Assert.assertTrue(ids[2] == answer.getInt("id"));
         Assert.assertTrue(answer.getBoolean("retrieved"));
@@ -161,17 +161,9 @@ public class BookingActionsTest extends DockerizedTest{
 
     /* ASSETS */
 
-    private JSONObject call(JSONObject request, String param) {
-        String raw =
-                WebClient.create("http://" + getDockerHost() + ":" + 8080 + "/tta-booking/" + param)
-                        .header("Content-Type", MediaType.APPLICATION_JSON)
-                        .post(request.toString(), String.class);
-        return new JSONObject(raw);
-    }
-
     private JSONObject createBooking(int i){
         JSONObject flight = new JSONObject()
-                .put("number", (int) (Math.random() * 1000))
+                .put("number", (int) (Math.random() * 10000))
                 .put("airline", "Air Whatever");
 
         return new JSONObject()
