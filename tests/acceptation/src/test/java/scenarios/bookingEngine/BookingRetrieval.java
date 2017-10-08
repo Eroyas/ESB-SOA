@@ -12,7 +12,7 @@ public class BookingRetrieval extends DockerizedTest {
 
     private JSONObject booking;
 
-    @Then("^there is one booking retrievable with id (\\d+)$")
+    @Then("^Booking: there is one booking retrievable with id (\\d+)$")
     public void retrieveBooking(int id){
         JSONObject request = new JSONObject()
                 .put("type", "retrieve")
@@ -22,7 +22,7 @@ public class BookingRetrieval extends DockerizedTest {
         this.booking = booking;
     }
 
-    @Given("^the (.*) is (.*)$")
+    @Given("^Booking: the (.*) is (.*)$")
     public void checkBookingAttributes(String key, String value){
         switch (key){
             case "status":

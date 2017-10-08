@@ -16,20 +16,20 @@ public class BookingActions extends DockerizedTest {
     private JSONObject booking;
 
 
-    @Given("^Service available at localhost:8080/tta-booking/booking$")
+    @Given("^Booking: Service available at localhost:8080/tta-booking/booking$")
     public void testAvailability() {
         Assert.assertTrue(Assets.get().getStatus() == 200);
     }
 
 
-    @Given("^A request with type set to (.*)$")
+    @Given("^Booking: A request with type set to (.*)$")
     public void createBookingRequest(String type) {
         this.request = new JSONObject()
                 .put("type", type);
         this.booking = new JSONObject();
     }
 
-    @Given("^with the booking (.*) set to (.*)$")
+    @Given("^Booking: with the booking (.*) set to (.*)$")
     public void fillBooking(String key, String param) {
         switch (key) {
             case "id":
@@ -67,12 +67,12 @@ public class BookingActions extends DockerizedTest {
         }
     }
 
-    @Given("^with the id set to (\\d+)$")
+    @Given("^Booking: with the id set to (\\d+)$")
     public void fillRequest(int id) {
         this.request.put("id", id);
     }
 
-    @When("^the request for (.*) sent")
+    @When("^Booking: the request for (.*) sent")
     public JSONObject post(String type) {
         if (type.equals("submission"))
             this.request.put("booking", this.booking);
