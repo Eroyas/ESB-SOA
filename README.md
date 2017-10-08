@@ -14,6 +14,7 @@ Github repository: https://github.com/Eroyas/ESB-SOA
 
 Le système que nous proposons est un ensemble de services indépendants les uns des autres.
 Aucun service ne fait appel à un autre service à l'intérieur de lui-même.
+
 Le scope de nos services est respectivement:
 * Services de recherche de vol
 * Services de recherche d'hotel
@@ -42,31 +43,31 @@ Le service de reservation d'hôtel est bien adapté pour être un service Ressou
 * Sélectionner une ville
 * Sélectionner un hotel
 * Sélectionner une date d’arrivée
-* Sélectionner une date de départ
-* (Sélectionner le type de chambre)
-* (Sélectionner le trie par prix)
+* Sélectionner une date de départ 
 
 ###### Les interfaces présentes :
 * public Response getHotels() :
-    * Path : get sur le path @Path("/hotels")
-    * Utilisation : http://localhost:8080/tta-car-and-hotel/hotels
-    * Description : liste tout les hôtels présent en France.
+    * Path : on fait un get sur le path @Path("/hotels")
+    * Utilisation : http://localhost:9080/tta-car-and-hotel/hotels
+    * Description : liste tous les hôtels présent en France.
 * public Response getHotelsByName(@PathParam("name") String name) :
-    * Path : get sur le path @Path("name/{name}")
-    * Utilisation : http://localhost:8080/tta-car-and-hotel/hotels/name/Ibis
-    * Description : liste tout les hôtels d'une enseigne précise présent en France, comme par exemple dans le cas d'utilisation ci-dessus, tout les Ibis de France.
+    * Path : on fait un get sur le path @Path("name/{name}")
+    * Utilisation : http://localhost:9080/tta-car-and-hotel/hotels/name/Ibis
+    * Description : liste tout les hôtels d'une enseigne précise présent en France, comme par exemple dans le cas d'utilisation ci-dessus, tous les Ibis de France. 
 * public Response getHotelsByCity(@PathParam("city") String city) :
-    * Path : get sur le path @Path("city/{city}")
-    * Utilisation : http://localhost:8080/tta-car-and-hotel/hotels/city/Paris
-    * Description : liste tout les hôtels présent dans une ville donné, comme par exemple dans le cas d'utilisation ci-dessus, tout les hôtels de Paris.
+    * Path : on fait un get sur le path @Path("city/{city}")
+    * Utilisation : http://localhost:9080/tta-car-and-hotel/hotels/city/Paris
+    * Description : liste tout les hôtels présent dans une ville donné, comme par exemple dans le cas d'utilisation ci-dessus, tous les hôtels de Paris.
 * public Response getHotelReservation(@PathParam("city") String city,
                                     @PathParam("name") String name,
                                     @PathParam("arrival") String arrival,
                                     @PathParam("departure") String departure) :
-    * Path : get sur le path @Path("{city}/{name}/{arrival}/{departure}")
-    * Utilisation : http://localhost:8080/tta-car-and-hotel/hotels/Paris/Ibis/01-10-2017/03-10-2017
-    * Description : liste un hôtel d'une enseigne précise et présent dans une ville donné en indiquant la date de l'arrivée et la date de départ du client. Comme par exemple dans le cas d'utilisation ci-dessus, l'hôtel Ibis de Paris pour les dates 01-10-2017 et 03-10-2017. 
-    * Remarque : pour l'instant il y a de la redondance dans les noms des hôtels par vile car nous avons mis en place une base de donnée de rapide et facile d'utilisation pour tester nos services. Donc la requête retourne pour l'instant plusieurs hôtels. Par la suite nous auront un nom unique d'hôtel par ville comme par exemple un « Ibis Paris Nord » ou « Ibis Paris sud » et etc.
+    * Path : on fait un get sur le path @Path("{city}/{name}/{arrival}/{departure}")
+    * Utilisation : http://localhost:9080/tta-car-and-hotel/hotels/Paris/Ibis/01-10-2017/03-10-2017
+    * Description : donne un hôtel d'une enseigne précise et qui est présent dans une ville donné en indiquant la date de l'arrivée et la date de départ du client. Comme par exemple dans le cas d'utilisation ci-dessus, l'hôtel Ibis de Paris pour les dates de 01-10-2017 et 03-10-2017. 
+    * Remarque : pour l'instant il y a de la redondance dans les noms des hôtels par vile car nous avons mis en place une base de donnée de façon rapide et facile d'utilisation pour tester nos services. Donc la requête retourne pour l'instant plusieurs hôtels. Par la suite nous auront un nom unique d'hôtel par ville comme par exemple un « Ibis Paris Nord » ou « Ibis Paris sud » et etc.
+    
+Le retour des interfaces : données transitant en JSON.
 
 ### Car handler
 
