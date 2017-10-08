@@ -1,22 +1,27 @@
-Feature: Submit a booking for approval
+Feature: Approve a booking
 
   Background:
     Given Service available at localhost:8080/tta-booking/booking
 
-  Scenario: Submit booking for approval
+  Scenario: Approve booking
     Given A request with type set to submit
-    And with the booking id set to 12345
-    And with the booking identity set to John Doe john@doe.com
-    And with the booking flight set to AirFrance 447
-    And with the booking car set to Mercedes 90
-    And with the booking hotel set to Hilton 666
-    When the request for booking sent
-    Then there is one booking retrievable with id 12345
-    And the status is WAITING_APPROVAL
-    And the flight is AirFrance 447
-    And the car is Mercedes 90
-    And the identity is John Doe john@doe.com
-    And the hotel is Hilton 666
+    And with the booking id set to 23456
+    And with the booking identity set to Foo Bar foobar@2000.com
+    And with the booking flight set to AirCanada 893
+    And with the booking car set to Porsche 911
+    And with the booking hotel set to Radison 765
+    When the request for submission sent
+
+    Given A request with type set to validate
+    And with the id set to 23456
+    Then the request for approval sent
+
+    Then there is one booking retrievable with id 23456
+    And the status is APPROVED
+    And the flight is AirCanada 893
+    And the car is Porsche 911
+    And the identity is Foo Bar foobar@2000.com
+    And the hotel is Radison 765
 
 
 

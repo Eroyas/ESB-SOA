@@ -10,28 +10,28 @@ import org.junit.Assert;
 
 import javax.ws.rs.core.MediaType;
 
-public class BookingApproval extends DockerizedTest {
+public class BookingActions extends DockerizedTest {
 
     private JSONObject request;
     private JSONObject booking;
 
 
     @Given("^Service available at localhost:8080/tta-booking/booking$")
-    public void testAvailability(){
+    public void testAvailability() {
         Assert.assertTrue(Assets.get().getStatus() == 200);
     }
 
 
-    @Given("^A request with type set to submit$")
-    public void createBookingRequest(){
+    @Given("^A request with type set to (.*)$")
+    public void createBookingRequest(String type) {
         this.request = new JSONObject()
-                .put("type", "submit");
+                .put("type", type);
         this.booking = new JSONObject();
     }
 
     @Given("^with the booking (.*) set to (.*)$")
-    public void fillBooking(String key, String param){
-        switch (key){
+    public void fillBooking(String key, String param) {
+        switch (key) {
             case "id":
                 this.booking.put("id", Integer.parseInt(param));
                 break;
@@ -67,16 +67,16 @@ public class BookingApproval extends DockerizedTest {
         }
     }
 
-    @When("^the request for booking sent")
-    public JSONObject post() {
-        this.request.put("booking", this.booking);
-        String raw =
-                WebClient.create("http://" + getDockerHost() + ":" + 8080 + "/tta-booking/booking")
-                        .header("Content-Type", MediaType.APPLICATION_JSON)
-                        .post(request.toString(), String.class);
-        return new JSONObject(raw);
+    @Given("^with the id set to (\\d+)$")
+    public void fillRequest(int id) {
+        this.request.put("id", id);
     }
 
-
+    @When("^the request for (.*) sent")
+    public JSONObject post(String type) {
+        if (type.equals("submission"))
+            this.request.put("booking", this.booking);
+        return new JSONObject(Assets.call(this.request));
+    }
 
 }

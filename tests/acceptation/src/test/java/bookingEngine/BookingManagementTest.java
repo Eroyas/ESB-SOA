@@ -1,7 +1,6 @@
 package bookingEngine;
 
 import dockerized.DockerizedTest;
-import org.apache.cxf.jaxrs.client.WebClient;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,9 +8,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
-import javax.ws.rs.core.MediaType;
-
-public class BookingActionsTest extends DockerizedTest{
+@Ignore
+public class BookingManagementTest extends DockerizedTest{
 
 
     private static final int[] ids = new int[]{(int) (Math.random()*10000), (int) (Math.random()*10000), (int) (Math.random()*10000)};
@@ -34,86 +32,87 @@ public class BookingActionsTest extends DockerizedTest{
 
     private JSONObject generateIdentity()
     {
+        //TODO: vraiment dégueu, to be fixed
         JSONObject identities = new JSONObject("{\n" +
                 "  \"array\": [\n" +
                 "    {\n" +
-                "      \"first_name\": \"Anica\",\n" +
-                "      \"last_name\": \"Matthisson\",\n" +
+                "      \"firstName\": \"Anica\",\n" +
+                "      \"lastName\": \"Matthisson\",\n" +
                 "      \"email\": \"amatthisson0@springer.com\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Bernie\",\n" +
-                "      \"last_name\": \"Jepps\",\n" +
+                "      \"firstName\": \"Bernie\",\n" +
+                "      \"lastName\": \"Jepps\",\n" +
                 "      \"email\": \"bjepps1@nhs.uk\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Harmonie\",\n" +
-                "      \"last_name\": \"Barrows\",\n" +
+                "      \"firstName\": \"Harmonie\",\n" +
+                "      \"lastName\": \"Barrows\",\n" +
                 "      \"email\": \"hbarrows2@booking.com\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Verge\",\n" +
-                "      \"last_name\": \"Purcell\",\n" +
+                "      \"firstName\": \"Verge\",\n" +
+                "      \"lastName\": \"Purcell\",\n" +
                 "      \"email\": \"vpurcell3@xing.com\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Sara\",\n" +
-                "      \"last_name\": \"McBean\",\n" +
+                "      \"firstName\": \"Sara\",\n" +
+                "      \"lastName\": \"McBean\",\n" +
                 "      \"email\": \"smcbean4@ucla.edu\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Koral\",\n" +
-                "      \"last_name\": \"Gurley\",\n" +
+                "      \"firstName\": \"Koral\",\n" +
+                "      \"lastName\": \"Gurley\",\n" +
                 "      \"email\": \"kgurley5@over-blog.com\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Donelle\",\n" +
-                "      \"last_name\": \"Napper\",\n" +
+                "      \"firstName\": \"Donelle\",\n" +
+                "      \"lastName\": \"Napper\",\n" +
                 "      \"email\": \"dnapper6@behance.net\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Granville\",\n" +
-                "      \"last_name\": \"Toffoloni\",\n" +
+                "      \"firstName\": \"Granville\",\n" +
+                "      \"lastName\": \"Toffoloni\",\n" +
                 "      \"email\": \"gtoffoloni7@google.it\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Lela\",\n" +
-                "      \"last_name\": \"Siemon\",\n" +
+                "      \"firstName\": \"Lela\",\n" +
+                "      \"lastName\": \"Siemon\",\n" +
                 "      \"email\": \"lsiemon8@wikispaces.com\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Reggis\",\n" +
-                "      \"last_name\": \"Zorzi\",\n" +
+                "      \"firstName\": \"Reggis\",\n" +
+                "      \"lastName\": \"Zorzi\",\n" +
                 "      \"email\": \"rzorzi9@wired.com\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Caldwell\",\n" +
-                "      \"last_name\": \"Dies\",\n" +
+                "      \"firstName\": \"Caldwell\",\n" +
+                "      \"lastName\": \"Dies\",\n" +
                 "      \"email\": \"cdiesa@uol.com.br\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Selinda\",\n" +
-                "      \"last_name\": \"Duddle\",\n" +
+                "      \"firstName\": \"Selinda\",\n" +
+                "      \"lastName\": \"Duddle\",\n" +
                 "      \"email\": \"sduddleb@cisco.com\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Philbert\",\n" +
-                "      \"last_name\": \"Everit\",\n" +
+                "      \"firstName\": \"Philbert\",\n" +
+                "      \"lastName\": \"Everit\",\n" +
                 "      \"email\": \"peveritc@t.co\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Bill\",\n" +
-                "      \"last_name\": \"Sinkins\",\n" +
+                "      \"firstName\": \"Bill\",\n" +
+                "      \"lastName\": \"Sinkins\",\n" +
                 "      \"email\": \"bsinkinsd@linkedin.com\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Kandace\",\n" +
-                "      \"last_name\": \"Cuerdale\",\n" +
+                "      \"firstName\": \"Kandace\",\n" +
+                "      \"lastName\": \"Cuerdale\",\n" +
                 "      \"email\": \"kcuerdalee@photobucket.com\"\n" +
                 "    },\n" +
                 "    {\n" +
-                "      \"first_name\": \"Anders\",\n" +
-                "      \"last_name\": \"Foucard\",\n" +
+                "      \"firstName\": \"Anders\",\n" +
+                "      \"lastName\": \"Foucard\",\n" +
                 "      \"email\": \"afoucardf@joomla.org\"\n" +
                 "    }]}");
         int nb = (int) (Math.random()*10);
