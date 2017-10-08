@@ -34,7 +34,7 @@ public class CarRentalService {
         }
 
         JSONArray result = new JSONArray(cities);
-        return Response.ok().entity(result).build();
+        return Response.ok().entity(result.toString()).build();
     }
 
     /**
@@ -55,7 +55,7 @@ public class CarRentalService {
             jsonAgencies.put(a.toJSONOject());
         }
 
-        return Response.ok(jsonAgencies).build();
+        return Response.ok(jsonAgencies.toString()).build();
     }
 
 
@@ -80,7 +80,7 @@ public class CarRentalService {
         }
 
         JSONObject jsonCar = Storage.getCarByUID(UID).toJSONOject();
-        return Response.ok(jsonCar).build();
+        return Response.ok(jsonCar.toString()).build();
     }
 
     /**
@@ -117,14 +117,14 @@ public class CarRentalService {
                 JSONObject error = new JSONObject();
                 error.put("status", "error");
                 error.put("message", "no car found with this UID");
-                return Response.status(400).entity(error).build();
+                return Response.status(400).entity(error.toString()).build();
             }
 
             if (!carToRent.isAvailable()) {
                 JSONObject error = new JSONObject();
                 error.put("status", "error");
                 error.put("message", "car is not available");
-                return Response.status(400).entity(error).build();
+                return Response.status(400).entity(error.toString()).build();
             }
 
             carToRent.rent(rentStart, rentEnd);
@@ -134,14 +134,14 @@ public class CarRentalService {
             JSONObject success = new JSONObject();
             success.put("status", "ok");
             success.put("total_price", totalPrice);
-            return Response.ok().entity(success).build();
+            return Response.ok().entity(success.toString()).build();
 
 
         } catch (Exception e) {
             JSONObject error = new JSONObject();
             error.put("status", "error");
             error.put("message", e.getMessage());
-            return Response.status(400).entity(error).build();
+            return Response.status(400).entity(error.toString()).build();
         }
 
 

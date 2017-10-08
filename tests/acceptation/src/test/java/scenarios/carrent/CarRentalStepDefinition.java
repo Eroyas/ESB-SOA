@@ -74,7 +74,6 @@ public class CarRentalStepDefinition extends DockerizedTest{
     @Given("^the carUID (\\d+)$")
     public void theCarUID(int carUID) {
         this.carUID = carUID;
-        this.endpoint +="/"+carUID;
     }
 
     @And("^the starting date is \"(.*)\"$")
@@ -95,9 +94,11 @@ public class CarRentalStepDefinition extends DockerizedTest{
         request.put("end_date", endDate);
 
         String rawResult="";
-        WebClient webClient = WebClient.create("http://" + host + ":" + port + serviceName + endpoint)
+        WebClient webClient = WebClient.create("http://" + host + ":" + port + serviceName + endpoint+"/"+carUID)
                 .accept(MediaType.APPLICATION_JSON)
                 .header("Content-Type", MediaType.APPLICATION_JSON);
+
+        System.out.println("http://" + host + ":" + port + serviceName + endpoint);
 
         switch (httpMethod) {
             case "POST":
@@ -109,6 +110,7 @@ public class CarRentalStepDefinition extends DockerizedTest{
     @Then("^the status reponse is \"(.*)\"$")
     public void theStatusReponseIs(String status) {
         JSONObject jsonresult = new JSONObject(result);
+        System.out.println(jsonresult);
         assertEquals("ok", jsonresult.getString("status"));
     }
 
@@ -116,6 +118,6 @@ public class CarRentalStepDefinition extends DockerizedTest{
     public void theTotalPriceIs(String doubleStringprice) {
         JSONObject jsonresult = new JSONObject(result);
         double thePrice = Double.parseDouble(doubleStringprice);
-        assertEquals(thePrice, jsonresult.getDouble("total_price"));
+        assertEquals(thePrice, jsonresult.getDouble("total_price"), 0);
     }
 }
