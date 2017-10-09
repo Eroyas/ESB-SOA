@@ -3,44 +3,43 @@
 # TravEL Expenses GReat Again! - Planning 
 
 ### Team composition
-   * Carlier Maxime
-   * Chevalier Mathias
-   * Eroglu Yasin
-   * Gning Khadim
+* Carlier Maxime
+* Chevalier Mathias
+* Eroglu Yasin
+* Gning Khadim
 
-### Web services utilisés
-   * Flights : Team 8
-   * Hotels : Team 2
-   * Cars : Team 1
+### Web services consommés
+* Flights : Team 8
+* Hotels : Team 2
+* Cars : Team 1
 
 
-### Stack Technologique
-    * Enterprise Service Bus: [Apache Service Mix](http://servicemix.apache.org/) (7.0.1)
-    * Message Broker: [Apache ActiveMQ](http://activemq.apache.org/)
-    * Routing: [Apache Camel](http://camel.apache.org/) (2.19.2)
+### Stack Techno
+* Enterprise Service Bus: [Apache Service Mix](http://servicemix.apache.org/) (7.0.1)
+* Message Broker: [Apache ActiveMQ](http://activemq.apache.org/)
+* Routing: [Apache Camel](http://camel.apache.org/) (2.19.2)
 
 
 ## Fonctionnalités
 
-Employé:
-Demande un vol d’un aéroport A vers un aéroport B
-Demander un hôtel à une localisation souhaitée
-Demander une location de voiture à la localisation souhaitée
-Envoyer la prévision de ses frais de transport
-Envoyer factures pour les dépenses 
-Justifier le dépassement si le manager le demande car le prix excède légèrement le seuil autorisé pour un déplacement professionnel
+* Employé:
+  * Demande un vol d’un aéroport A vers un aéroport B
+  * Demander un hôtel à une localisation souhaitée
+  * Demander une location de voiture à la localisation souhaitée
+  * Envoyer la prévision de ses frais de transports
+  * Envoyer factures pour les dépenses 
+  * Justifier le dépassement de frais
 
-Manager :
-Récupérer les prévisions de frais de déplacement des employés pour un déplacement professionnel
-(Approuver la prévision)
-Approuver ou refuser les demandes de remboursement des employés selon le montant de leur demande (automatique si les prix n'excède pas le prix fixé par le tableau des dépenses autorisés pour une activitée)
-Récupérer compte rendu résumant les frais de voyages (avec justif)
-Système :
-Si refusé pour cause de frais supérieurs au seuil, demander une justification à l’employé
-Si la demande est approuvée, récupérer les factures pour le remboursement 
-Déclencher le processus de remboursement si la demande a été accepté
-Déclencher le processus d’archivage
-Déclencher le processus de notification si le remboursement est effectué
+* Manager :
+  * Récupérer les prévisions de frais de déplacement des employés pour un déplacement professionnel pour approbation
+  * Approuver ou refuser les demandes de remboursement des employés selon le montant de leur demande (automatique si les prix n'excède pas le seuil fixé par le tableau des dépenses autorisées)
+  * Récupérer compte rendu résumant les frais de voyages (avec justificatifs)
+
+* Système :
+  * Demander automatiquement une justification à l’employé lors d’un dépassement de frais
+  * Récupérer et valider les factures pour le remboursement des frais
+  * Déclencher le processus de remboursement si la demande a été acceptée
+  * Déclencher le processus d’archivage lorsque le voyage est complétée
 
 
 
@@ -81,3 +80,6 @@ Déclencher le processus de notification si le remboursement est effectué
 
 * Joindre une facture avec la soumission d’une dépense
 * Vérification et saisie automatique avec OCR des factures jointes
+
+
+
