@@ -20,7 +20,7 @@
 * Routing: [Apache Camel](http://camel.apache.org/) (2.19.2)
 
 
-## Fonctionnalités
+## Features
 
 * Employé:
   * Demande un vol d’un aéroport A vers un aéroport B
