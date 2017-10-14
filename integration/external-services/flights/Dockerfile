@@ -2,7 +2,7 @@ FROM tomee:8-jre-7.0.3-plus
 
 WORKDIR /usr/local/tomee/
 
-COPY ./flight-service.war ./webapps/.
+COPY ./flights-service.war ./webapps/.
 
 ## Configuring the network.properties file (default values are provided)
 ENV db_host=localhost
