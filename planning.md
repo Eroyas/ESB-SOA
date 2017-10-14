@@ -9,9 +9,9 @@
 * Gning Khadim
 
 ### Web services consommés
-* Flights : Team 8
-* Hotels : Team 2
-* Cars : Team 1
+* Flights : Team 8 [Github](https://github.com/HCScorp/soa)
+* Hotels : Team 2 [Github](https://github.com/VinceBT/polytech-soa-fgbl)
+* Cars : Team 1 [Github](https://github.com/scipio3000/polytech-soa/)
 
 
 ### Stack Techno
