@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 FEATURES="camel-csv camel-http camel-saxon camel-spring-ws camel-servlet camel-jackson "
 DELTA=10

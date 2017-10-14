@@ -13,7 +13,8 @@ WORKDIR /servicemix
 
 # Installing OSGi dependencies at build time
 COPY ./install-deps.sh .
-RUN chmod u+x ./install-deps.sh && ./install-deps.sh
+RUN ["chmod", "u+x", "./install-deps.sh"]
+RUN ["sh", "./install-deps.sh"]
 
 # Port exposition
 EXPOSE 8181 8101 1099 61616 44444

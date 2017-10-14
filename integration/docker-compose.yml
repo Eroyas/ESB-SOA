@@ -1,0 +1,53 @@
+########################################
+##              TELEGRAM              ##
+########################################
+
+## Start the system with "docker-compose up -d"
+## Shutdown it with "docker-compose down"
+## To clean your docker install: "docker system prune"
+## To purge your docker install: "docker system prune -a"
+
+
+version: "3"
+
+services:
+
+  integration-bus:
+      container_name: telegram-esb
+      build:
+        context: ./esb
+      ports:
+        - "8181:8181"
+        - "8101:8101"
+        - "1099:1099"
+        - "61616:61616"
+        - "44444:44444"
+
+  cars-service:
+    container_name: telegram-cars-services
+    build:
+      context: ./external-services/cars
+    ports:
+      - "9080:8080"
+
+  flights-service:
+    container_name: telegram-flights-services
+    build:
+      context: ./external-services/flights
+    depends_on:
+      - flights-database
+    ports:
+      - "9180:8080"
+
+  hotels-services:
+    container_name: telegram-hotels-services
+    build:
+      context: ./external-services/hotels
+    ports:
+      - "9280:8080"
+
+  flights-database:
+    container_name: flights-database
+    image: mongo:3.0
+    ports:
+    - "27017:27017"
