@@ -201,3 +201,11 @@ Le type de reqûete est défini par un champ envoyé en JSON, ce champ est le ch
 
 On notera que le service de récupération n'est pas testé directement, cependant il est testé implicitement par la validation et le rejet, puisque lors des tests de ces derniers, l'état de la réservation est vérifié une fois la requête executée.
 
+---------------
+
+## TELEGRA(m)
+
+### Les services externes utilisés :
+* Flights : https://github.com/HCScorp/soa
+* Hotels : https://github.com/VinceBT/polytech-soa-fgbl
+* Cars : https://github.com/scipio3000/polytech-soa/
