@@ -10,7 +10,7 @@
 
 ### Web services consommés
 * Flights : Team 8 [Github](https://github.com/HCScorp/soa)
-* Hotels : Team 2 [Github](https://github.com/VinceBT/polytech-soa-fgbl)
+* Hotels : Team 5 [Github](https://github.com/iliasnaamane/microservices-uns)
 * Cars : Team 1 [Github](https://github.com/scipio3000/polytech-soa/)
 
 
