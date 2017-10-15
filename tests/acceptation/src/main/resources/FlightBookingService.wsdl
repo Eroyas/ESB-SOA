@@ -1,11 +1,13 @@
 <wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://informatique.polytech.unice.fr/soa1/team/3/flightres/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="FlightBookingService" targetNamespace="http://informatique.polytech.unice.fr/soa1/team/3/flightres/">
   <wsdl:types>
     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://informatique.polytech.unice.fr/soa1/team/3/flightres/" elementFormDefault="unqualified" targetNamespace="http://informatique.polytech.unice.fr/soa1/team/3/flightres/" version="1.0">
+      <xs:element name="listPossibleReservation" type="tns:listPossibleReservation"/>
+      <xs:element name="listPossibleReservationResponse" type="tns:listPossibleReservationResponse"/>
       <xs:element name="simpleReservation" type="tns:simpleReservation"/>
       <xs:element name="simpleReservationResponse" type="tns:simpleReservationResponse"/>
-      <xs:complexType name="simpleReservation">
+      <xs:complexType name="listPossibleReservation">
         <xs:sequence>
-          <xs:element minOccurs="0" name="simpleItineraryInfo" type="tns:simpleItineraryRequest"/>
+          <xs:element minOccurs="0" name="itineraryInfo" type="tns:simpleItineraryRequest"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="simpleItineraryRequest">
@@ -16,22 +18,46 @@
           <xs:element name="originCountry" type="xs:string"/>
         </xs:sequence>
       </xs:complexType>
+      <xs:complexType name="listPossibleReservationResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="booking_info" type="tns:flightInformation"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="flightInformation">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="date" type="xs:string"/>
+          <xs:element minOccurs="0" name="endingAirport" type="xs:string"/>
+          <xs:element name="price" type="xs:float"/>
+          <xs:element minOccurs="0" name="startingAirport" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="simpleReservation">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="simpleItineraryInfo" type="tns:simpleItineraryRequest"/>
+        </xs:sequence>
+      </xs:complexType>
       <xs:complexType name="simpleReservationResponse">
         <xs:sequence>
           <xs:element minOccurs="0" name="simple_booking" type="tns:flightReservation"/>
         </xs:sequence>
       </xs:complexType>
       <xs:complexType name="flightReservation">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="date" type="xs:string"/>
-          <xs:element minOccurs="0" name="endingAirport" type="xs:string"/>
-          <xs:element minOccurs="0" name="identifier" type="xs:string"/>
-          <xs:element name="price" type="xs:float"/>
-          <xs:element minOccurs="0" name="startingAirport" type="xs:string"/>
-        </xs:sequence>
+        <xs:complexContent>
+          <xs:extension base="tns:flightInformation">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="identifier" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
       </xs:complexType>
     </xs:schema>
   </wsdl:types>
+  <wsdl:message name="listPossibleReservation">
+    <wsdl:part element="tns:listPossibleReservation" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listPossibleReservationResponse">
+    <wsdl:part element="tns:listPossibleReservationResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
   <wsdl:message name="simpleReservationResponse">
     <wsdl:part element="tns:simpleReservationResponse" name="parameters"></wsdl:part>
   </wsdl:message>
@@ -39,6 +65,10 @@
     <wsdl:part element="tns:simpleReservation" name="parameters"></wsdl:part>
   </wsdl:message>
   <wsdl:portType name="FlightReservation">
+    <wsdl:operation name="listPossibleReservation">
+      <wsdl:input message="tns:listPossibleReservation" name="listPossibleReservation"></wsdl:input>
+      <wsdl:output message="tns:listPossibleReservationResponse" name="listPossibleReservationResponse"></wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="simpleReservation">
       <wsdl:input message="tns:simpleReservation" name="simpleReservation"></wsdl:input>
       <wsdl:output message="tns:simpleReservationResponse" name="simpleReservationResponse"></wsdl:output>
@@ -46,6 +76,15 @@
   </wsdl:portType>
   <wsdl:binding name="FlightBookingServiceSoapBinding" type="tns:FlightReservation">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="listPossibleReservation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="listPossibleReservation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="listPossibleReservationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="simpleReservation">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="simpleReservation">
