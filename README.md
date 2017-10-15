@@ -207,5 +207,5 @@ On notera que le service de récupération n'est pas testé directement, cependa
 
 ### Les services externes utilisés :
 * Flights : https://github.com/HCScorp/soa
-* Hotels : https://github.com/VinceBT/polytech-soa-fgbl
+* Hotels : https://github.com/iliasnaamane/microservices-uns
 * Cars : https://github.com/scipio3000/polytech-soa/
