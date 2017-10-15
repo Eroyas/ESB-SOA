@@ -1,20 +1,39 @@
 package flightres.data;
 
-
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 
 public class FlightAgency {
-    private static HashMap<String, ArrayList<Flight>> agency = new HashMap<String, ArrayList<Flight>>();
+    private static HashMap<String, List<Flight>> agency = new HashMap<String, List<Flight>>();
 
-    public static ArrayList<Flight> getAllFlightsFrom(String origin) {
+    public static List<Flight> getAllFlightsFrom(String origin) {
         return agency.get(origin);
+    }
+
+    public  static List<Flight> getAllFlightsBetween(String origin, String arrival)
+    {
+        List<Flight> listOfFlights = agency.get(origin);
+        for(int i = 0; i < listOfFlights.size(); i++)
+        {
+            if(!listOfFlights.get(i).getEndingAirport().equals(arrival))
+                listOfFlights.remove(i);
+        }
+
+        return listOfFlights;
     }
 
     public static Flight getFlight(String start, String end, String date)
     {
-        ArrayList<Flight> listOfFlights = agency.get(start);
+        List<Flight> listOfFlights = agency.get(start);
         for(Flight flight: listOfFlights)
         {
             if(flight.getEndingAirport().equals(end) &&
@@ -24,40 +43,33 @@ public class FlightAgency {
         return null;
     }
 
-    static {
-        /*
-        JSONParser parser = new JSONParser();
+    static
+    {
+        try
+        {
+            JSONTokener flightsDataTokener = new JSONTokener(new FileReader("/usr/local/tomee/data/flights-data.json"));
+            JSONArray flightsDB = new JSONArray(flightsDataTokener);
 
-        try {
+            Iterator iterator = flightsDB.iterator();
+            while (iterator.hasNext())
+            {
+                JSONObject jsonFlight = (JSONObject) iterator.next();
+                String startingAirport = (String) jsonFlight.get("airport_origin");
+                String endingAirport = (String) jsonFlight.get("airport_destination");
+                String startingDate = (String) jsonFlight.get("date_departure");
+                String endingDate = (String) jsonFlight.get("date_arrival");
+                String price = (String) jsonFlight.get("price");
+                Flight flight = new Flight(startingAirport, endingAirport, startingDate, endingDate, price);
 
-            Object obj = parser.parse(new FileReader("datasets\flights\flights-data.json"));
-            JSONArray jsonArray = (JSONArray) obj;
-
-            Iterator<JSONObject> iterator = jsonArray.iterator();
-            while (iterator.hasNext()) {
-                JSONObject jsonFlight = iterator.next();
-                Flight flight = new Flight();
-                flight.setStartingAirport((String) jsonFlight.get("airport_origin"));
-                flight.setEndingAirport((String) jsonFlight.get("airport_destination"));
-                flight.setStartDate((String) jsonFlight.get("date_departure"));
-                flight.setEndDate((String) jsonFlight.get("date_arrival"));
-                flight.setPrice((String) jsonFlight.get("price"));
                 if(agency.get(flight.getStartingAirport()) == null)
+                {
                     ArrayList<Flight> listOfFlights = new ArrayList<>();
+                    agency.put(flight.getStartingAirport(), listOfFlights);
+                }
                 agency.get(flight.getStartingAirport()).add(flight);
             }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
-
-        agency.put("Lyon", new ArrayList<>());
-        agency.put("Paris", new ArrayList<>());
-        agency.get("Lyon").add(new Flight("Lyon", "Nice", "2017-10-25 20:15:00", "2017-10-25 21:05:00", "$ 40"));
-        agency.get("Paris").add(new Flight("Paris", "Nice", "2017-10-25 20:15:00", "2017-10-25 22:10:53", "$ 30"));
+        } catch (FileNotFoundException fnfe){
+            fnfe.printStackTrace();
+        }
     }
 }

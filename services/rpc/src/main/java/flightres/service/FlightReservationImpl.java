@@ -5,6 +5,8 @@ import flightres.data.*;
 import javax.jws.WebService;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -13,6 +15,15 @@ import java.util.Locale;
         serviceName       = "FlightBookingService",
         endpointInterface = "flightres.service.FlightReservationService")
 public class FlightReservationImpl implements FlightReservationService {
+
+    public List<FlightInformation> listPossibleReservation(SimpleItineraryRequest request)
+    {
+        String origin = request.getOriginCountry();
+        String destination = request.getDestinationCountry();
+        List<FlightInformation> listOfFlights = new ArrayList<>();
+        //FlightAgency.getAllFlightsBetween(origin, destination);
+        return listOfFlights;
+    }
 
     public FlightReservation simpleReservation(SimpleItineraryRequest request) {
         String originAirport = request.getOriginCountry();
