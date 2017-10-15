@@ -51,61 +51,13 @@ The associated request and response classes are available in the [data](https://
 
 ### Implementing the interface
 
-The interface is implemented in the [CarRentalImpl](https://github.com/Eroyas/ESB-SOA/blob/master/services/rpc/src/main/java/flightres/FlightReservationServiceImpl.java) class.
-
-## Starting the service
-
-* Compiling: mvn clean package will create the file target/tta-service-rpc.war
-* Running: mvn tomee:run will deploy the created war inside a TomEE+ server, available on localhost:8080
-* The WSDL interface is available at http://localhost:8080/tta-service-rpc/FlightBookingService?wsdl
-
-### Request example
-
-```xml
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soa="http://informatique.polytech.unice.fr/soa/">
-   <soapenv:Header/>
-   <soapenv:Body>
-      <soa:getCarRentalList>
-         <place>France</place> <!-- Place of rental -->
-         <duration>2</duration> <!-- Duration of rental in days -->
-      </soa:getCarRentalList>
-   </soapenv:Body>
-</soapenv:Envelope>
-```
-
-### Response example
-
-```xml
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-   <soap:Body>
-      <ns2:getCarRentalListResponse xmlns:ns2=
-### Declaring the interface
-
-The service declares 1 operation in the [CarRentalService](https://github.com/scipio3000/polytech-soa/blob/develop/services/cars/src/main/java/service/CarRentalService.java) interface, which is associated to a data loader method.
-
-```java
-@WebService(name = "CarRental",
-        targetNamespace = "http://informatique.polytech.unice.fr/soa/")
-public interface CarRentalService {
-
-    @WebResult(name = "car_rentals")
-    List<Car> getCarRentalList(
-            @WebParam(name = "place") String place,
-            @WebParam(name = "duration") int duration);
-
-}
-```
-The associated request and response classes are available in the [business](https://github.com/scipio3000/polytech-soa/tree/develop/services/cars/src/main/java/business) package.
-
-### Implementing the interface
-
-The interface is implemented in the [CarRentalImpl](https://github.com/scipio3000/polytech-soa/blob/develop/services/cars/src/main/java/service/CarRentalImpl.java) class.
+The interface is implemented in the [FlightReservationImpl](https://github.com/Eroyas/ESB-SOA/blob/master/services/rpc/src/main/java/flightres/service/FlightReservationService.java) class.
 
 ## Starting the service
 
 * Compiling: mvn clean package will create the file target/tcs-cars-service.war
 * Running: mvn tomee:run will deploy the created war inside a TomEE+ server, available on localhost:8080
-* The WSDL interface is available at http://localhost:8080/tcs-cars-service/ExternalCarRentalService?wsdl
+* The WSDL interface is available at http://localhost:8080/tta-service-rpc/FlightBookingService?wsdl
 
 ### Request example
 
