@@ -9,7 +9,7 @@ import org.apache.camel.Exchange;
 /**
  * Created by GNINGK on 16/10/17.
  */
-public class FlightExternalPartners extends RouteBuilder {
+public class CallFlightExternalPartners extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
