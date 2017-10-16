@@ -9,9 +9,10 @@ import org.skyscreamer.jsonassert.JSONAssert;
 
 public class CallFlightExternalPartnersTest extends ActiveMQTest{
 
+    // Define mock endpoint to be used
     @Override public String isMockEndpointsAndSkip() { return Endpoints.FLIGHT_RESERVATION_Q; }
 
-
+    // Create route
     @Override protected RouteBuilder createRouteBuilder() throws Exception {
         CallFlightExternalPartners routes = new CallFlightExternalPartners();
 
@@ -24,7 +25,7 @@ public class CallFlightExternalPartnersTest extends ActiveMQTest{
 
     private static final String flightsRegistry = "mock://" + Endpoints.FLIGHT_RESERVATION_Q;
 
-    private String testRequest;
+    private String flightRequest;
 
     @Test public void testExecutionContext() throws Exception {
         assertNotNull(context.hasEndpoint(Endpoints.FLIGHT_RESERVATION_Q));
@@ -34,7 +35,7 @@ public class CallFlightExternalPartnersTest extends ActiveMQTest{
 
 
     @Before public void initRequest() {
-        testRequest = "{\n" +
+        flightRequest = "{\n" +
                     "   \"origin\": \"Nice\",\n" +
                     "   \"destination\": \"Paris\",\n" +
                     "   \"date\": \"2017-08-14\",\n" +
@@ -89,10 +90,10 @@ public class CallFlightExternalPartnersTest extends ActiveMQTest{
 
     }
 
-    @Test public void testCitizenRegistration() throws Exception {
+    @Test public void testFlightRequest() throws Exception {
 
-        // Sending info for flight reservation
-        template.sendBody(Endpoints.FLIGHT_RESERVATION_Q, testRequest);
+        // Sending infos for flight reservation
+        template.sendBody(Endpoints.FLIGHT_RESERVATION_Q, flightRequest);
 
         getMockEndpoint(flightsRegistry).assertIsSatisfied();
 
@@ -112,15 +113,15 @@ public class CallFlightExternalPartnersTest extends ActiveMQTest{
                 "   \"order\": \"ASCENDING\"\n" +
                 "}";
 
-        JSONAssert.assertEquals(expected, testRequest, false);
+        JSONAssert.assertEquals(expected, request, false);
     }
 
     @Test public void testFlightPartnerResponse() throws Exception {
-        // Assertions on the mocks w.r.t. number of exchnaged messages
+        // Assertions on the mocks w.r.t. number of exchanged messages
         getMockEndpoint(flightsRegistry).expectedMessageCount(1);
 
         // Calling the integration flow
-        String out = (String) template.requestBody(Endpoints.FLIGHT_RESERVATION_Q, testRequest);
+        String out = (String) template.requestBody(Endpoints.FLIGHT_RESERVATION_Q, flightRequest);
 
         // ensuring assertions
         String expectedResponse = "{\n" +
