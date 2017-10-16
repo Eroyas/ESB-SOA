@@ -15,7 +15,7 @@ import javax.xml.xpath.XPathFactory;
 /**
  * Created by Eroyas on 14/10/17.
  */
-public class CallExternalPartners extends RouteBuilder {
+public class CarExternalPartners extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
@@ -28,7 +28,7 @@ public class CallExternalPartners extends RouteBuilder {
                 .routeId("car-reservation-call")
                 .routeDescription("Call the car reservation service : getCarRentalList(place, duration)")
 
-                .bean(CarReservationHelper.class, "buildRequest(${body}, ${exchangeProperty[req-uuid]})")
+                .bean(CarReservationHelper.class, "buildRequest(${body})")
                 .inOut(CAR_RESERVATION)
                 .process(result2carInfo)
         ;
