@@ -1,16 +1,10 @@
 package fr.unice.polytech.esb.flows;
 
-import fr.unice.polytech.esb.flows.data.CarInfo;
-import fr.unice.polytech.esb.flows.utils.CarReservationHelper;
 import static fr.unice.polytech.esb.flows.utils.Endpoints.*;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.Processor;
 import org.apache.camel.Exchange;
 
-import javax.xml.transform.Source;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathFactory;
 
 /**
  * Created by GNINGK on 16/10/17.
@@ -59,3 +53,4 @@ public class FlightExternalPartners extends RouteBuilder {
                 .inOut(FLIGHT_RESERVATION)
         ;
     }
+}
