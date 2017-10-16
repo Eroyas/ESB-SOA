@@ -12,19 +12,13 @@ public class CarReservationHelper {
 
     private XPath xpath = XPathFactory.newInstance().newXPath();
 
-    public String buildRequest(CarInfo car, String uuid) {
+    public String buildRequest(String place, int duration) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("<cook:simple xmlns:cook=\"http://cookbook.soa1.polytech.unice.fr/\">\n");
-        builder.append("  <CarInfo>\n");
-        builder.append("    <id>" + uuid + "</id>\n");
-        builder.append("    <brand>" + car.getBrand() + "</brand>\n");
-        builder.append("    <model>" + car.getModel() + "</model>\n");
-        builder.append("    <place>" + car.getPlace() + "</place>\n");
-        builder.append("    <rentPricePerDay>" + car.getRentPricePerDay() + "</rentPricePerDay>\n");
-        builder.append("    <availability>" + car.getAvailability() + "</availability>\n");
-        builder.append("  </CarInfo>\n");
-        builder.append("</cook:simple>");
+        builder.append("<info:getCarRentalList xmlns:info=\"http://informatique.polytech.unice.fr/soa/\">\n");
+        builder.append("  <place>" + place + "</place>\n");
+        builder.append("  <duration>" + duration + "</duration>\n");
+        builder.append("</info:getCarRentalList>");
 
         return builder.toString();
     }

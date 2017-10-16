@@ -10,6 +10,6 @@ public class Endpoints {
     public static final String FLIGHT_RESERVATION_Q = "activemq:flight-reservation";
 
     // External partners
-    public static final String CAR_RESERVATION = "http://localhost:8080/tcs-cars-service/ExternalCarRentalService";
-    public static final String FLIGHT_RESERVATION = "http://localhost:8080/tcs-service-document/registry";
+    public static final String CAR_RESERVATION = "http:localhost:8080/tcs-cars-service/ExternalCarRentalService";
+    public static final String FLIGHT_RESERVATION = "http:localhost:8080/tcs-service-document/registry";
 }
