@@ -13,7 +13,7 @@ import org.json.JSONTokener;
 
 
 public class FlightAgency {
-    private static HashMap<String, List<Flight>> agency = new HashMap<String, List<Flight>>();
+    private static HashMap<String, List<Flight>> agency = new HashMap<>();
 
     public static List<Flight> getAllFlightsFrom(String origin) {
         return agency.get(origin);
@@ -47,7 +47,8 @@ public class FlightAgency {
     {
         try
         {
-            JSONTokener flightsDataTokener = new JSONTokener(new FileReader("/usr/local/tomee/data/flights-data.json"));
+            ClassLoader classLoader = FlightAgency.class.getClassLoader();
+            JSONTokener flightsDataTokener = new JSONTokener(new FileReader(classLoader.getResource("flights/flights-data.json").getFile()));
             JSONArray flightsDB = new JSONArray(flightsDataTokener);
 
             Iterator iterator = flightsDB.iterator();

@@ -62,15 +62,35 @@ The interface is implemented in the [FlightReservationImpl](https://github.com/E
 ### Request example
 
 ```xml
-<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soa="http://informatique.polytech.unice.fr/soa1/team/3/flightres/">
-    <soapenv:Header/>
-        <soapenv:Body>
-        <soa:simpleReservation>
-        <id>palatine-234</id>
-        <departureTime>2017-10-25</departureTime>
-        <originCountry>Paris</originCountry>
-        <destinationCountry>Nice</destinationCountry>
-    </soa:simpleReservation>
-    </soapenv:Body>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:flig="http://informatique.polytech.unice.fr/soa1/team/3/flightres/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <flig:simpleReservation>
+         <!--Optional:-->
+         <simpleItineraryInfo>
+            <departureTime>2017-10-25</departureTime>
+            <destinationCountry>United Kingdom</destinationCountry>
+            <id>ah</id>
+            <originCountry>Denmark</originCountry>
+         </simpleItineraryInfo>
+      </flig:simpleReservation>
+   </soapenv:Body>
 </soapenv:Envelope>
 ```
+### Response example
+
+```xml
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <ns2:simpleReservationResponse xmlns:ns2="http://informatique.polytech.unice.fr/soa1/team/3/flightres/">
+         <simple_booking>
+            <date>2017-10-25 22:10:53</date>
+            <price>0.0</price>
+            <startingAirport>Denmark</startingAirport>
+            <identifier>ah</identifier>
+         </simple_booking>
+      </ns2:simpleReservationResponse>
+   </soap:Body>
+</soap:Envelope>
+```
+

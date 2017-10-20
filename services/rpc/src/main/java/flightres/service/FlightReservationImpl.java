@@ -48,8 +48,8 @@ public class FlightReservationImpl implements FlightReservationService {
             FlightReservation reservation = new FlightReservation();
             float price = 0;
             try {
-                price = (float) NumberFormat.getNumberInstance(Locale.FRANCE).parse(
-                        flight.getPrice().split("$")[0]);
+                price = NumberFormat.getNumberInstance(Locale.FRANCE).parse(
+                        flight.getPrice().split("€")[1]).floatValue();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
