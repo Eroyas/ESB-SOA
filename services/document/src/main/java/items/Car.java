@@ -5,26 +5,27 @@ import org.json.JSONObject;
 public class Car {
 
     private String model;
-    private int id;
+    private String brand;
+    private double pricePerDay;
 
     public Car(){}
 
     public Car(JSONObject car) {
         this.model = car.getString("model");
-        this.id = car.getInt("id");
+        this.brand = car.getString("brand");
+        //TODO: chiant qu'on ait des int et des double
+        this.pricePerDay = (double) car.getInt("rentPricePerDay");
     }
 
     JSONObject toJson() {
         return new JSONObject()
                 .put("model", model)
-                .put("id", id);
+                .put("brand", brand);
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "model='" + model + '\'' +
-                ", id=" + id +
-                '}';
+
+    //TODO: define behavior with the price vs priceperday etc
+    public double getPrice() {
+        return pricePerDay;
     }
 }

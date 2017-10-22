@@ -4,11 +4,11 @@ import dockerized.DockerizedTest;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
-@Ignore
+// Tests unitaires du rendu 1
+
 public class BookingManagementTest extends DockerizedTest{
 
 
