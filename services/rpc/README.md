@@ -1,4 +1,4 @@
-# Car Rental Service
+# Flight Reservation Service
 Authors: 
 * Khadim Gning [(email)](khadim.gning@etu.unice.fr)
 This service is implemented using J2EE. It is structured using Maven. The descriptor is the pom.xml file. The file system hierarchy is the following.
@@ -59,7 +59,7 @@ The interface is implemented in the [FlightReservationImpl](https://github.com/E
 * Running: mvn tomee:run will deploy the created war inside a TomEE+ server, available on localhost:8080
 * The WSDL interface is available at http://localhost:8080/tta-service-rpc/FlightBookingService?wsdl
 
-### Request example
+### Simple reservation request example
 
 ```xml
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:flig="http://informatique.polytech.unice.fr/soa1/team/3/flightres/">
@@ -77,7 +77,7 @@ The interface is implemented in the [FlightReservationImpl](https://github.com/E
    </soapenv:Body>
 </soapenv:Envelope>
 ```
-### Response example
+### Simple reservation response example
 
 ```xml
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
@@ -87,6 +87,7 @@ The interface is implemented in the [FlightReservationImpl](https://github.com/E
             <date>2017-10-25 22:10:53</date>
             <price>0.0</price>
             <startingAirport>Denmark</startingAirport>
+            <endingAirport>United Kingdom</endingAirport>
             <identifier>ah</identifier>
          </simple_booking>
       </ns2:simpleReservationResponse>
@@ -94,3 +95,58 @@ The interface is implemented in the [FlightReservationImpl](https://github.com/E
 </soap:Envelope>
 ```
 
+
+### List of possible reservation request example
+
+```xml
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:flig="http://informatique.polytech.unice.fr/soa1/team/3/flightres/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <flig:listPossibleReservation>
+         <!--Optional:-->
+         <itineraryInfo>
+            <departureTime>2017-10-15</departureTime>
+            <destinationCountry>Norway</destinationCountry>
+            <id>truc</id>
+            <originCountry>France</originCountry>
+         </itineraryInfo>
+      </flig:listPossibleReservation>
+   </soapenv:Body>
+</soapenv:Envelope>
+```
+
+### List of possible reservation response example
+
+```xml
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+   <soap:Body>
+      <ns2:listPossibleReservationResponse xmlns:ns2="http://informatique.polytech.unice.fr/soa1/team/3/flightres/">
+         <booking_info>
+            <date>2017-10-27 05:24:00</date>
+            <endingAirport>Norway</endingAirport>
+            <price>269.41</price>
+            <startingAirport>France</startingAirport>
+         </booking_info>
+         <booking_info>
+            <date>2017-10-06 09:46:27</date>
+            <endingAirport>Norway</endingAirport>
+            <price>360.11</price>
+            <startingAirport>France</startingAirport>
+         </booking_info>
+         ...
+         <booking_info>
+            <date>2017-10-19 20:13:41</date>
+            <endingAirport>Norway</endingAirport>
+            <price>304.23</price>
+            <startingAirport>France</startingAirport>
+         </booking_info>
+         <booking_info>
+            <date>2017-10-21 18:32:38</date>
+            <endingAirport>Norway</endingAirport>
+            <price>379.46</price>
+            <startingAirport>France</startingAirport>
+         </booking_info>
+      </ns2:listPossibleReservationResponse>
+   </soap:Body>
+</soap:Envelope>
+```
