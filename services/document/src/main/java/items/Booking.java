@@ -2,8 +2,12 @@ package items;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import exceptions.EmptyBookingException;
+import items.assets.Status;
+import items.assets.date.DateInterval;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class Booking {
 
@@ -14,6 +18,8 @@ public class Booking {
     private Car car;
     private int id;
     private Identity identity;
+    private List<Spending> spendings;
+    private DateInterval dateInterval;
 
     @MongoObjectId
     String _id;
@@ -65,6 +71,24 @@ public class Booking {
         return result;
     }
 
+    public double getTotalPrice(){
+        double price = 0;
+        price += this.car.getPrice();
+        price += this.flight.getPrice();
+        price += this.hotel.getPrice();
+
+        return price;
+    }
+
+    public double getTotalSpendings(){
+        double price = 0;
+        for (Spending spending : this.spendings){
+            price += spending.getPrice();
+        }
+
+        return price;
+    }
+
     @Override
     public String toString() {
         return "Booking{" +
@@ -78,6 +102,7 @@ public class Booking {
                 '}';
     }
 
+    //TODO: regenerate
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

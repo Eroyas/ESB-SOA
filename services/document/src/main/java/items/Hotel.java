@@ -6,6 +6,7 @@ public class Hotel {
 
     private String name;
     private int room;
+    private double price;
 
     public Hotel() {
     }
@@ -31,5 +32,8 @@ public class Hotel {
                 '}';
     }
 
+    public double getPrice() {
+        return price;
+    }
 }
 

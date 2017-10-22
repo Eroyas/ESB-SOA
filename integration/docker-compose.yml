@@ -55,3 +55,18 @@ services:
     image: mongo:3.0
     ports:
     - "27017:27017"
+
+  booking_management:
+    container_name: tta-booking
+    build:
+      context: ./../services/document/
+    depends_on:
+      - tta-database
+    ports:
+       - "8080:8080"
+
+  tta-database:
+    container_name: tta-database
+    image: mongo:3.0
+    ports:
+      - "28017:27017"
