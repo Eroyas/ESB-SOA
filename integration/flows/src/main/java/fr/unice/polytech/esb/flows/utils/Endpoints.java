@@ -5,13 +5,10 @@ package fr.unice.polytech.esb.flows.utils;
  */
 public class Endpoints {
 
-    // Trash Output
-    public static final String CONSOLE_OUTPUT = "stream:out";
-    public static final String CONSOLE_IN_ASK_DESTINATION = "stream:in?promptMessage=Enter destination: ";
-
     // Internal message queues
     public static final String CAR_RESERVATION_Q = "activemq:car-reservation";
     public static final String FLIGHT_RESERVATION_Q = "activemq:flight-reservation";
+    public static final String HOTEL_RESERVATION_Q = "activemq:hotel-reservation";
 
     // External partners
     public static final String CAR_RESERVATION = "http:localhost:8080/tcs-cars-service/ExternalCarRentalService";
