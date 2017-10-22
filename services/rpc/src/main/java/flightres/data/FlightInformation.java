@@ -17,7 +17,7 @@ public class FlightInformation {
 
     @XmlElement
     public String getEndingAirport() { return endingAirport; }
-    public void setEndingAirport(String airport) { this.endingAirport = endingAirport; }
+    public void setEndingAirport(String airport) { this.endingAirport = airport; }
 
     @XmlElement
     public String getDate() { return date; }
