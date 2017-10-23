@@ -16,6 +16,13 @@
     </parent>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20171018</version>
+        </dependency>
+
         <!-- Dependencies required by Camel -->
         <dependency>
             <groupId>org.apache.camel</groupId>
