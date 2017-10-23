@@ -6,6 +6,7 @@ public class Flight {
 
     private String airline;
     private int number;
+    private double price;
 
     public Flight() {}
 
@@ -30,4 +31,7 @@ public class Flight {
                 '}';
     }
 
+    public double getPrice() {
+        return price;
+    }
 }
