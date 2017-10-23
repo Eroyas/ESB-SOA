@@ -17,10 +17,15 @@ public class CallHotelService extends RouteBuilder {
         from(HOTEL_RESERVATION_Q)
                 .routeId("search-matching-hotels")
                 .routeDescription("Search the hotels available for a given destination")
-
                 .setProperty("destination", simple("${body.destination}"))
                 .setProperty("duration", simple("${body.duration}"))
-                .log("Calling Webservice for hotel reservation search with destination : ${exchangeProperty[destination]} and duration : ${exchangeProperty[duration]}");
-                //TODO
+                .log("Calling Webservice for hotel reservation search with destination : ${exchangeProperty[destination]} and duration : ${exchangeProperty[duration]}")
+                .inOut(HOTEL_SERVICE);
+
+        from(HOTEL_SERVICE)
+                .setHeader("operation_name",simple("recherche"))
+                .to("HotelServiceProcessor");
+
     }
+
 }

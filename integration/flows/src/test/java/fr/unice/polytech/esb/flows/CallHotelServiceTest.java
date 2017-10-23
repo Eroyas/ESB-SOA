@@ -47,6 +47,7 @@ public class CallHotelServiceTest extends ActiveMQTest {
     @Test
     public void testHotelService() throws Exception {
         mock(HOTEL_RESERVATION_Q).expectedMessageCount(1);
+
     }
 
 }

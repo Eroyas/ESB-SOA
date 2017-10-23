@@ -2,10 +2,8 @@
 <blueprint
         xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:camelcxf="http://camel.apache.org/schema/blueprint/cxf"
-        xsi:schemaLocation="
-        http://www.osgi.org/xmlns/blueprint/v1.0.0
-        http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd" >
+        xmlns:camelcxf="http://camel.apache.org/schema/cxf/camel-cxf-2.20.0-blueprint.xsd"
+        xsi:schemaLocation=" http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd" >
 
 
     <!--
@@ -18,6 +16,21 @@
         <package>fr.unice.polytech.esb.flows</package>
     </camelContext>
 
+    <!--
+        *********************************************
+        * Configuring CXF for HotelWebservice stubs *
+        *********************************************
+    -->
+
+    <camelcxf:cxfEndpoint id="HotelServiceEndpoint"
+      address="http://localhost:9280/hotels-service/ExternalHotelFinderService"
+      serviceClass="stubs.hotelservice.ExternalHotelFinderService"/>
+
+    <bean id="HotelServiceEndpoint" class="stubs.hotelservice.ExternalHotelFinderService"/>
+
+    <bean id="HotelServiceProcessor" class="fr.unice.polytech.esb.flows.processors.HotelServiceProcessor">
+        <property name="HotelServiceEndpoint" ref="HotelServiceEndpoint"/>
+    </bean>
 
     <!--
         *************************************************************
