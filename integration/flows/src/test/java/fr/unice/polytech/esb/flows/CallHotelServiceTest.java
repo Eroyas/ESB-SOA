@@ -42,21 +42,6 @@ public class CallHotelServiceTest extends ActiveMQTest {
         };
     }
 
-    @BeforeClass
-    public static void doOnlyOnce() {
-        hotelFinderServiceClient = HotelServiceClientFactory.newHotelFinderServiceClient("localhost", "9280");
-    }
-
-    @Before
-    public void initRequest() {
-        hotelRequest = ""+
-            "<cook:recherche xmlns:cook=\"http://informatique.polytech.unice.fr/soa1/cookbook/\">\n"+
-                "  <lieu>Paris</lieu>\n"+
-                "  <dure>1</dure>\n"+
-                "  <arg2>false</arg2>\n"+
-            "</cook:recherche>";
-    }
-
     @Before
     public void initMocks() {
         resetMocks();
@@ -72,11 +57,8 @@ public class CallHotelServiceTest extends ActiveMQTest {
     public void testHotelService() throws Exception {
         mock(HOTEL_RESERVATION_Q).expectedMessageCount(1);
         mock(HOTEL_SEARCH).expectedMessageCount(1);
-
         String message = template.requestBody(HOTEL_RESERVATION_Q, "Paris", String.class);
 
-        List<Hotel> hotels = hotelFinderServiceClient.recherche("Paris", 1, true);
-        assertThat(hotels.size(), greaterThan(0));
     }
 
 }
