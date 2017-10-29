@@ -6,6 +6,7 @@ package fr.unice.polytech.esb.flows.utils;
 public class Endpoints {
 
     // Internal message queues
+    public static final String MESSAGE_GENERATION = "activemq:message-generation";
     public static final String CAR_RESERVATION_Q = "activemq:car-reservation";
     public static final String FLIGHT_RESERVATION_Q = "activemq:flight-reservation";
     public static final String HOTEL_RESERVATION_Q = "activemq:hotel-reservation";
