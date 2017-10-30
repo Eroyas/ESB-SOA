@@ -3,6 +3,7 @@ package items.assets.date;
 public class Date {
 
     private int day;
+    // Every month is 30 days long for simplification
     private int month;
     private int year;
 
@@ -13,6 +14,10 @@ public class Date {
         this.day = day;
         this.month = month;
         this.year = year;
+    }
+
+    public int getAbsolute(){
+        return this.day + this.month * 30 + this.year * 365;
     }
 
     public int getDay() {
