@@ -14,9 +14,12 @@ public class Booking {
     private Status status;
     @JsonProperty("flight")
     private Flight flight;
+    @JsonProperty("hotel")
     private Hotel hotel;
+    @JsonProperty("car")
     private Car car;
     private int id;
+    @JsonProperty("identity")
     private Identity identity;
     private List<Spending> spendings;
     private DateInterval dateInterval;
