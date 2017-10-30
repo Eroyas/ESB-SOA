@@ -17,7 +17,7 @@ public class Endpoints {
     public static final String CAR_RESERVATION = "http:localhost:8080/tcs-cars-service/ExternalCarRentalService";
     public static final String FLIGHT_RESERVATION = "http:localhost:8080/tcs-service-document/registry";
     public static final String HOTEL_SEARCH = "http:localhost:8080/hotels-service/ExternalHotelFinderService";
-    
+
     public static final String CAR_RENTAL = "http:localhost:8080/tta-car-and-hotel/car-rental";
 
 }
