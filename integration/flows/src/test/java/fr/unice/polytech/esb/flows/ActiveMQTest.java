@@ -1,5 +1,6 @@
 package fr.unice.polytech.esb.flows;
 
+import fr.unice.polytech.esb.flows.CarServices.CallCarExternalPartners;
 import fr.unice.polytech.esb.flows.utils.Endpoints;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.camel.builder.RouteBuilder;
