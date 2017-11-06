@@ -1,6 +1,6 @@
 package network;
 
-import handler.Handler;
+import handlers.BookingHandler;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
@@ -9,11 +9,11 @@ import javax.ws.rs.core.Response;
 
 @Path("/booking")
 @Produces(MediaType.APPLICATION_JSON)
-public class ReservationService {
+public class BookingService {
 
     private static final int INDENT_FACTOR = 2;
-    private Handler handler = new Handler();
-    //TODO: est-ce-que ça c'est mauvais? si oui? est-ce VRAIMENT mauvais?
+    private BookingHandler bookingHandler = new BookingHandler();
+
     public static MongoConnector mongoConnector = new MongoConnector();
 
     // Testing availability scope.
@@ -32,16 +32,19 @@ public class ReservationService {
             JSONObject answer = null;
             switch ((obj.getString("type"))) {
                 case "submit":
-                    answer = handler.submitBooking(obj.getJSONObject("booking"));
+                    answer = bookingHandler.submitBooking(obj.getJSONObject("booking"));
                     break;
                 case "validate":
-                    answer = handler.approveBooking(obj.getInt("id"));
+                    answer = bookingHandler.approveBooking(obj.getInt("travelId"));
                     break;
                 case "reject":
-                    answer = handler.rejectBooking(obj.getInt("id"));
+                    answer = bookingHandler.rejectBooking(obj.getInt("travelId"));
                     break;
                 case "retrieve":
-                    answer = handler.retrieveBooking(obj.getInt("id"));
+                    answer = bookingHandler.retrieveBooking(obj.getInt("travelId"));
+                    break;
+                case "justify":
+                    //TODO: implem
                     break;
             }
 

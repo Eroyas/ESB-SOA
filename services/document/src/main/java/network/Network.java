@@ -9,6 +9,8 @@ class Network {
 
     static final String DATABASE = "tta-database";
 
-    static final String COLLECTION = "bookings";
+    static final String COLLECTION_BOOKINGS = "bookings";
+
+    static final String COLLECTION_PAYMENTS = "payments";
 
 }
