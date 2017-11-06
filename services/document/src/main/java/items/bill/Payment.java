@@ -15,11 +15,12 @@ public class Payment {
 
     public Payment(){}
 
-    public Payment(int paymentId, int customerId, int travelId, int amount, Bill bill) {
+    public Payment(int paymentId, int customerId, int travelId, int amount, Bill bill, String reason) {
         this.paymentId = paymentId;
         this.customerId = customerId;
         this.travelId = travelId;
         this.amount = amount;
+        this.reason = reason;
         this.bill = bill;
     }
 
@@ -29,6 +30,7 @@ public class Payment {
         this.travelId = json.getInt("travelId");
         this.amount = json.getInt("amount");
         this.bill = new Bill(json.getJSONObject("bill"));
+        this.reason = json.getString("reason");
     }
 
     public JSONObject toJson(){

@@ -14,13 +14,14 @@ public class Car {
         this.model = car.getString("model");
         this.brand = car.getString("brand");
         //TODO: chiant qu'on ait des int et des double
-        this.pricePerDay = (double) car.getInt("rentPricePerDay");
+        this.pricePerDay = (double) car.getInt("pricePerDay");
     }
 
     JSONObject toJson() {
         return new JSONObject()
                 .put("model", model)
-                .put("brand", brand);
+                .put("brand", brand)
+                .put("pricePerDay", pricePerDay);
     }
 
 

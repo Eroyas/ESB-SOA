@@ -32,7 +32,7 @@ public class BillService {
             JSONObject answer = null;
             switch ((obj.getString("type"))) {
                 case "submit":
-                    answer = handler.submitBill(obj.getJSONObject("booking"));
+                    answer = handler.submitBill(obj.getJSONObject("payment"));
                     break;
             }
 
