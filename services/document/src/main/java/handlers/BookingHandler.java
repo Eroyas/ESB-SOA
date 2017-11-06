@@ -1,5 +1,6 @@
 package handlers;
 
+import exceptions.CustomerNotFoundException;
 import exceptions.EmptyBookingException;
 import items.bill.Payment;
 import items.booking.Booking;
@@ -24,7 +25,7 @@ public class BookingHandler {
                     .put("inserted", true)
                     .put("booking", booking.toJson());
         }
-        catch (EmptyBookingException e)
+        catch (EmptyBookingException | CustomerNotFoundException e)
         {
             System.err.println(e.getMessage());
             return new JSONObject()

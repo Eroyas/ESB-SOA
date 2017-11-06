@@ -13,7 +13,6 @@ public class Car {
     public Car(JSONObject car) {
         this.model = car.getString("model");
         this.brand = car.getString("brand");
-        //TODO: chiant qu'on ait des int et des double
         this.pricePerDay = (double) car.getInt("pricePerDay");
     }
 

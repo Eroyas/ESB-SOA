@@ -1,8 +1,10 @@
 package items.booking;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import exceptions.CustomerNotFoundException;
 import exceptions.EmptyBookingException;
 import items.assets.Customer;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Booking {
@@ -20,24 +22,24 @@ public class Booking {
 
     public Booking(){}
 
-    public Booking(JSONObject booking) throws EmptyBookingException {
+    public Booking(JSONObject booking) throws EmptyBookingException, CustomerNotFoundException {
         this.status = Status.WAITING_APPROVAL;
         try {
             this.flight = new Flight(booking.getJSONObject("flight"));
         }
-        catch (NullPointerException e){
+        catch (JSONException e){
             this.flight = null;
         }
         try {
-            this.hotel = new Hotel(booking.optJSONObject("hotel"));
+            this.hotel = new Hotel(booking.getJSONObject("hotel"));
         }
-        catch (NullPointerException e){
+        catch (JSONException e){
             this.hotel = null;
         }
         try {
-            this.car = new Car(booking.optJSONObject("car"));
+            this.car = new Car(booking.getJSONObject("car"));
         }
-        catch (NullPointerException e){
+        catch (JSONException e){
             this.car = null;
         }
         this.travelId = booking.getInt("travelId");
@@ -46,10 +48,10 @@ public class Booking {
             throw new EmptyBookingException();
         }
         try{
-            this.customer = new Customer(booking.optJSONObject("customer"));
+            this.customer = new Customer(booking.getJSONObject("customer"));
         }
-        catch(NullPointerException e){
-            this.customer = null;
+        catch(JSONException e){
+            throw new CustomerNotFoundException();
         }
     }
 
@@ -67,6 +69,7 @@ public class Booking {
                 result.put("hotel", this.hotel.toJson());
         if (this.car != null)
                 result.put("car", this.car.toJson());
+
         return result;
     }
 
