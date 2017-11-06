@@ -26,6 +26,7 @@ services:
         - "1099:1099"
         - "61616:61616"
         - "44444:44444"
+        - "8989:8989"
 
   cars-service:
     container_name: telegram-cars-services
@@ -56,14 +57,14 @@ services:
     ports:
     - "27017:27017"
 
-#  booking_management:
-#    container_name: tta-booking
-#    build:
-#      context: ./../services/document/
-#    depends_on:
-#      - tta-database
-#    ports:
-#       - "8080:8080"
+  booking-management:
+    container_name: tta-booking
+    build:
+      context: ./../services/document/
+    depends_on:
+      - tta-database
+    ports:
+       - "8080:8080"
 
   tta-database:
     container_name: tta-database

@@ -28,7 +28,21 @@ public class MongoConnector {
         }
         try {
             Jongo jongo = new Jongo(this.mongoClient.getDB(Network.DATABASE));
-            return jongo.getCollection(Network.COLLECTION);
+            return jongo.getCollection(Network.COLLECTION_BOOKINGS);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public MongoCollection getPayments() {
+        if (this.mongoClient == null){
+            this.initMongoClient();
+        }
+        try {
+            Jongo jongo = new Jongo(this.mongoClient.getDB(Network.DATABASE));
+            return jongo.getCollection(Network.COLLECTION_PAYMENTS);
         }
         catch (Exception e){
             e.printStackTrace();

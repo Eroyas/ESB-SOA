@@ -1,9 +1,10 @@
-package items.assets;
+package items.booking;
 
 public enum Status {
     WAITING_APPROVAL("WAITING_APPROVAL"),
     APPROVED("APPROVED"),
-    REJECTED("REJECTED");
+    REJECTED("REJECTED"),
+    ARCHIVED("ARCHIVED");
 
     String str;
 

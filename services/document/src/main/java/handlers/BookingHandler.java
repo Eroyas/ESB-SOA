@@ -1,18 +1,23 @@
-package handler;
+package handlers;
 
+import exceptions.CustomerNotFoundException;
 import exceptions.EmptyBookingException;
-import items.Booking;
-import network.ReservationService;
+import items.bill.Payment;
+import items.booking.Booking;
+import network.BookingService;
 import org.jongo.MongoCollection;
+import org.jongo.MongoCursor;
 import org.json.JSONObject;
 
-public class Handler {
+import java.util.ArrayList;
+import java.util.List;
 
-    //TODO: contraindre la db pour éviter doublons, pas réellement scope
+public class BookingHandler {
+
     public JSONObject submitBooking(JSONObject bookingAsJson)
     {
         try {
-            MongoCollection bookings = ReservationService.mongoConnector.getBookings();
+            MongoCollection bookings = BookingService.mongoConnector.getBookings();
             Booking booking = new Booking(bookingAsJson);
             bookings.insert(booking);
 
@@ -20,7 +25,7 @@ public class Handler {
                     .put("inserted", true)
                     .put("booking", booking.toJson());
         }
-        catch (EmptyBookingException e)
+        catch (EmptyBookingException | CustomerNotFoundException e)
         {
             System.err.println(e.getMessage());
             return new JSONObject()
@@ -39,11 +44,11 @@ public class Handler {
     public JSONObject approveBooking(int idToValidate)
     {
         try {
-            MongoCollection bookings = ReservationService.mongoConnector.getBookings();
-            bookings.update("{id:#}", idToValidate).upsert().multi().with("{$set: {'status': 'APPROVED'}}");
+            MongoCollection bookings = BookingService.mongoConnector.getBookings();
+            bookings.update("{travelId:#}", idToValidate).upsert().multi().with("{$set: {'status': 'APPROVED'}}");
 
             return new JSONObject()
-                    .put("id", idToValidate)
+                    .put("travelId", idToValidate)
                     .put("approved", true);
         }
         catch (Exception e)
@@ -51,7 +56,7 @@ public class Handler {
             e.printStackTrace();
             return new JSONObject()
                     .put("approved", false)
-                    .put("id", idToValidate)
+                    .put("travelId", idToValidate)
                     .put("message", "Error occured: " + e.getMessage());
         }
     }
@@ -59,19 +64,19 @@ public class Handler {
     public JSONObject rejectBooking(int idToReject)
     {
         try {
-            MongoCollection bookings = ReservationService.mongoConnector.getBookings();
-            bookings.update("{id:#}", idToReject).with("{$set: {'status': 'REJECTED'}}");
+            MongoCollection bookings = BookingService.mongoConnector.getBookings();
+            bookings.update("{travelId:#}", idToReject).with("{$set: {'status': 'REJECTED'}}");
 
             return new JSONObject()
                     .put("rejected", true)
-                    .put("id", idToReject);
+                    .put("travelId", idToReject);
         }
         catch (Exception e)
         {
             e.printStackTrace();
             return new JSONObject()
                     .put("rejected", false)
-                    .put("id", idToReject)
+                    .put("travelId", idToReject)
                     .put("message", "Error occured: " + e.getMessage());
         }
     }
@@ -79,10 +84,19 @@ public class Handler {
     public JSONObject retrieveBooking(int idToRetrieve)
     {
         try {
-            MongoCollection bookings = ReservationService.mongoConnector.getBookings();
-            Booking booking = bookings.findOne("{id:#}", idToRetrieve).as(Booking.class);
+            MongoCollection bookings = BookingService.mongoConnector.getBookings();
+            MongoCollection payments = BookingService.mongoConnector.getPayments();
+            Booking booking = bookings.findOne("{travelId:#}", idToRetrieve).as(Booking.class);
 
-            return booking.toJson().put("retrieved", true);
+            MongoCursor<Payment> cursor = payments.find("{travelId:#}", idToRetrieve).as(Payment.class);
+            List<Payment> bookingPayments = new ArrayList<>();
+            for(Payment payment : cursor)
+                bookingPayments.add(payment);
+
+            return new JSONObject()
+                    .put("retrieved", true)
+                    .put("booking", booking.toJson())
+                    .put("payments", bookingPayments);
         }
         catch (Exception e)
         {
