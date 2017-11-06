@@ -9,4 +9,7 @@ RUN mkdir -p camel/input camel/output
 # Deploying technical flows
 COPY ./target/flows-1.0.jar ./deploy/.
 
+# Copy the demo input file
+COPY ./demo/test.csv ./camel/.
+
 EXPOSE 8181 8101 1099 61616 44444
