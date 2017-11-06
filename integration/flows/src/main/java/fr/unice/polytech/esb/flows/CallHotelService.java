@@ -33,7 +33,7 @@ public class CallHotelService extends RouteBuilder {
 
     private static Processor callHotelWebService = (Exchange exchange) -> {
 
-        HotelFinderService hotelFinderService = HotelServiceClientFactory.getInstance("localhost", "9280");
+        HotelFinderService hotelFinderService = HotelServiceClientFactory.getInstance("hotels-services", "8080");
 
         Message inMessage = exchange.getIn();
         String operationName = inMessage.getHeader("operation_name", String.class);
