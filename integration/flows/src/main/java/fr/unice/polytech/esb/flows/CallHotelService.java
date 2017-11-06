@@ -1,5 +1,8 @@
 package fr.unice.polytech.esb.flows;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Message;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import stubs.hotelservice.Hotel;
 import stubs.hotelservice.HotelFinderService;
@@ -17,15 +20,31 @@ public class CallHotelService extends RouteBuilder {
         from(HOTEL_RESERVATION_Q)
                 .routeId("search-matching-hotels")
                 .routeDescription("Search the hotels available for a given destination")
-                .setProperty("destination", simple("${body.destination}"))
-                .setProperty("duration", simple("${body.duration}"))
+                .setProperty("destination", simple("${body.paysArrive}"))
+                .setProperty("duration", simple("${body.durationInDay}"))
                 .log("Calling Webservice for hotel reservation search with destination : ${exchangeProperty[destination]} and duration : ${exchangeProperty[duration]}")
                 .inOut(HOTEL_SERVICE);
 
         from(HOTEL_SERVICE)
                 .setHeader("operation_name",simple("recherche"))
-                .to("HotelServiceProcessor");
+                .process(callHotelWebService);
 
     }
+
+    private static Processor callHotelWebService = (Exchange exchange) -> {
+
+        HotelFinderService hotelFinderService = HotelServiceClientFactory.getInstance("localhost", "9280");
+
+        Message inMessage = exchange.getIn();
+        String operationName = inMessage.getHeader("operation_name", String.class);
+
+        if ("recherche".equals(operationName)) {
+            String destination = exchange.getProperty("destination",String.class);
+            int duration = exchange.getProperty("duration", Integer.class);
+            System.out.println("Calling recherche with argument destination : "+destination+" and duration : "+duration);
+            List<Hotel> hotels = hotelFinderService.recherche(destination, duration, false);
+            System.out.println("Got result from recherche : "+ hotels.size());
+        }
+    };
 
 }
