@@ -16,7 +16,7 @@ public class HotelServiceClientFactory {
             URL wsdlLocation = HotelServiceClientFactory.class.getResource("/WSDLs/ExternalHotelFinderService.wsdl");
             ExternalHotelFinderService factory = new ExternalHotelFinderService(wsdlLocation);
             client = factory.getExternalHotelFinderPort();
-            String address = "http://" + host + ":" + port + "/hotels-service";
+            String address = "http://" + host + ":" + port + "/hotels-service/ExternalHotelFinderService";
             ((BindingProvider) client).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, address);
             clients.put(host + ":" + port, client);
         }
