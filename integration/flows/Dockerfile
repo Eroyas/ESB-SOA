@@ -1,4 +1,4 @@
-FROM lazorex/esb
+FROM petitroll/esb
 
 # Build: docker build -t esb .
 # Run:   docker run -v ./_in:/servicemix/camel/input -v ./_out:/servicemix/camel/output esb

@@ -17,22 +17,6 @@
     </camelContext>
 
     <!--
-        *********************************************
-        * Configuring CXF for HotelWebservice stubs *
-        *********************************************
-    -->
-
-    <camelcxf:cxfEndpoint id="HotelServiceEndpoint"
-      address="http://localhost:9280/hotels-service/ExternalHotelFinderService"
-      serviceClass="stubs.hotelservice.ExternalHotelFinderService"/>
-
-    <bean id="HotelServiceEndpoint" class="stubs.hotelservice.ExternalHotelFinderService"/>
-
-    <bean id="HotelServiceProcessor" class="fr.unice.polytech.esb.flows.processors.HotelServiceProcessor">
-        <property name="HotelServiceEndpoint" ref="HotelServiceEndpoint"/>
-    </bean>
-
-    <!--
         *************************************************************
         * Configuring ActiveMQ for trusted objects & Authentication *
         *************************************************************
