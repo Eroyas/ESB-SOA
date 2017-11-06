@@ -15,6 +15,14 @@ set -e
 cd integration
 set +e
 mvn clean package -DskipTests
+cd ..
+
+echo "Building maven booking service project..."
+set -e
+cd services/document
+set +e
+mvn clean package -DskipTests
+cd ../../integration
 
 # Check for errors on last call
 if [ "$?" = "0" ]; then

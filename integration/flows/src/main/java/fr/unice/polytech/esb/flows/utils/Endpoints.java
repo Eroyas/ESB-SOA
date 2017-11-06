@@ -15,10 +15,14 @@ public class Endpoints {
     public static final String CAR_INTERNAL_RESERVATION_Q = "activemq:car-internal-reservation";
     public static final String FLIGHT_RESERVATION_Q = "activemq:flight-reservation";
     public static final String HOTEL_RESERVATION_Q = "activemq:hotel-reservation";
+    public static final String BOOKING_Q = "activemq:booking";
 
     // External partners
     public static final String CAR_RESERVATION = "http:localhost:8080/tcs-cars-service/ExternalCarRentalService";
     public static final String FLIGHT_RESERVATION = "http:localhost:8080/tcs-service-document/registry";
+
     public static final String HOTEL_SERVICE = "direct:HotelServiceEndpoint";
+
+    public static final String BOOKING_SERVICE = "direct:BookingService";
 
 }

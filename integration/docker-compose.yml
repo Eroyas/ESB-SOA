@@ -57,7 +57,7 @@ services:
     ports:
     - "27017:27017"
 
-  booking_management:
+  booking-management:
     container_name: tta-booking
     build:
       context: ./../services/document/
