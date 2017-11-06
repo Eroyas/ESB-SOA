@@ -1,16 +1,13 @@
-package items;
+package items.booking;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import exceptions.EmptyBookingException;
-import items.assets.Status;
-import items.assets.date.DateInterval;
-import org.jongo.marshall.jackson.oid.MongoObjectId;
+import items.assets.Customer;
 import org.json.JSONObject;
-
-import java.util.List;
 
 public class Booking {
 
+    private int travelId;
     private Status status;
     @JsonProperty("flight")
     private Flight flight;
@@ -18,14 +15,8 @@ public class Booking {
     private Hotel hotel;
     @JsonProperty("car")
     private Car car;
-    private int id;
-    @JsonProperty("identity")
-    private Identity identity;
-    private List<Spending> spendings;
-    private DateInterval dateInterval;
-
-    @MongoObjectId
-    String _id;
+    @JsonProperty("customer")
+    private Customer customer;
 
     public Booking(){}
 
@@ -49,11 +40,16 @@ public class Booking {
         catch (NullPointerException e){
             this.car = null;
         }
-        this.id = booking.getInt("id");
-        this.identity = new Identity(booking.getJSONObject("identity"));
+        this.travelId = booking.getInt("travelId");
         if (this.flight == null && this.hotel == null && this.car == null)
         {
             throw new EmptyBookingException();
+        }
+        try{
+            this.customer = new Customer(booking.optJSONObject("customer"));
+        }
+        catch(NullPointerException e){
+            this.customer = null;
         }
     }
 
@@ -62,8 +58,8 @@ public class Booking {
         JSONObject result = new JSONObject();
 
         result.put("status", this.status.getStr());
-        result.put("id", this.id);
-        result.put("identity", this.identity.toJson());
+        result.put("travelId", this.travelId);
+        result.put("customer", this.customer.toJson());
 
         if (this.flight != null)
                 result.put("flight", this.flight.toJson());
@@ -74,38 +70,30 @@ public class Booking {
         return result;
     }
 
-    public double getTotalPrice(){
-        double price = 0;
-        price += this.car.getPrice();
-        price += this.flight.getPrice();
-        price += this.hotel.getPrice();
-
-        return price;
+    public int getTravelId() {
+        return travelId;
     }
 
-    public double getTotalSpendings(){
-        double price = 0;
-        for (Spending spending : this.spendings){
-            price += spending.getPrice();
-        }
-
-        return price;
+    public Status getStatus() {
+        return status;
     }
 
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "status=" + status +
-                ", flight=" + flight +
-                ", hotel=" + hotel +
-                ", car=" + car +
-                ", id=" + id +
-                ", identity=" + identity +
-                ", _id='" + _id + '\'' +
-                '}';
+    public Flight getFlight() {
+        return flight;
     }
 
-    //TODO: regenerate
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,25 +101,35 @@ public class Booking {
 
         Booking booking = (Booking) o;
 
-        if (id != booking.id) return false;
+        if (travelId != booking.travelId) return false;
         if (status != booking.status) return false;
         if (flight != null ? !flight.equals(booking.flight) : booking.flight != null) return false;
         if (hotel != null ? !hotel.equals(booking.hotel) : booking.hotel != null) return false;
         if (car != null ? !car.equals(booking.car) : booking.car != null) return false;
-        if (identity != null ? !identity.equals(booking.identity) : booking.identity != null) return false;
-        return _id != null ? _id.equals(booking._id) : booking._id == null;
+        return customer.equals(booking.customer);
     }
 
     @Override
     public int hashCode() {
-        int result = status != null ? status.hashCode() : 0;
+        int result = travelId;
+        result = 31 * result + status.hashCode();
         result = 31 * result + (flight != null ? flight.hashCode() : 0);
         result = 31 * result + (hotel != null ? hotel.hashCode() : 0);
         result = 31 * result + (car != null ? car.hashCode() : 0);
-        result = 31 * result + id;
-        result = 31 * result + (identity != null ? identity.hashCode() : 0);
-        result = 31 * result + (_id != null ? _id.hashCode() : 0);
+        result = 31 * result + customer.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "travelId=" + travelId +
+                ", status=" + status +
+                ", flight=" + flight +
+                ", hotel=" + hotel +
+                ", car=" + car +
+                ", customer=" + customer +
+                '}';
     }
 
 }

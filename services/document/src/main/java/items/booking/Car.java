@@ -1,4 +1,4 @@
-package items;
+package items.booking;
 
 import org.json.JSONObject;
 

@@ -1,4 +1,4 @@
-package items;
+package items.booking;
 
 import org.json.JSONObject;
 
@@ -8,8 +8,7 @@ public class Hotel {
     private int room;
     private double price;
 
-    public Hotel() {
-    }
+    public Hotel() {}
 
     public Hotel(JSONObject data) {
         System.out.println("Hotel: " + data);
