@@ -71,11 +71,28 @@
             <version>1.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            <version>2.0.1</version>
+        </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Import-Package>!org.json,*</Import-Package>
+                        <Embed-Dependency>json</Embed-Dependency>
+                    </instructions>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-codegen-plugin</artifactId>
@@ -91,7 +108,9 @@
                                     <wsdl>${basedir}/src/main/resources/WSDLs/ExternalHotelFinderService.wsdl</wsdl>
                                     <extraargs>
                                         <extraarg>-p</extraarg>
-                                        <extraarg>http://informatique.polytech.unice.fr/soa1/cookbook/=stubs.hotelservice</extraarg>
+                                        <extraarg>
+                                            http://informatique.polytech.unice.fr/soa1/cookbook/=stubs.hotelservice
+                                        </extraarg>
                                     </extraargs>
                                 </wsdlOption>
                             </wsdlOptions>

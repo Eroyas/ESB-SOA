@@ -7,6 +7,7 @@ public class Identity {
     private String firstName;
     private String lastName;
     private String email;
+    private int customerId;
 
     public Identity(){}
 
@@ -15,21 +16,15 @@ public class Identity {
         this.firstName = data.getString("firstName");
         this.lastName = data.getString("lastName");
         this.email = data.getString("email");
+        this.customerId = data.getInt("customerId");
     }
 
     JSONObject toJson(){
         return new JSONObject()
                 .put("firstName", firstName)
                 .put("lastName", lastName)
-                .put("email", email);
+                .put("email", email)
+                .put("customerId", customerId);
     }
 
-    @Override
-    public String toString() {
-        return "Identity{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 }
