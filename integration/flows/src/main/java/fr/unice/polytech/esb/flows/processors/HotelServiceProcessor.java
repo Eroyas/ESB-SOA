@@ -23,7 +23,7 @@ public class HotelServiceProcessor implements Processor {
     @Override
     public void process(Exchange exchange) throws Exception {
         Message inMessage = exchange.getIn();
-        String operationName = inMessage.getHeader("opeation_name", String.class);
+        String operationName = inMessage.getHeader("operation_name", String.class);
 
         if ("recherche".equals(operationName)) {
             String destination = exchange.getProperty("destination",String.class);
