@@ -1,12 +1,14 @@
 package fr.unice.polytech.esb.flows.CarServices;
 
+import fr.unice.polytech.esb.flows.CarServices.data.CarRequest;
 import fr.unice.polytech.esb.flows.CarServices.utils.CarReservationHelper;
 import static fr.unice.polytech.esb.flows.utils.Endpoints.*;
 
-import fr.unice.polytech.esb.flows.CarServices.utils.ServicesAggregationStrategy;
+import fr.unice.polytech.esb.flows.CarServices.utils.CarServicesAggregationStrategy;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.Processor;
 import org.apache.camel.Exchange;
+import org.apache.camel.model.dataformat.JsonLibrary;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,20 +27,25 @@ public class CallCarExternalPartners extends RouteBuilder {
     @Override
     public void configure() throws Exception {
 
+        /****************************************************************
+         **          Car reservation (aggregation of services)         **
+         ****************************************************************/
+
         from(CAR_RESERVATION_Q)
                 .routeId("car-reservation-call")
                 .routeDescription("Call the car reservation service")
 
-                .setProperty("car-reservation-info", simple("${body}"))
-                /*.bean(CarReservationMessageGenerator.class,
-                        "write(${body})")*/
+                .unmarshal().json(JsonLibrary.Jackson, CarRequest.class)
 
-                .multicast(new ServicesAggregationStrategy())
+                .multicast(new CarServicesAggregationStrategy())
                     .parallelProcessing(true)
                     .executorService(WORKERS)
                     .timeout(1000)
                     .to(CAR_EXTERNAL_RESERVATION_Q, CAR_INTERNAL_RESERVATION_Q)
                     .end()
+
+                .setHeader("Content-Type", constant("application/json"))
+                .marshal().json(JsonLibrary.Jackson)
         ;
 
         /****************************************************************

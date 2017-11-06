@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Eroyas on 30/10/17.
  */
-public class ServicesAggregationStrategy implements AggregationStrategy{
+public class CarServicesAggregationStrategy implements AggregationStrategy{
 
     @Override
     public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
@@ -22,3 +22,5 @@ public class ServicesAggregationStrategy implements AggregationStrategy{
     }
 
 }
+
+// https://github.com/apache/camel/blob/master/camel-core/src/main/docs/eips/aggregate-eip.adoc
