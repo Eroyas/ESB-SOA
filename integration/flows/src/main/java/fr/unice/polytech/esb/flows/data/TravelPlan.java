@@ -6,8 +6,8 @@ public class TravelPlan implements Serializable {
     private String paysDepart;
     private String paysArrive;
     private int durationInDay;
+    private String DateDepart;
 
-    // private String DateDepart; Je laisse comme ça pour l'instant. vu que j'intèqre uniquement mon
     // private String DateArrive; service pour la démo. On utilisera une lib comme Joda pour gérer les dates proprement
 
 
@@ -34,6 +34,10 @@ public class TravelPlan implements Serializable {
     public void setDurationInDay(int durationInDay) {
         this.durationInDay = durationInDay;
     }
+
+    public String getDateDepart() { return DateDepart; }
+
+    public void setDateDepart(String dateDepart) { DateDepart = dateDepart; }
 
     @Override
     public boolean equals(Object o) {

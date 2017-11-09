@@ -20,7 +20,7 @@ public class FlightReservationImpl implements FlightReservationService {
     {
         String origin = request.getOriginCountry();
         String destination = request.getDestinationCountry();
-        List<FlightInformation> listOfFlights = lookupFlights(origin, destination);
+        List<FlightInformation> listOfFlights = lookupFlights(origin, destination, request.getDepartureTime());
         return listOfFlights;
     }
 
@@ -36,9 +36,9 @@ public class FlightReservationImpl implements FlightReservationService {
         return result;
     }
 
-    private List<FlightInformation> lookupFlights(String origin, String destination){
-        List<Flight> flights = FlightAgency.getAllFlightsBetween(origin, destination);
-        List<FlightInformation> flightsInfos = new ArrayList<>();
+    private List<FlightInformation> lookupFlights(String origin, String destination, String date){
+        List<Flight> flights = FlightAgency.getAllFlightsBetween(origin, destination, date);
+        List<FlightInformation> flightsInfo = new ArrayList<>();
         for(Flight flight: flights){
             FlightInformation information = new FlightInformation();
             float price = 0;
@@ -52,10 +52,10 @@ public class FlightReservationImpl implements FlightReservationService {
             information.setEndingAirport(destination);
             information.setDate(flight.getStartDate());
             information.setPrice(price);
-            flightsInfos.add(information);
+            flightsInfo.add(information);
         }
 
-        return flightsInfos;
+        return flightsInfo;
     }
 
     /***************************************

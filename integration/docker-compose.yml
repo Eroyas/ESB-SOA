@@ -18,7 +18,8 @@ services:
         context: ./flows
       depends_on:
         - cars-service
-        - flights-service
+        - external-flights-service
+        - internal-flights-service
         - hotels-services
       ports:
         - "8181:8181"
@@ -35,14 +36,26 @@ services:
     ports:
       - "9080:8080"
 
-  flights-service:
+  external-flights-service:
     container_name: telegram-flights-services
     build:
       context: ./external-services/flights
+    environment:
+          - db_host=flights-database
+          - db_port=27017
     depends_on:
+      - flights-database
+    links:
       - flights-database
     ports:
       - "9180:8080"
+
+  internal-flights-service:
+    container_name: tta-flight-services
+    build:
+          context: ../services/rpc
+    ports:
+      - "9380:8080"
 
   hotels-services:
     container_name: telegram-hotels-services
@@ -54,8 +67,10 @@ services:
   flights-database:
     container_name: flights-database
     image: mongo:3.0
+    volumes:
+      - "./external-services/flights/resources/flights.json:/external-flights-service/resources/flights.json"
     ports:
-    - "27017:27017"
+      - "27017:27017"
 
   booking-management:
     container_name: tta-booking

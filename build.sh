@@ -22,6 +22,14 @@ set -e
 cd services/document
 set +e
 mvn clean package -DskipTests
+
+echo "Building maven flight service project..."
+set -e
+cd ../rpc
+set +e
+mvn clean package -DskipTests
+
+
 cd ../../integration
 
 # Check for errors on last call
