@@ -7,10 +7,15 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static fr.unice.polytech.esb.flows.utils.Endpoints.*;
 
-public class NIoRoutes extends RouteBuilder {
+public class  NIoRoutes extends RouteBuilder {
+
+    private static final ExecutorService WORKERS = Executors.newFixedThreadPool(10);
+
     @Override
     public void configure() throws Exception {
         from(CSV_INPUT_TRAVEL_PLAN)
@@ -23,7 +28,11 @@ public class NIoRoutes extends RouteBuilder {
                 .split(body())
                     .process(csv2TravelPlanData)
                     .log("Travel Plan object built ! [PDep: ${body.paysDepart}, PArr: ${body.paysArrive}, duration: ${body.durationInDay}]")
-                    .to(HOTEL_RESERVATION_Q);
+                .multicast()
+                    .parallelProcessing().executorService(WORKERS)
+                    //TODO: aggregate result
+                    .to(SEARCH_FLIGHT, HOTEL_RESERVATION_Q);
+
     }
 
     private static Processor csv2TravelPlanData = (Exchange exchange) -> {
@@ -31,6 +40,7 @@ public class NIoRoutes extends RouteBuilder {
         TravelPlan tp = new TravelPlan();
         tp.setPaysDepart((String) data.get("PaysDepart"));
         tp.setPaysArrive((String) data.get("PaysArrive"));
+        tp.setDateDepart((String) data.get("DateDepart"));
 
         String durationInDays = (String) data.get("duration");
         int duration = 1;

@@ -1,3 +1,10 @@
 activemq-data
 
-flows/src/main/java/stubs/*
+/flows/src/main/java/stubs/hotelservice/RechercheResponse.java
+/flows/src/main/java/stubs/hotelservice/ObjectFactory.java
+/flows/src/main/java/stubs/hotelservice/Hotel.java
+/flows/src/main/java/stubs/hotelservice/HotelFinderService.java
+/flows/src/main/java/stubs/hotelservice/package-info.java
+/flows/src/main/java/stubs/hotelservice/Recherche.java
+/flows/src/main/java/stubs/hotelservice/ExternalHotelFinderService.java
+

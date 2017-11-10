@@ -19,13 +19,22 @@ public class FlightAgency {
         return agency.get(origin);
     }
 
-    public  static List<Flight> getAllFlightsBetween(String origin, String arrival)
+    public  static List<Flight> getAllFlightsBetween(String origin, String arrival, String date)
     {
+        if(!agency.containsKey(origin))
+            return new ArrayList<>();
+
         List<Flight> listOfFlights = agency.get(origin);
-        for(int i = 0; i < listOfFlights.size(); i++)
+        int i = 0;
+
+        while(i < listOfFlights.size())
         {
-            if(!listOfFlights.get(i).getEndingAirport().equals(arrival))
+            if(!(listOfFlights.get(i).getEndingAirport().equals(arrival) &&
+                    listOfFlights.get(i).getStartDate().startsWith(date))) {
                 listOfFlights.remove(i);
+                i--;
+            }
+            i++;
         }
 
         return listOfFlights;
@@ -33,6 +42,9 @@ public class FlightAgency {
 
     public static Flight getFlight(String start, String end, String date)
     {
+        if(!agency.containsKey(start))
+            return null;
+
         List<Flight> listOfFlights = agency.get(start);
         for(Flight flight: listOfFlights)
         {

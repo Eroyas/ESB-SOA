@@ -19,9 +19,19 @@ public class Endpoints {
 
     // External partners
     public static final String CAR_RESERVATION = "http:localhost:8080/tcs-cars-service/ExternalCarRentalService";
-    public static final String FLIGHT_RESERVATION = "http:localhost:8080/tcs-service-document/registry";
-
+    public static final String CALL_EXTERNAL_FLIGHT_RESERVATION = "http://external-flights-service:8080/flights-service/flight/";
+    public static final String CALL_INTERNAL_FLIGHT_RESERVATION = "http://internal-flights-service:8080/tta-service-rpc/FlightBookingService";
     public static final String HOTEL_SEARCH = "http:localhost:8080/hotels-service/ExternalHotelFinderService";
+
+    // Direct endpoints
+    public static final String USE_INTERNAL_FLIGHT_RESERVATION = "direct:internal-flight-service";
+    public static final String USE_EXTERNAL_FLIGHT_RESERVATION = "direct:external-flight-service";
+
+    // Dead message channel
+    public static final String DEAD_PARTNER =  "activemq:global:dead";
+
+    // Servlet endpoints.
+    public static final String SEARCH_FLIGHT = "activemq:bus-cheapest-flight";
 
     // Internal partners
     public static final String CAR_RENTAL = "http:localhost:8080/tta-car-and-hotel/car-rental";
