@@ -10,7 +10,7 @@ public class TravelMessageGenerator {
     public String buildRequest(JSONObject json) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append("TODO : IF FAUT : PaysDep PayArr DateDep DateArr");
+        builder.append("TODO : IF FAUT : PaysDep PayArr DateDep DateArr Customer(Id, firstname, lastname, email");
         builder.append("");
 
         return builder.toString();
