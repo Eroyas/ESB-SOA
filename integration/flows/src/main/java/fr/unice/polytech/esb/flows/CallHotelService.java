@@ -5,8 +5,6 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.dataformat.JsonLibrary;
-import org.json.JSONObject;
 import stubs.hotelservice.Hotel;
 import stubs.hotelservice.HotelFinderService;
 import stubs.hotelservice.HotelServiceClientFactory;
@@ -14,7 +12,6 @@ import stubs.hotelservice.HotelServiceClientFactory;
 import java.util.List;
 
 import static fr.unice.polytech.esb.flows.utils.Endpoints.*;
-import static fr.unice.polytech.esb.flows.utils.Config.*;
 
 public class CallHotelService extends RouteBuilder {
     @Override
@@ -57,9 +54,9 @@ public class CallHotelService extends RouteBuilder {
                 System.out.println("Selecting lowest price : name: "+cheapest.getNom()+", price: "+cheapest.getPrix()+" location:"+cheapest.getLieu());
 
                 HotelReservation hotelReservation = new HotelReservation();
-                hotelReservation.setHotelName(cheapest.getNom());
+                hotelReservation.setName(cheapest.getNom());
                 hotelReservation.setPrice(cheapest.getPrix());
-                hotelReservation.setRoomNumber(10);
+                hotelReservation.setRoom(10);
 
                 exchange.getIn().setBody(hotelReservation.toString());
             }

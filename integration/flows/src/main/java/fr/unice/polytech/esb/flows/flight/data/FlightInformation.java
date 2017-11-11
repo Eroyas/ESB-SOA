@@ -3,26 +3,17 @@ package fr.unice.polytech.esb.flows.flight.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.UUID;
+import java.util.Random;
 
 public class FlightInformation {
-/*
- "origin": "Nice",
-      "destination": "Paris",
-      "date": "2017-08-14",
-      "time": "12:30:00",
-      "price": "89",
-      "journeyType": "DIRECT",
-      "duration": 92,
-      "category": "ECO",
-      "airline": "Air France"
-*/
+
+
     @JsonProperty("origin") private String startingAirport;
     @JsonProperty("destination") private String endingAirport;
     @JsonProperty("date") private String date;
     @JsonProperty("price") private Double price;
     @JsonProperty("airline") private String airline;
-    private String flightId;
+    private int number;
 
 
     public FlightInformation(String startingAirport, String endingAirport, String date, Double price, String airline) {
@@ -31,7 +22,7 @@ public class FlightInformation {
         this.date = date;
         this.price = price;
         this.airline = airline;
-        this.flightId = UUID.randomUUID().toString();
+        this.number = new Random().nextInt();
     }
 
     public FlightInformation() {
@@ -53,8 +44,8 @@ public class FlightInformation {
     public String getAirline() { return airline; }
     public void setAirline(String company) { this.airline = company; }
 
-    public String getFlightId() { return flightId; }
-    public void setFlightId(String id) { this.flightId = id; }
+    public int getNumber() { return number; }
+    public void setNumber(int id) { this.number = id; }
 
     @Override
     public String toString() {
@@ -65,7 +56,7 @@ public class FlightInformation {
                         ", \"date\": \"" + date + "\"" +
                         ", \"price\": " + price +
                         ", \"airline\": \"" + airline + "\"" +
-                        ", \"flightId\": \"" + flightId + "\"" +
+                        ", \"number\": " + number +
                         "}" +
                     "}" +
                 "}";

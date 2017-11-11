@@ -3,17 +3,15 @@ package fr.unice.polytech.esb.flows.data;
 import java.io.Serializable;
 
 public class HotelReservation implements Serializable{
-    private String hotelName;
+    private String name;
     private int price;
-    private int roomNumber;
+    private int room;
 
-    public String getHotelName() {
 
-        return hotelName;
-    }
+    public String getName() { return name; }
 
-    public void setHotelName(String hotelName) {
-        this.hotelName = hotelName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getPrice() {
@@ -24,13 +22,14 @@ public class HotelReservation implements Serializable{
         this.price = price;
     }
 
-    public int getRoomNumber() {
-        return roomNumber;
+    public int getRoom() {
+        return room;
     }
 
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
+    public void setRoom(int room) {
+        this.room = room;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -40,15 +39,15 @@ public class HotelReservation implements Serializable{
         HotelReservation that = (HotelReservation) o;
 
         if (price != that.price) return false;
-        if (roomNumber != that.roomNumber) return false;
-        return hotelName.equals(that.hotelName);
+        if (room != that.room) return false;
+        return name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        int result = hotelName.hashCode();
+        int result = name.hashCode();
         result = 31 * result + price;
-        result = 31 * result + roomNumber;
+        result = 31 * result + room;
         return result;
     }
 
@@ -56,9 +55,9 @@ public class HotelReservation implements Serializable{
     public String toString() {
         return  "{\"booking\": " +
                     "{\"hotel\": {" +
-                        "\"hotelName\": \"" + hotelName + "\"" +
+                        "\"name\": \"" + name + "\"" +
                         ", \"price\": " + price +
-                        ", \"roomNumber\": " + roomNumber +
+                        ", \"room\": " + room +
                         "}" +
                     "}" +
                 "}";
