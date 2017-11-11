@@ -31,7 +31,7 @@ public class  NIoRoutes extends RouteBuilder {
                 .multicast()
                     .parallelProcessing().executorService(WORKERS)
                     //TODO: aggregate result
-                    .to(SEARCH_FLIGHT, HOTEL_RESERVATION_Q);
+                    .to(CAR_RESERVATION_Q, SEARCH_FLIGHT, HOTEL_RESERVATION_Q);
 
     }
 

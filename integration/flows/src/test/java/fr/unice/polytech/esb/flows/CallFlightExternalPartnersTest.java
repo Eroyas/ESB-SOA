@@ -1,5 +1,6 @@
 package fr.unice.polytech.esb.flows;
 
+import fr.unice.polytech.esb.flows.flight.CallFlightExternalPartners;
 import fr.unice.polytech.esb.flows.utils.Endpoints;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;

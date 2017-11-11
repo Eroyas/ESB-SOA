@@ -17,7 +17,8 @@ services:
       build:
         context: ./flows
       depends_on:
-        - cars-service
+        - external-cars-service
+        - internal-cars-service
         - external-flights-service
         - internal-flights-service
         - hotels-services
@@ -29,12 +30,19 @@ services:
         - "44444:44444"
         - "8989:8989"
 
-  cars-service:
+  external-cars-service:
     container_name: telegram-cars-services
     build:
       context: ./external-services/cars
     ports:
       - "9080:8080"
+
+  internal-cars-service:
+    container_name: tta-car-services
+    build:
+      context: ../services/resource
+    ports:
+      - "9780:8080"
 
   external-flights-service:
     container_name: telegram-flights-services

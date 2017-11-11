@@ -12,7 +12,7 @@ import org.junit.Test;
 public class CallCarExternalPartnersTest extends ActiveMQTest {
 
     @Override public String isMockEndpointsAndSkip() {
-        return CAR_RESERVATION;
+        return CAR_EXTERNAL_RESERVATION;
     }
 
     @Override public String isMockEndpoints() {
@@ -20,7 +20,7 @@ public class CallCarExternalPartnersTest extends ActiveMQTest {
     }
 
     @Test public void testExecutionContext() throws Exception {
-        isAvailableAndMocked(CAR_RESERVATION);
+        isAvailableAndMocked(CAR_EXTERNAL_RESERVATION);
         isAvailableAndMocked(CAR_RESERVATION_Q);
     }
 
@@ -37,7 +37,7 @@ public class CallCarExternalPartnersTest extends ActiveMQTest {
     @Before public void initMocks() {
         resetMocks();
 
-        mock(CAR_RESERVATION).whenAnyExchangeReceived((Exchange e) -> {
+        mock(CAR_EXTERNAL_RESERVATION).whenAnyExchangeReceived((Exchange e) -> {
             String response = "" +
                     "<ns2:getCarRentalListResponse xmlns:ns2=\"http://informatique.polytech.unice.fr/soa/\">\n" +
                     "    <car_rentals>\n" +
@@ -62,7 +62,7 @@ public class CallCarExternalPartnersTest extends ActiveMQTest {
 
     @Test public void testCar() throws Exception  {
         mock(CAR_RESERVATION_Q).expectedMessageCount(1);
-        mock(CAR_RESERVATION).expectedMessageCount(1);
+        mock(CAR_EXTERNAL_RESERVATION).expectedMessageCount(1);
 
         String out = template.requestBodyAndHeader(
                 CAR_RESERVATION_Q, "Paris",

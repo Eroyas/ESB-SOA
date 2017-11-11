@@ -3,59 +3,58 @@ package fr.unice.polytech.esb.flows.CarServices.data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by Eroyas on 30/10/17.
  */
 public class CarRequest implements Serializable {
 
-    @JsonProperty private String CityDep;
-    @JsonProperty private String CityArr;
-    @JsonProperty private Date DateDep; // SimpleDateFormat.parse(String);
-    @JsonProperty private Date DateArr;
+    @JsonProperty private String cityDep;
+    @JsonProperty private String cityArr;
+    @JsonProperty private String dateDep;
+    @JsonProperty private String duration;
 
-    CarRequest() {
+    public CarRequest() {
         super();
     }
 
-    public CarRequest(String cityDep, String cityArr, Date dateDep, Date dateArr) {
-        CityDep = cityDep;
-        CityArr = cityArr;
-        DateDep = dateDep;
-        DateArr = dateArr;
+    public CarRequest(String cityDep, String cityArr, String dateDep, String duration) {
+        this.cityDep = cityDep;
+        this.cityArr = cityArr;
+        this.dateDep = dateDep;
+        this.duration = duration;
     }
 
     public String getCityDep() {
-        return CityDep;
+        return cityDep;
     }
 
     public void setCityDep(String cityDep) {
-        CityDep = cityDep;
+        this.cityDep = cityDep;
     }
 
     public String getCityArr() {
-        return CityArr;
+        return cityArr;
     }
 
     public void setCityArr(String cityArr) {
-        CityArr = cityArr;
+        this.cityArr = cityArr;
     }
 
-    public Date getDateDep() {
-        return DateDep;
+    public String getDateDep() {
+        return dateDep;
     }
 
-    public void setDateDep(Date dateDep) {
-        DateDep = dateDep;
+    public void setDateDep(String dateDep) {
+        this.dateDep = dateDep;
     }
 
-    public Date getDateArr() {
-        return DateArr;
+    public String getDuration() {
+        return duration;
     }
 
-    public void setDateArr(Date dateArr) {
-        DateArr = dateArr;
+    public void setDuration(String duration) {
+        this.duration = duration;
     }
 
 }

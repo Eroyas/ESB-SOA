@@ -95,4 +95,15 @@ public class CarInfo implements Serializable {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "CarInfo{" +
+                "brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", place='" + place + '\'' +
+                ", rentPricePerDay=" + rentPricePerDay +
+                ", availability=" + availability +
+                '}';
+    }
+
 }

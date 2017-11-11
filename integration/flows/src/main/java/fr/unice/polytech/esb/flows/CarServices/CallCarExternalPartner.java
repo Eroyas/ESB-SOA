@@ -1,52 +1,37 @@
 package fr.unice.polytech.esb.flows.CarServices;
 
-import fr.unice.polytech.esb.flows.CarServices.data.CarRequest;
 import fr.unice.polytech.esb.flows.CarServices.utils.CarReservationHelper;
+import fr.unice.polytech.esb.flows.flight.data.FlightInformation;
 import static fr.unice.polytech.esb.flows.utils.Endpoints.*;
 
-import fr.unice.polytech.esb.flows.CarServices.utils.CarServicesAggregationStrategy;
-import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.Processor;
 import org.apache.camel.Exchange;
-import org.apache.camel.model.dataformat.JsonLibrary;
+import org.apache.camel.ExchangeTimedOutException;
+import org.apache.camel.Processor;
+import org.apache.camel.builder.RouteBuilder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.ArrayList;
 
 /**
- * Created by Eroyas on 14/10/17.
+ * Created by Eroyas on 10/11/17.
  */
-public class CallCarExternalPartners extends RouteBuilder {
-
-    private static final ExecutorService WORKERS = Executors.newFixedThreadPool(4);
+public class CallCarExternalPartner extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
 
         /****************************************************************
-         **          Car reservation (aggregation of services)         **
+         **             Error handler : if does not respond            **
          ****************************************************************/
 
-        from(CAR_RESERVATION_Q)
-                .routeId("car-reservation-call")
-                .routeDescription("Call the car reservation service")
-
-                .unmarshal().json(JsonLibrary.Jackson, CarRequest.class)
-
-                .multicast(new CarServicesAggregationStrategy())
-                    .parallelProcessing(true)
-                    .executorService(WORKERS)
-                    .timeout(1000)
-                    .to(CAR_EXTERNAL_RESERVATION_Q, CAR_INTERNAL_RESERVATION_Q)
-                    .end()
-
-                .setHeader("Content-Type", constant("application/json"))
-                .marshal().json(JsonLibrary.Jackson)
-        ;
+        onException(ExchangeTimedOutException.class)
+                .handled(true)
+                .to(DEAD_PARTNER)
+                .process(exchange -> exchange.getIn().setBody(new ArrayList<FlightInformation>()));
 
         /****************************************************************
          **                Car reservation (a RPC service)             **
@@ -56,27 +41,14 @@ public class CallCarExternalPartners extends RouteBuilder {
                 .routeId("car-external-reservation-call")
                 .routeDescription("Call the external car reservation service : getCarRentalList(place, duration)")
 
+                .log("\n###\n Request for external car reservation \n###\n")
+
                 .bean(CarReservationHelper.class, "buildRequest(${body}, ${header[duration]})")
 
-                .inOut(CAR_RESERVATION)
+                .inOut(CAR_EXTERNAL_RESERVATION)
+
                 .process(result2carJson)
                 .process(result2filteredCarByPrice)
-        ;
-
-        /****************************************************************
-         **          Our car reservation (a resource service)          **
-         ****************************************************************/
-
-        from(CAR_INTERNAL_RESERVATION_Q)
-                .routeId("car-internal-reservation-call")
-                .routeDescription("Call the internal car reservation service : listAgencyByCity(city)")
-
-                .setHeader(Exchange.HTTP_METHOD, constant("GET"))
-                .setHeader("Content-Type", constant("application/json"))
-                .setHeader("Accept", constant("application/json"))
-
-                // Using a dynamic endpoint => refer to a recipient list, inOut as an endpoint parameter
-                .setBody(simple(""))
         ;
 
     }
