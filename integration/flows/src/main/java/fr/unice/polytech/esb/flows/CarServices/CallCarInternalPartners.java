@@ -56,7 +56,7 @@ public class CallCarInternalPartners extends RouteBuilder {
 
                 .log("\n###\n Car internal service: ${body} \n###\n")
 
-                .inOut("${body}")
+                .inOut(CAR_INTERNAL_RESERVATION)
 
                 .log("\n###\n Car internal result: ${body} \n###\n")
 
@@ -69,7 +69,11 @@ public class CallCarInternalPartners extends RouteBuilder {
 
         // TODO convertir ville en pays
 
-        return (CAR_INTERNAL_RESERVATION.replace("http:", "http://") + "/search/" + "Nice");
+        return String.format(
+                "/search/Nice",
+                place);
+
+        // return (CAR_INTERNAL_RESERVATION.replace("http:", "http://") + "/search/" + "Nice");
     }
 
     private static Processor result2filteredCarByPrice = (Exchange exc) -> {

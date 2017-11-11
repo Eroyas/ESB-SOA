@@ -62,14 +62,14 @@ public class CallCarExternalPartner extends RouteBuilder {
 
                 .log("\n###\n Car external result: ${body} \n###\n")
 
-                .process(result2carJson)
+                .process(result2carJson)g
                 .process(result2filteredCarByPrice)
         ;
 
     }
 
     private static String adaptRequest(TravelPlan carRequest) {
-        String place = carRequest.getPaysArrive();
+        String place = carRequest.getPaysgit add -AArrive();
         int duration = carRequest.getDurationInDay();
 
         return String.format(

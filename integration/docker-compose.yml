@@ -42,7 +42,7 @@ services:
     build:
       context: ../services/resource
     ports:
-      - "9780:8080"
+      - "9480:8080"
 
   external-flights-service:
     container_name: telegram-flights-services
