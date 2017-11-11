@@ -1,7 +1,7 @@
 package fr.unice.polytech.esb.flows;
 
-import fr.unice.polytech.esb.flows.CarServices.CallCarPartners;
-import fr.unice.polytech.esb.flows.flight.CallFlightExternalPartners;
+import fr.unice.polytech.esb.flows.CarServices.CallCarExternalPartner;
+import fr.unice.polytech.esb.flows.flight.FlightSearchEngine;
 import fr.unice.polytech.esb.flows.utils.Endpoints;
 import org.apache.activemq.broker.BrokerService;
 import org.apache.camel.builder.RouteBuilder;
@@ -44,8 +44,8 @@ public abstract class ActiveMQTest  extends CamelTestSupport {
         return new RouteBuilder() {
             @Override public void configure() throws Exception {
 
-                this.includeRoutes(new CallCarPartners());
-                this.includeRoutes(new CallFlightExternalPartners());
+                this.includeRoutes(new CallCarExternalPartner());
+                this.includeRoutes(new FlightSearchEngine());
 
             }
         };

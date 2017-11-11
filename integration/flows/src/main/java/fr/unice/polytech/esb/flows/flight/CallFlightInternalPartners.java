@@ -40,6 +40,13 @@ public class CallFlightInternalPartners extends RouteBuilder {
                 .to(DEAD_PARTNER)
                 // If the service does not respond, fill the body with an empty list.
                 .process(exchange -> exchange.getIn().setBody(new ArrayList<FlightInformation>()));
+        onException(ConnectException.class)
+                .handled(true)
+                .to(DEAD_PARTNER)
+                .log("Cannot connect to flight external service")
+                // If the service does not respond, fill the body with an empty list.
+                .process(exchange -> exchange.getIn().setBody(new ArrayList<FlightInformation>()));
+
         from(USE_INTERNAL_FLIGHT_RESERVATION)
                 .routeId("flight-internal-reservation-call")
                 .routeDescription("Retrieve flight available depending of user criteria from internal service")

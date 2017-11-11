@@ -8,6 +8,7 @@ import org.apache.camel.ExchangeTimedOutException;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -53,20 +54,21 @@ public class FlightSearchEngine extends RouteBuilder {
                     List<FlightInformation> flights = (List<FlightInformation>) exchange.getIn().getBody(List.class);
 
                     if (flights == null || flights.isEmpty()) {
-                        exchange.getIn().setBody("{}");
+                        exchange.getIn().setBody("{\"booking\": {\"flight\": { } } }");
                     } else {
                         System.out.println("\n\nGot " + flights.size() + " result from flights search partners");
                         flights.sort(Comparator.comparingDouble(FlightInformation::getPrice));
                         FlightInformation cheapestFlight = flights.get(0);
                         System.out.println("Cheapest flight is: " + cheapestFlight.toString() + "\n\n");
-                        exchange.getIn().setBody(cheapestFlight);
+
+
+                        exchange.getIn().setBody(cheapestFlight.toString());
                     }
                 })
 
-
-                // Marshal the body into a json array.
-                .setHeader("Content-Type", constant("application/json"))
-                .marshal().json(JsonLibrary.Jackson);
+                .log("\n\nFlight: ${body}\n\n")
+                // Marshal the body into a json object.
+                .setHeader("Content-Type", constant("application/json"));
 
     }
 
