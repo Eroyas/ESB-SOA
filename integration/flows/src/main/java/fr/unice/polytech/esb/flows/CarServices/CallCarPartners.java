@@ -42,6 +42,8 @@ public class CallCarPartners extends RouteBuilder {
                 .routeId("car-reservation-call")
                 .routeDescription("Call the car reservation service")
 
+                .log("\n###\n Request car reservation services \n###\n")
+
                 // .unmarshal().json(JsonLibrary.Jackson, CarRequest.class)
 
                 .multicast(new CarServicesAggregationStrategy())
@@ -53,8 +55,11 @@ public class CallCarPartners extends RouteBuilder {
 
                 // .process(result2filteredCarByServices)
 
+                .log("\n###\n Car: ${body} \n###\n")
+
                 .setHeader("Content-Type", constant("application/json"))
-                .marshal().json(JsonLibrary.Jackson)
+
+                // .marshal().json(JsonLibrary.Jackson)
         ;
     }
 

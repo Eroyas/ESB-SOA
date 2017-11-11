@@ -39,7 +39,7 @@ public class  NIoRoutes extends RouteBuilder {
                     .executorService(WORKERS)
                     .timeout(4000)
                     .inOut(HOTEL_RESERVATION_Q)
-                    .inOut(CAR_RESERVATION_Q)
+                    //.inOut(CAR_RESERVATION_Q)
                     .inOut(SEARCH_FLIGHT)
                     .end()
                 .process(exchange -> {

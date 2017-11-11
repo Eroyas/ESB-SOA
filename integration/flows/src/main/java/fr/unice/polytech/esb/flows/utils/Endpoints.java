@@ -22,6 +22,7 @@ public class Endpoints {
 
     public static final String CAR_EXTERNAL_RESERVATION = "http:external-cars-service:8080/tcs-cars-service/ExternalCarRentalService";
     public static final String CAR_INTERNAL_RESERVATION = "http:internal-cars-service:8080/tta-car-and-hotel/car-rental";
+
     public static final String CALL_EXTERNAL_FLIGHT_RESERVATION = "http://external-flights-service:8080/flights-service/flight/";
     public static final String CALL_INTERNAL_FLIGHT_RESERVATION = "http://internal-flights-service:8080/tta-service-rpc/FlightBookingService";
     public static final String HOTEL_SEARCH = "http:localhost:8080/hotels-service/ExternalHotelFinderService";

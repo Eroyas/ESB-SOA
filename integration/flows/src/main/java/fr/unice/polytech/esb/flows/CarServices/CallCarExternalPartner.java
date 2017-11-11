@@ -1,6 +1,7 @@
 package fr.unice.polytech.esb.flows.CarServices;
 
 import fr.unice.polytech.esb.flows.CarServices.utils.CarReservationHelper;
+import fr.unice.polytech.esb.flows.data.TravelPlan;
 import fr.unice.polytech.esb.flows.flight.data.FlightInformation;
 import static fr.unice.polytech.esb.flows.utils.Endpoints.*;
 
@@ -14,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 
 /**
@@ -33,6 +35,12 @@ public class CallCarExternalPartner extends RouteBuilder {
                 .to(DEAD_PARTNER)
                 .process(exchange -> exchange.getIn().setBody(new ArrayList<FlightInformation>()));
 
+        onException(ConnectException.class)
+                .handled(true)
+                .to(DEAD_PARTNER)
+                .log("Cannot connect to car external service")
+                .process(exchange -> exchange.getIn().setBody(new ArrayList<FlightInformation>()));
+
         /****************************************************************
          **                Car reservation (a RPC service)             **
          ****************************************************************/
@@ -43,14 +51,38 @@ public class CallCarExternalPartner extends RouteBuilder {
 
                 .log("\n###\n Request for external car reservation \n###\n")
 
-                .bean(CarReservationHelper.class, "buildRequest(${body}, ${header[duration]})")
+                // .bean(CarReservationHelper.class, "buildRequest(${body}, ${header[duration]})")
+
+                .process(exchange -> exchange.getIn()
+                        .setBody(adaptRequest(exchange.getIn().getBody(TravelPlan.class))))
+
+                .log("\n###\n Car external service: ${body} \n###\n")
 
                 .inOut(CAR_EXTERNAL_RESERVATION)
+
+                .log("\n###\n Car external result: ${body} \n###\n")
 
                 .process(result2carJson)
                 .process(result2filteredCarByPrice)
         ;
 
+    }
+
+    private static String adaptRequest(TravelPlan carRequest) {
+        String place = carRequest.getPaysArrive();
+        int duration = carRequest.getDurationInDay();
+
+        return String.format(
+                "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:soa=\"http://informatique.polytech.unice.fr/soa/\">\n" +
+                        "   <soapenv:Header/>\n" +
+                        "   <soapenv:Body>\n" +
+                        "      <soa:getCarRentalList>\n" +
+                        "         <place>%s</place> <!-- Place of rental -->\n" +
+                        "         <duration>%d</duration> <!-- Duration of rental in days -->\n" +
+                        "      </soa:getCarRentalList>\n" +
+                        "   </soapenv:Body>\n" +
+                        "</soapenv:Envelope>",
+                place, duration);
     }
 
     private static Processor result2carJson = (Exchange exc) -> {
