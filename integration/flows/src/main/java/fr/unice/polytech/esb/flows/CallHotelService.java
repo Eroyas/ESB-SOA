@@ -5,6 +5,8 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.model.dataformat.JsonLibrary;
+import org.json.JSONObject;
 import stubs.hotelservice.Hotel;
 import stubs.hotelservice.HotelFinderService;
 import stubs.hotelservice.HotelServiceClientFactory;
@@ -27,9 +29,13 @@ public class CallHotelService extends RouteBuilder {
                 .inOut(HOTEL_SERVICE);
 
         from(HOTEL_SERVICE)
+                .routeId("hotel-reservation")
                 .setHeader("operation_name", simple("recherche"))
                 .process(callHotelWebService)
-                .to(BOOKING_Q);
+
+                .log("\n\nHotel: ${body}\n\n")
+                // Marshal the body into a json array.
+                .setHeader("Content-Type", constant("application/json"));
 
     }
 
@@ -55,7 +61,7 @@ public class CallHotelService extends RouteBuilder {
                 hotelReservation.setPrice(cheapest.getPrix());
                 hotelReservation.setRoomNumber(10);
 
-                exchange.getIn().setBody(hotelReservation);
+                exchange.getIn().setBody(hotelReservation.toString());
             }
 
         }

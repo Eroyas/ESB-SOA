@@ -58,13 +58,16 @@ public class FlightInformation {
 
     @Override
     public String toString() {
-        return "FlightInformation{" +
-                "startingAirport='" + startingAirport + '\'' +
-                ", endingAirport='" + endingAirport + '\'' +
-                ", date='" + date + '\'' +
-                ", price=" + price +
-                ", airline='" + airline + '\'' +
-                ", flightId='" + flightId + '\'' +
-                '}';
+        return "{\"booking\": " +
+                    "{\"flight\": {" +
+                        "\"startingAirport\": \"" + startingAirport + "\"" +
+                        ", \"endingAirport\": \"" + endingAirport + "\"" +
+                        ", \"date\": \"" + date + "\"" +
+                        ", \"price\": " + price +
+                        ", \"airline\": \"" + airline + "\"" +
+                        ", \"flightId\": \"" + flightId + "\"" +
+                        "}" +
+                    "}" +
+                "}";
     }
 }

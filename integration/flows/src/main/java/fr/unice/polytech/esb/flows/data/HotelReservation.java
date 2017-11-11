@@ -51,4 +51,16 @@ public class HotelReservation implements Serializable{
         result = 31 * result + roomNumber;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return  "{\"booking\": " +
+                    "{\"hotel\": {" +
+                        "\"hotelName\": \"" + hotelName + "\"" +
+                        ", \"price\": " + price +
+                        ", \"roomNumber\": " + roomNumber +
+                        "}" +
+                    "}" +
+                "}";
+    }
 }
