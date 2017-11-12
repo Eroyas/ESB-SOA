@@ -1,24 +1,28 @@
 package fr.unice.polytech.esb.flows.data;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
-public class HotelReservation implements Serializable{
+public class HotelReservation implements Serializable {
     private String name;
-    private int price;
+    private double price;
     private int room;
 
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -28,6 +32,13 @@ public class HotelReservation implements Serializable{
 
     public void setRoom(int room) {
         this.room = room;
+    }
+
+    public JSONObject toJSONObject() {
+        return new JSONObject()
+                .put("name", this.name)
+                .put("room", this.room)
+                .put("price", this.price);
     }
 
 
@@ -45,21 +56,12 @@ public class HotelReservation implements Serializable{
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + price;
+        int result;
+        long temp;
+        result = name.hashCode();
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + room;
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return  "{\"booking\": " +
-                    "{\"hotel\": {" +
-                        "\"name\": \"" + name + "\"" +
-                        ", \"price\": " + price +
-                        ", \"room\": " + room +
-                        "}" +
-                    "}" +
-                "}";
     }
 }

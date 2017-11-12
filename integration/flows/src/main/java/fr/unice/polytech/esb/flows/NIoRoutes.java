@@ -1,15 +1,19 @@
 package fr.unice.polytech.esb.flows;
 
+import fr.unice.polytech.esb.flows.data.Booking;
+import fr.unice.polytech.esb.flows.data.HotelReservation;
 import fr.unice.polytech.esb.flows.data.TravelPlan;
 import fr.unice.polytech.esb.flows.utils.CsvTravelPlanFormat;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.Processor;
+import org.apache.camel.builder.ExchangeBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -38,12 +42,19 @@ public class  NIoRoutes extends RouteBuilder {
                     .parallelProcessing(true)
                     .executorService(WORKERS)
                     .timeout(4000)
-                    .inOut(HOTEL_RESERVATION_Q)
+                    .stopOnException()
+                    .to(HOTEL_RESERVATION_Q)
                     //.inOut(CAR_RESERVATION_Q)
-                    .inOut(SEARCH_FLIGHT)
+                    //.inOut(SEARCH_FLIGHT)
                     .end()
                 .process(exchange -> {
-                    System.out.println("Process exchange: " + exchange.getIn().getBody());
+                    HotelReservation hr = exchange.getIn().getBody(HotelReservation.class);
+                    System.out.println("hotel reservation : " + hr);
+                    System.out.println("hotelReservation : "+ exchange.getProperty("hotelReservation"));
+                    HotelReservation theHotelReservation = exchange.getProperty("hotelReservation", HotelReservation.class);
+                    Booking theBooking = new Booking();
+                    theBooking.setHotelReservation(theHotelReservation);
+                    exchange.getIn().setBody(theBooking);
                 })
                 .log("\n\nBooking to send: ${body}\n\n")
                 .to(BOOKING_SERVICE);
@@ -72,16 +83,16 @@ public class  NIoRoutes extends RouteBuilder {
 
         @Override
         public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
-            // Join result from internal and external flight services
-
             if (oldExchange != null) {
-                JSONObject newBooking = new JSONObject(newExchange.getIn().getBody(String.class)).getJSONObject("booking");
-                String newTypeOfBooking = newBooking.keys().next();
-                JSONObject newBookingValue = newBooking.getJSONObject(newTypeOfBooking);
-
-                JSONObject oldBooking = new JSONObject(oldExchange.getIn().getBody(String.class));
-                oldBooking.getJSONObject("booking").put(newTypeOfBooking, newBookingValue);
-                newExchange.getIn().setBody(oldBooking);
+                Map<String, Object> one = oldExchange.getProperties();
+                if (newExchange != null) {
+                    for (Map.Entry<String, Object> property : one.entrySet()) {
+                        newExchange.setProperty(property.getKey(), property.getValue());
+                        System.out.println("property ["+property.getKey()+"] added");
+                    }
+                    return newExchange;
+                }
+                return oldExchange;
             }
 
             return newExchange;

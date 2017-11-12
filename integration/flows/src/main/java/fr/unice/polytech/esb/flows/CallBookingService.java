@@ -1,5 +1,6 @@
 package fr.unice.polytech.esb.flows;
 
+import fr.unice.polytech.esb.flows.data.Booking;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -42,32 +43,15 @@ public class CallBookingService extends RouteBuilder{
 
     public static Processor callBookingService = (Exchange exchange) -> {
 
-        //String hotelName = exchange.getProperty("hotelName", String.class);
-        //int hotelPrice = exchange.getProperty("hotelPrice", Integer.class);
-
         Client client = ClientBuilder.newClient();
 
+        Booking theBooking = exchange.getIn().getBody(Booking.class);
 
-        JSONObject json = new JSONObject().put("type","submit");
-
-        System.out.println("Booking string: " + exchange.getIn().getBody());
-        JSONObject booking = new JSONObject(exchange.getIn().getBody(String.class)).getJSONObject("booking");
-        booking.put("travelId",100);
-
-        JSONObject customer = new JSONObject()
-                .put("customerId", 9)
-                .put("firstName", "Mathias")
-                .put("lastName", "Eroglu")
-                .put("email", "teamswag@swag.al");
-
-        booking.put("customer", customer);
-        json.put("booking", booking);
-
-        System.out.println("Sending request : \n"+json.toString());
+        System.out.println("Sending request : \n"+theBooking.toJSONObject().toString());
 
         Response response = client.target("http://" + HOST + ":" + PORT + "/" + SERVICE + "/" + ENDPOINT)
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.json(json.toString()));
+                .post(Entity.json(theBooking.toJSONObject().toString()));
 
 
         client.close();

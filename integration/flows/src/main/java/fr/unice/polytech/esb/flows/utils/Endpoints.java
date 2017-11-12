@@ -25,7 +25,6 @@ public class Endpoints {
 
     public static final String CALL_EXTERNAL_FLIGHT_RESERVATION = "http://external-flights-service:8080/flights-service/flight/";
     public static final String CALL_INTERNAL_FLIGHT_RESERVATION = "http://internal-flights-service:8080/tta-service-rpc/FlightBookingService";
-    public static final String HOTEL_SEARCH = "http:localhost:8080/hotels-service/ExternalHotelFinderService";
 
     // Direct endpoints
     public static final String USE_INTERNAL_FLIGHT_RESERVATION = "direct:internal-flight-service";
@@ -39,7 +38,8 @@ public class Endpoints {
 
     // Internal partners
 
-    public static final String HOTEL_SERVICE = "direct:HotelServiceEndpoint";
+    public static final String HOTEL_SERVICE_EXTERNAL = "direct:HotelServiceEndpoint";
+    public static final String HOTEL_SERVICE_INTERNAL = "direct:HotelServiceInternal";
 
     public static final String BOOKING_SERVICE = "direct:BookingService";
 
