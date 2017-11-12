@@ -2,14 +2,11 @@ package network;
 
 public class MailSender {
 
-    private String senderEmail = "bookings@tta.al";
+    private final static String senderEmail = "bookings@tta.al";
 
-    public MailSender() {
-    }
-
-    public boolean sendMail(String content){
+    public static boolean sendMail(String content, String dest){
         try{
-            //TODO: sending mail
+            System.out.println("Sending mail to : " + dest + " from: " + senderEmail + " with content :\n" + content);
 
             return true;
         }
