@@ -1,0 +1,14 @@
+HOW TO RUN
+
+Lancer les script build.sh et start.sh disponible à la racine du répo.
+
+Une fois que serviceMix est démaré, éxecuter la commande suivante sur un terminal :
+
+docker exec -it telegram-esb "sh"
+
+afin d'obtenir un terminal sur le container de l'ESB.
+
+puis lancer les commandes suivante :
+
+cd camel/
+cp test.csv input/travelPlan.csv
