@@ -74,9 +74,8 @@ services:
 
   flights-database:
     container_name: flights-database
-    image: mongo:3.0
-    volumes:
-      - "./external-services/flights/resources/flights.json:/external-flights-service/resources/flights.json"
+    build:
+      context: ../docker/flightdatabase
     ports:
       - "27017:27017"
 
