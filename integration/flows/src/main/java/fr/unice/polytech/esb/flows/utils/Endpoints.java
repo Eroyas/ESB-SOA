@@ -20,8 +20,8 @@ public class Endpoints {
     // External partners
     public static final String FLIGHT_RESERVATION_Q = "activemq:flight-reservation";
 
-    public static final String CAR_EXTERNAL_RESERVATION = "http:external-cars-service:8080/tcs-cars-service/ExternalCarRentalService";
-    public static final String CAR_INTERNAL_RESERVATION = "http:internal-cars-service:8080/tta-car-and-hotel/car-rental";
+    public static final String CAR_EXTERNAL_RESERVATION = "http:external-cars-service:8080/cars-service/ExternalCarRentalService";
+    public static final String CAR_INTERNAL_RESERVATION = "http:internal-cars-service:8080/tta-car-and-hotel/car-rental/search/Nice";
 
     public static final String CALL_EXTERNAL_FLIGHT_RESERVATION = "http://external-flights-service:8080/flights-service/flight/";
     public static final String CALL_INTERNAL_FLIGHT_RESERVATION = "http://internal-flights-service:8080/tta-service-rpc/FlightBookingService";
